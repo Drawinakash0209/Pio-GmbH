@@ -1,7 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Building2, Globe, Award } from "lucide-react";
+import {
+  Building2,
+  Globe,
+  Award,
+  Target,
+  Users,
+  Zap,
+  Check,
+  ArrowRight,
+} from "lucide-react";
+import Modal from "./Modal";
 
 const pillars = [
   { icon: Building2, label: "Founded in Mülheim" },
@@ -9,7 +20,16 @@ const pillars = [
   { icon: Award, label: "German Standards" },
 ];
 
+const standoutPoints = [
+  "German-engineered process discipline, applied to every contract",
+  "Direct project ownership — no layers of subcontracted management",
+  "Transparent, scheduled reporting on every engagement",
+  "Sustainability-first sourcing and operational practices",
+];
+
 export default function About() {
+  const [open, setOpen] = useState(false);
+
   return (
     <section id="about" className="py-[120px] bg-[#f9f9f9]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
@@ -76,6 +96,18 @@ export default function About() {
                 </motion.div>
               ))}
             </div>
+
+            <motion.button
+              onClick={() => setOpen(true)}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] mt-8 hover:text-[#536600] transition-colors group/link"
+            >
+              Learn More
+              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+            </motion.button>
           </motion.div>
 
           {/* Visual panel */}
@@ -128,6 +160,101 @@ export default function About() {
           </motion.div>
         </div>
       </div>
+
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <div className="p-8 md:p-12">
+          <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#536600] px-3 py-1.5 bg-[#c7ef00] mb-6 inline-block">
+            Our Story &amp; Values
+          </span>
+          <h3
+            className="text-[#000000] mb-8"
+            style={{
+              fontSize: "clamp(26px, 3vw, 34px)",
+              lineHeight: "1.2",
+              letterSpacing: "-0.02em",
+              fontWeight: 700,
+            }}
+          >
+            Defining Facility Management Excellence, from Mülheim to the World
+          </h3>
+
+          <div className="flex items-start gap-4 mb-10">
+            <div className="w-12 h-12 bg-[#1a1c1c] flex items-center justify-center shrink-0">
+              <Target className="w-5 h-5 text-[#caf300]" />
+            </div>
+            <div>
+              <h4 className="text-xl font-bold tracking-tight text-[#000000] mb-2">
+                Excellence in Execution
+              </h4>
+              <p className="text-base leading-7 text-[#444748]">
+                At Pio GmbH, we believe mediocrity has no place in facility
+                management. Every engagement, from a single maintenance visit
+                to a multi-site staffing rollout, is run against the same
+                German engineering standard: precise, documented, and
+                accountable. Our teams are trained and audited against that
+                standard continuously, not just at onboarding.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-5 mb-10">
+            <div className="p-6 bg-[#f9f9f9] border border-[#c4c7c7]">
+              <Target className="w-7 h-7 text-[#536600] mb-3" />
+              <h5 className="font-bold text-lg mb-2 text-[#000000]">
+                Strategic Foundation
+              </h5>
+              <p className="text-sm leading-6 text-[#444748]">
+                Rooted in the industrial heritage of Mülheim an der Ruhr,
+                aligning every service line with long-term operational goals.
+              </p>
+            </div>
+            <div className="p-6 bg-[#f9f9f9] border border-[#c4c7c7]">
+              <Users className="w-7 h-7 text-[#536600] mb-3" />
+              <h5 className="font-bold text-lg mb-2 text-[#000000]">
+                People First
+              </h5>
+              <p className="text-sm leading-6 text-[#444748]">
+                Investing in recruitment, training, and welfare so our
+                workforce arrives motivated, skilled, and accountable.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-8 bg-[#1a1c1c] relative overflow-hidden">
+            <div
+              className="absolute inset-0 opacity-[0.06]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, #caf300 1px, transparent 1px), linear-gradient(to bottom, #caf300 1px, transparent 1px)",
+                backgroundSize: "40px 40px",
+              }}
+            />
+            <h4 className="relative text-xl font-bold mb-6 text-white flex items-center gap-3">
+              <Zap className="w-5 h-5 text-[#caf300]" />
+              Why We Stand Out
+            </h4>
+            <ul className="relative space-y-4">
+              {standoutPoints.map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <div className="p-1 bg-[#caf300] text-[#000000] mt-0.5 shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-white/80 leading-6">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <button
+              onClick={() => setOpen(false)}
+              className="inline-flex items-center justify-center px-9 py-4 bg-[#caf300] text-[#000000] text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#b0d500] transition-colors duration-150 min-w-[140px]"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
     </section>
   );
 }

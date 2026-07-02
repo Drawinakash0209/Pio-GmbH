@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import StatsBar from "@/components/StatsBar";
 import MarqueeBanner from "@/components/MarqueeBanner";
 import About from "@/components/About";
+import VisionMission from "@/components/VisionMission";
 import Services from "@/components/Services";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import WhyUs from "@/components/WhyUs";
@@ -18,6 +19,7 @@ export default function Home() {
         <StatsBar />
         <MarqueeBanner />
         <About />
+        <VisionMission />
         <Services />
         <ParallaxBanner />
         <WhyUs />

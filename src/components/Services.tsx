@@ -1,20 +1,83 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
+import Modal from "./Modal";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
+type ServiceDetail = {
+  title: string;
+  tagline: string;
+  description: string;
+  features: string[];
+};
+
+const serviceDetails: Record<string, ServiceDetail> = {
+  facility: {
+    title: "Facility Management",
+    tagline: "Comprehensive Care, Zero Compromise",
+    description:
+      "Our facility management teams handle the full lifecycle of your building's upkeep — from daily cleaning cycles to scheduled technical maintenance — so hotels, offices, and industrial sites run without interruption. Every visit is logged and measured against German hygiene and safety benchmarks.",
+    features: [
+      "Daily & Deep Cleaning Cycles",
+      "Preventive Maintenance Scheduling",
+      "Hygiene & Sanitation Compliance",
+      "Interior-Exterior Building Care",
+    ],
+  },
+  staffing: {
+    title: "Staffing Solutions",
+    tagline: "Powering Your Operations with People",
+    description:
+      "We recruit, vet, and train personnel who integrate directly into your operations — whether you need short-term coverage or a long-term workforce. Every placement is backed by structured onboarding and ongoing compliance administration.",
+    features: [
+      "Specialized Recruitment",
+      "On-Site Personnel Management",
+      "Continuous Training Programs",
+      "Compliance & Payroll Administration",
+    ],
+  },
+  optimization: {
+    title: "Operational Optimization",
+    tagline: "Precision Process Engineering",
+    description:
+      "Our project management specialists analyze your existing workflows and rebuild them around measurable quality control and efficiency targets, drawing on structured German engineering methods to remove waste without disrupting operations.",
+    features: [
+      "Quality Control Systems",
+      "Workflow Efficiency Audits",
+      "Structured Project Governance",
+      "Data-Driven Reporting",
+    ],
+  },
+  trade: {
+    title: "Import & Export",
+    tagline: "European Sourcing, Global Delivery",
+    description:
+      "We source premium European goods — food, textiles, and household products — and manage the full cross-border logistics chain, ensuring every shipment clears compliance and arrives on schedule.",
+    features: [
+      "European Sourcing Network",
+      "Global Logistics Coordination",
+      "Quality Assurance Checks",
+      "Efficient Cross-Border Supply",
+    ],
+  },
+};
+
 export default function Services() {
+  const [activeService, setActiveService] = useState<string | null>(null);
+  const activeDetail = activeService ? serviceDetails[activeService] : null;
+
   return (
     <section id="services" className="py-[120px] bg-white">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
@@ -67,14 +130,32 @@ export default function Services() {
                   We maintain your infrastructure to the highest hygienic and
                   operational standards.
                 </p>
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {["Cleaning", "Maintenance", "Hygiene", "Care"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1.5 bg-white border border-[#c4c7c7] text-[10px] font-bold tracking-[0.08em] uppercase text-[#444748]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <Link
-                href="#contact"
-                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] mt-8 hover:text-[#536600] transition-colors group/link"
-              >
-                Request Audit
-                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-              </Link>
+              <div className="flex flex-wrap items-center gap-6 mt-8">
+                <Link
+                  href="#contact"
+                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#536600] transition-colors group/link"
+                >
+                  Request Audit
+                  <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+                <button
+                  onClick={() => setActiveService("facility")}
+                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#747878] hover:text-[#000000] transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
             </div>
             <div className="md:w-1/2 h-64 md:h-auto order-1 md:order-2 relative overflow-hidden">
               <Image
@@ -111,7 +192,7 @@ export default function Services() {
               </p>
             </div>
             <div className="mt-8 pt-4 border-t border-[#c4c7c7]">
-              <ul className="space-y-2">
+              <ul className="space-y-2 mb-6">
                 {["Rapid Deployment", "Quality Assured", "Vetted Personnel"].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm leading-5 text-[#444748]">
                     <span className="w-1.5 h-1.5 bg-[#caf300] inline-block shrink-0" />
@@ -119,6 +200,13 @@ export default function Services() {
                   </li>
                 ))}
               </ul>
+              <button
+                onClick={() => setActiveService("staffing")}
+                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#536600] transition-colors group/link"
+              >
+                Learn More
+                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+              </button>
             </div>
           </motion.div>
 
@@ -152,6 +240,13 @@ export default function Services() {
                   execution.
                 </p>
               </div>
+              <button
+                onClick={() => setActiveService("optimization")}
+                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] mt-6 hover:text-[#536600] transition-colors group/link"
+              >
+                Learn More
+                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+              </button>
             </div>
           </motion.div>
 
@@ -185,6 +280,16 @@ export default function Services() {
                   European sourcing and logistics. Reliable cross-border trade
                   management ensuring timely delivery and compliance.
                 </p>
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {["European Sourcing", "Global Logistics", "Quality Assurance", "Efficient Supply"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1.5 border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div className="mt-8">
                 <div className="h-px w-full bg-white/10 mb-4" />
@@ -201,11 +306,55 @@ export default function Services() {
                     viewport={{ once: true }}
                   />
                 </div>
+                <button
+                  onClick={() => setActiveService("trade")}
+                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-white mt-6 hover:text-[#caf300] transition-colors group/link"
+                >
+                  Learn More
+                  <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                </button>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
+
+      <Modal open={activeDetail !== null} onClose={() => setActiveService(null)}>
+        {activeDetail && (
+          <div className="relative p-8 md:p-10">
+            <h3 className="text-3xl font-bold tracking-tight text-[#000000] mb-2 pr-10">
+              {activeDetail.title}
+            </h3>
+            <p className="text-[#536600] font-bold mb-6">{activeDetail.tagline}</p>
+            <p className="text-base leading-7 text-[#444748] mb-8">
+              {activeDetail.description}
+            </p>
+
+            <div className="bg-[#f9f9f9] border border-[#c4c7c7] p-6">
+              <h4 className="font-bold text-[#000000] mb-4">Key Features</h4>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {activeDetail.features.map((feature) => (
+                  <div key={feature} className="flex items-start gap-3">
+                    <div className="w-5 h-5 bg-[#caf300] flex items-center justify-center text-[#000000] shrink-0 mt-0.5">
+                      <Check className="w-3 h-3" />
+                    </div>
+                    <span className="text-sm font-medium text-[#444748]">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-[#c4c7c7] flex justify-end">
+              <button
+                onClick={() => setActiveService(null)}
+                className="inline-flex items-center justify-center px-9 py-4 bg-[#000000] text-white text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#1a1c1c] transition-colors duration-150 min-w-[120px]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </section>
   );
 }
