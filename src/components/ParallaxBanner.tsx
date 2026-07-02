@@ -15,7 +15,7 @@ export default function ParallaxBanner() {
   const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
   return (
-    <section ref={ref} className="relative h-[65vh] overflow-hidden flex items-center justify-center bg-[#1a1c1c]">
+    <section ref={ref} className="relative h-[65vh] overflow-hidden flex items-center justify-center bg-[#0e0e0e]">
       {/* Parallax image */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <Image
@@ -29,18 +29,8 @@ export default function ParallaxBanner() {
       </motion.div>
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1c1c] via-transparent to-[#1a1c1c] z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1a1c1c]/60 via-transparent to-[#1a1c1c]/60 z-[1]" />
-
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 z-[1] opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #caf300 1px, transparent 1px), linear-gradient(to bottom, #caf300 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-transparent to-[#0e0e0e] z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0e0e0e]/60 via-transparent to-[#0e0e0e]/60 z-[1]" />
 
       {/* Content */}
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 md:px-[64px] text-center">
@@ -50,29 +40,29 @@ export default function ParallaxBanner() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
         >
-          <span className="inline-block py-1 px-4 border border-[#caf300]/30 bg-[#caf300]/5 text-[#caf300] text-[10px] font-black tracking-[0.2em] uppercase mb-8">
+          <span className="inline-block py-1 px-4 rounded border border-[#0055ff]/30 bg-[#0055ff]/5 text-[#0055ff] text-[11px] font-medium tracking-[0.2em] uppercase mb-8">
             Zukunftssicher
           </span>
           <h2
             className="text-white mb-6"
             style={{
-              fontSize: "clamp(36px, 5vw, 72px)",
-              lineHeight: "1.1",
-              letterSpacing: "-0.04em",
-              fontWeight: 800,
+              fontSize: "clamp(36px, 5vw, 68px)",
+              lineHeight: "1.15",
+              letterSpacing: "-0.02em",
+              fontWeight: 600,
             }}
           >
             Shaping the Future of{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#caf300] to-[#b0d500]">
+            <span className="text-[#0055ff]">
               Facility Management
             </span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-[#c3c5d9] font-light text-lg max-w-2xl mx-auto leading-relaxed mb-10">
             We combine structured German engineering with modern management to deliver services that go beyond expectations.
           </p>
           <Link
             href="#contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#caf300] text-[#000000] text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#b0d500] transition-colors duration-150"
+            className="inline-flex items-center gap-3 rounded px-8 py-3.5 bg-[#0055ff] text-white text-sm font-medium tracking-wide hover:bg-[#0055ff]/90 transition-colors duration-300"
           >
             Start a Conversation
           </Link>

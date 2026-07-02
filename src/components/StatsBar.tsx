@@ -11,7 +11,7 @@ const stats = [
 
 export default function StatsBar() {
   return (
-    <section className="bg-[#1a1c1c] border-b border-white/5">
+    <section className="bg-[#131313] border-b border-white/5">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px] py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
           {stats.map(({ value, suffix, label, icon: Icon }, i) => (
@@ -24,18 +24,18 @@ export default function StatsBar() {
               className="flex flex-col items-start pt-4 md:pt-0 md:pl-8 first:pl-0 group"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-[#caf300]/10 flex items-center justify-center rounded">
-                  <Icon className="w-4 h-4 text-[#caf300]" />
+                <div className="w-8 h-8 bg-[#0055ff]/10 flex items-center justify-center rounded">
+                  <Icon className="w-4 h-4 text-[#0055ff]" />
                 </div>
               </div>
               <span
-                className="text-white mb-1 font-black tracking-tight"
+                className="text-[#e5e2e1] mb-1 font-semibold tracking-tight"
                 style={{ fontSize: "clamp(32px, 5vw, 64px)", lineHeight: 1 }}
               >
                 {value}
-                {suffix && <span className="text-[#caf300]">{suffix}</span>}
+                {suffix && <span className="text-[#e9c176]">{suffix}</span>}
               </span>
-              <span className="text-[11px] font-bold tracking-[0.1em] uppercase text-white/40">
+              <span className="text-[11px] font-medium tracking-[0.1em] uppercase text-[#c3c5d9]/60">
                 {label}
               </span>
             </motion.div>

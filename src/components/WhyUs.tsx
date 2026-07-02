@@ -9,25 +9,22 @@ const pillars = [
     icon: ShieldCheck,
     title: "German Reliability",
     body: "Built on a foundation of exact standards, rigorous quality control, and steadfast commitment to contractual obligations.",
-    accent: "text-[#caf300]",
   },
   {
     icon: Clock,
     title: "24/7 Availability",
     body: "Continuous operational readiness. Our management structures ensure round-the-clock response capabilities for critical infrastructure.",
-    accent: "text-[#caf300]",
   },
   {
     icon: Globe2,
     title: "International Expertise",
     body: "Local operational excellence coupled with global sourcing and management strategies, adapting to diverse market requirements.",
-    accent: "text-[#caf300]",
   },
 ];
 
 export default function WhyUs() {
   return (
-    <section id="reliability" className="py-[120px] bg-white">
+    <section id="reliability" className="py-[120px] bg-[#131313]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Header */}
         <motion.div
@@ -38,16 +35,16 @@ export default function WhyUs() {
           className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
         >
           <div>
-            <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#536600] px-3 py-1.5 bg-[#c7ef00] mb-4 inline-block">
+            <span className="inline-block border-l-2 border-[#0055ff] pl-4 text-[#0055ff] text-[11px] font-medium tracking-[0.2em] uppercase mb-4">
               Warum wir
             </span>
             <h2
-              className="text-[#000000]"
+              className="text-[#e5e2e1]"
               style={{
                 fontSize: "clamp(32px, 3vw, 44px)",
-                lineHeight: "1.15",
-                letterSpacing: "-0.03em",
-                fontWeight: 700,
+                lineHeight: "1.2",
+                letterSpacing: "-0.01em",
+                fontWeight: 600,
               }}
             >
               The Pio GmbH Standard
@@ -55,7 +52,7 @@ export default function WhyUs() {
           </div>
           <Link
             href="#contact"
-            className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#536600] transition-colors group shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-[#e5e2e1] hover:text-[#0055ff] transition-colors group shrink-0"
           >
             Work With Us
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -71,20 +68,17 @@ export default function WhyUs() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.12, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="group relative p-8 border border-[#c4c7c7] hover:border-[#000000] bg-[#f9f9f9] hover:bg-white transition-all duration-200 overflow-hidden"
+              className="refined-border group relative rounded-xl p-8 bg-[#1c1b1b] hover:border-white/20 transition-all duration-300 overflow-hidden hover:-translate-y-1"
             >
-              {/* Hover lime accent bar */}
-              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#caf300] group-hover:w-full transition-all duration-300" />
-
-              <div className="w-12 h-12 bg-[#1a1c1c] flex items-center justify-center mb-6 group-hover:bg-[#caf300] transition-colors duration-200">
-                <Icon className="w-5 h-5 text-[#caf300] group-hover:text-[#000000] transition-colors duration-200" />
+              <div className="w-12 h-12 rounded bg-[#1a1a1a] border border-white/10 flex items-center justify-center mb-6 group-hover:border-[#0055ff]/40 transition-colors duration-300">
+                <Icon className="w-5 h-5 text-[#0055ff]" />
               </div>
-              <h3 className="text-xl font-bold tracking-tight text-[#000000] mb-3">{title}</h3>
-              <p className="text-base leading-6 text-[#444748]">{body}</p>
+              <h3 className="text-xl font-medium tracking-tight text-[#e5e2e1] mb-3">{title}</h3>
+              <p className="text-base leading-6 text-[#c3c5d9] font-light">{body}</p>
 
               {/* Number */}
               <span
-                className="absolute top-6 right-6 text-6xl font-black text-[#000000]/5 select-none pointer-events-none"
+                className="absolute top-6 right-6 text-6xl font-semibold text-white/5 select-none pointer-events-none"
                 style={{ lineHeight: 1 }}
               >
                 {String(i + 1).padStart(2, "0")}

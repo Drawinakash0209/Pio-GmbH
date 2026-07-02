@@ -18,7 +18,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-[120px] bg-[#f9f9f9] border-t border-[#c4c7c7]/50">
+    <section id="contact" className="py-[120px] bg-[#0e0e0e] border-t border-white/5">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Info */}
@@ -28,21 +28,21 @@ export default function Contact() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
           >
-            <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#536600] px-3 py-1.5 bg-[#c7ef00] mb-6 inline-block">
+            <span className="inline-block border-l-2 border-[#0055ff] pl-4 text-[#0055ff] text-[11px] font-medium tracking-[0.2em] uppercase mb-6">
               Kontakt
             </span>
             <h2
-              className="text-[#000000] mb-6"
+              className="text-[#e5e2e1] mb-6"
               style={{
                 fontSize: "clamp(32px, 3vw, 44px)",
-                lineHeight: "1.15",
-                letterSpacing: "-0.03em",
-                fontWeight: 700,
+                lineHeight: "1.2",
+                letterSpacing: "-0.01em",
+                fontWeight: 600,
               }}
             >
               Initiate Dialogue.
             </h2>
-            <p className="text-base leading-7 text-[#444748] mb-12 max-w-md">
+            <p className="text-base leading-7 text-[#c3c5d9] font-light mb-12 max-w-md">
               Connect with our management team to discuss structured solutions
               for your operational requirements.
             </p>
@@ -53,7 +53,7 @@ export default function Contact() {
                   icon: MapPin,
                   label: "Headquarters",
                   content: (
-                    <span className="text-base text-[#000000]">
+                    <span className="text-base text-[#e5e2e1]">
                       Oberhausener Straße 187<br />
                       45476 Mülheim an der Ruhr<br />
                       Germany
@@ -66,7 +66,7 @@ export default function Contact() {
                   content: (
                     <a
                       href="tel:+4915127919995"
-                      className="text-base text-[#000000] hover:text-[#536600] transition-colors"
+                      className="text-base text-[#e5e2e1] hover:text-[#0055ff] transition-colors"
                     >
                       +49 151 27919995
                     </a>
@@ -81,11 +81,11 @@ export default function Contact() {
                   viewport={{ once: true }}
                   className="flex items-start gap-4 group"
                 >
-                  <div className="w-10 h-10 bg-[#1a1c1c] flex items-center justify-center shrink-0 group-hover:bg-[#caf300] transition-colors duration-200">
-                    <Icon className="w-4 h-4 text-[#caf300] group-hover:text-[#000000] transition-colors duration-200" />
+                  <div className="w-10 h-10 rounded bg-[#1a1a1a] border border-white/10 flex items-center justify-center shrink-0 group-hover:border-[#0055ff]/40 transition-colors duration-300">
+                    <Icon className="w-4 h-4 text-[#0055ff]" />
                   </div>
                   <div>
-                    <span className="block text-[10px] font-black tracking-[0.15em] uppercase text-[#747878] mb-1">
+                    <span className="block text-[11px] font-medium tracking-[0.15em] uppercase text-[#8d90a2] mb-1">
                       {label}
                     </span>
                     {content}
@@ -101,7 +101,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             viewport={{ once: true }}
-            className="bg-white p-8 border border-[#c4c7c7] shadow-sm"
+            className="refined-border rounded-xl bg-[#1c1b1b] p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               {[
@@ -109,7 +109,7 @@ export default function Contact() {
                 { name: "email", label: "Corporate Email", type: "email", placeholder: "k.schmidt@company.de" },
               ].map(({ name, label, type, placeholder }) => (
                 <div key={name}>
-                  <label className="block text-[10px] font-black tracking-[0.15em] uppercase text-[#000000] mb-2">
+                  <label className="block text-[11px] font-medium tracking-[0.15em] uppercase text-[#e5e2e1] mb-2">
                     {label}
                   </label>
                   <input
@@ -119,13 +119,13 @@ export default function Contact() {
                     onChange={handleChange}
                     placeholder={placeholder}
                     required
-                    className="w-full bg-transparent border-0 border-b border-[#c4c7c7] focus:border-[#caf300] focus:ring-0 outline-none px-0 py-3 text-base text-[#000000] transition-colors placeholder-[#c4c7c7]"
+                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-[#0055ff] focus:ring-0 outline-none px-0 py-3 text-base text-[#e5e2e1] transition-colors placeholder-white/20"
                   />
                 </div>
               ))}
 
               <div>
-                <label className="block text-[10px] font-black tracking-[0.15em] uppercase text-[#000000] mb-2">
+                <label className="block text-[11px] font-medium tracking-[0.15em] uppercase text-[#e5e2e1] mb-2">
                   Requirement Details
                 </label>
                 <textarea
@@ -135,7 +135,7 @@ export default function Contact() {
                   placeholder="Describe your operational needs..."
                   rows={4}
                   required
-                  className="w-full bg-transparent border-0 border-b border-[#c4c7c7] focus:border-[#caf300] focus:ring-0 outline-none px-0 py-3 text-base text-[#000000] transition-colors resize-none placeholder-[#c4c7c7]"
+                  className="w-full bg-transparent border-0 border-b border-white/10 focus:border-[#0055ff] focus:ring-0 outline-none px-0 py-3 text-base text-[#e5e2e1] transition-colors resize-none placeholder-white/20"
                 />
               </div>
 
@@ -143,7 +143,7 @@ export default function Contact() {
                 type="submit"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                className="w-full py-4 bg-[#000000] text-white text-[11px] font-black tracking-[0.1em] uppercase border border-transparent hover:border-[#caf300] transition-all duration-150 flex justify-center items-center gap-3 group"
+                className="w-full py-3.5 rounded bg-[#0055ff] text-white text-sm font-medium tracking-wide hover:bg-[#0055ff]/90 transition-all duration-300 flex justify-center items-center gap-3 group"
               >
                 Submit Inquiry
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
