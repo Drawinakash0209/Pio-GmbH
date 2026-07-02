@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Sparkles, Users, Settings2, PlaneTakeoff } from "lucide-react";
 import Modal from "./Modal";
 
 const cardVariants = {
@@ -79,7 +79,7 @@ export default function Services() {
   const activeDetail = activeService ? serviceDetails[activeService] : null;
 
   return (
-    <section id="services" className="py-[120px] bg-white">
+    <section id="services" className="py-[120px] bg-[#0b0b0d]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Header */}
         <motion.div
@@ -89,11 +89,11 @@ export default function Services() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#536600] px-3 py-1.5 bg-[#c7ef00] mb-4 inline-block">
+          <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#e9c176] px-3 py-1.5 rounded bg-[#e9c176]/10 border border-[#e9c176]/20 mb-4 inline-block">
             Core Capabilities
           </span>
           <h2
-            className="text-[#000000]"
+            className="text-[#f0f0f2]"
             style={{
               fontSize: "clamp(32px, 3vw, 44px)",
               lineHeight: "1.15",
@@ -113,19 +113,17 @@ export default function Services() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="lg:col-span-2 group border border-[#c4c7c7] hover:border-[#000000] transition-all duration-200 bg-[#f9f9f9] flex flex-col md:flex-row overflow-hidden min-h-[420px]"
+            className="depth-card lg:col-span-2 group rounded-xl flex flex-col md:flex-row overflow-hidden min-h-[420px]"
           >
             <div className="md:w-1/2 p-8 flex flex-col justify-between order-2 md:order-1">
               <div>
-                <div className="w-11 h-11 bg-[#000000] flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-[#caf300] text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    cleaning_services
-                  </span>
+                <div className="w-11 h-11 rounded-lg bg-[#b6c4ff] flex items-center justify-center mb-6">
+                  <Sparkles className="w-5 h-5 text-[#001551]" />
                 </div>
-                <h3 className="text-2xl font-bold leading-8 tracking-tight text-[#000000] mb-4">
+                <h3 className="text-2xl font-bold leading-8 tracking-tight text-[#f0f0f2] mb-4">
                   Facility Management
                 </h3>
-                <p className="text-base leading-6 text-[#444748]">
+                <p className="text-base leading-6 text-[#9b9db0]">
                   Comprehensive cleaning, maintenance, and technical oversight.
                   We maintain your infrastructure to the highest hygienic and
                   operational standards.
@@ -134,7 +132,7 @@ export default function Services() {
                   {["Cleaning", "Maintenance", "Hygiene", "Care"].map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 bg-white border border-[#c4c7c7] text-[10px] font-bold tracking-[0.08em] uppercase text-[#444748]"
+                      className="px-3 py-1.5 rounded bg-[#26262e] border border-white/10 text-[10px] font-bold tracking-[0.08em] uppercase text-[#9b9db0]"
                     >
                       {tag}
                     </span>
@@ -144,14 +142,14 @@ export default function Services() {
               <div className="flex flex-wrap items-center gap-6 mt-8">
                 <Link
                   href="#contact"
-                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#536600] transition-colors group/link"
+                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#f0f0f2] hover:text-[#b6c4ff] transition-colors group/link"
                 >
                   Request Audit
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                 </Link>
                 <button
                   onClick={() => setActiveService("facility")}
-                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#747878] hover:text-[#000000] transition-colors"
+                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#9b9db0] hover:text-[#f0f0f2] transition-colors"
                 >
                   Learn More
                 </button>
@@ -175,34 +173,32 @@ export default function Services() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="border border-[#c4c7c7] hover:border-[#000000] transition-all duration-200 bg-[#f9f9f9] p-8 flex flex-col justify-between min-h-[420px] group"
+            className="depth-card rounded-xl p-8 flex flex-col justify-between min-h-[420px] group"
           >
             <div>
-              <div className="w-11 h-11 bg-[#e8e8e8] border border-[#c4c7c7] flex items-center justify-center mb-6 group-hover:bg-[#000000] transition-colors duration-200">
-                <span className="material-symbols-outlined text-[#000000] group-hover:text-[#caf300] transition-colors duration-200">
-                  groups
-                </span>
+              <div className="w-11 h-11 rounded-lg bg-[#26262e] border border-white/10 flex items-center justify-center mb-6 group-hover:bg-[#e9c176] transition-colors duration-200">
+                <Users className="w-5 h-5 text-[#e9c176] group-hover:text-[#3b2a08] transition-colors duration-200" />
               </div>
-              <h3 className="text-2xl font-bold leading-8 tracking-tight text-[#000000] mb-4">
+              <h3 className="text-2xl font-bold leading-8 tracking-tight text-[#f0f0f2] mb-4">
                 Staffing Solutions
               </h3>
-              <p className="text-base leading-6 text-[#444748]">
+              <p className="text-base leading-6 text-[#9b9db0]">
                 Skilled workforce integration. We provide vetted, highly trained
                 personnel to meet your operational demands with precision.
               </p>
             </div>
-            <div className="mt-8 pt-4 border-t border-[#c4c7c7]">
+            <div className="mt-8 pt-4 border-t border-white/10">
               <ul className="space-y-2 mb-6">
                 {["Rapid Deployment", "Quality Assured", "Vetted Personnel"].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm leading-5 text-[#444748]">
-                    <span className="w-1.5 h-1.5 bg-[#caf300] inline-block shrink-0" />
+                  <li key={item} className="flex items-center gap-2 text-sm leading-5 text-[#9b9db0]">
+                    <span className="w-1.5 h-1.5 bg-[#e9c176] inline-block shrink-0" />
                     {item}
                   </li>
                 ))}
               </ul>
               <button
                 onClick={() => setActiveService("staffing")}
-                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#536600] transition-colors group/link"
+                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#f0f0f2] hover:text-[#e9c176] transition-colors group/link"
               >
                 Learn More
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -217,7 +213,7 @@ export default function Services() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="border border-[#c4c7c7] hover:border-[#000000] transition-all duration-200 bg-[#f9f9f9] flex flex-col overflow-hidden min-h-[420px] group"
+            className="depth-card rounded-xl flex flex-col overflow-hidden min-h-[420px] group"
           >
             <div className="h-52 relative overflow-hidden">
               <Image
@@ -227,14 +223,17 @@ export default function Services() {
                 className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
                 unoptimized
               />
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-[#caf300]" />
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#b6c4ff] to-[#e9c176]" />
+              <div className="absolute top-4 left-4 w-11 h-11 rounded-lg bg-[#0b0b0d]/80 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+                <Settings2 className="w-5 h-5 text-[#b6c4ff]" />
+              </div>
             </div>
             <div className="p-8 flex-grow flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold leading-8 tracking-tight text-[#000000] mb-4">
+                <h3 className="text-2xl font-bold leading-8 tracking-tight text-[#f0f0f2] mb-4">
                   Operational Optimization
                 </h3>
-                <p className="text-base leading-6 text-[#444748]">
+                <p className="text-base leading-6 text-[#9b9db0]">
                   Project management and efficiency consulting. Streamlining
                   your processes through rigorous analysis and structured
                   execution.
@@ -242,7 +241,7 @@ export default function Services() {
               </div>
               <button
                 onClick={() => setActiveService("optimization")}
-                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] mt-6 hover:text-[#536600] transition-colors group/link"
+                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#f0f0f2] mt-6 hover:text-[#b6c4ff] transition-colors group/link"
               >
                 Learn More
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -257,7 +256,7 @@ export default function Services() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="lg:col-span-2 group border border-[#c4c7c7] hover:border-[#000000] transition-all duration-200 bg-[#f9f9f9] flex flex-col md:flex-row overflow-hidden min-h-[420px]"
+            className="depth-card lg:col-span-2 group rounded-xl flex flex-col md:flex-row overflow-hidden min-h-[420px]"
           >
             <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
               <Image
@@ -268,9 +267,12 @@ export default function Services() {
                 unoptimized
               />
             </div>
-            <div className="md:w-1/2 p-8 flex flex-col justify-between bg-[#000000] text-white">
+            <div className="md:w-1/2 p-8 flex flex-col justify-between bg-[#0f0f12] text-white">
               <div>
-                <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#caf300] mb-4 inline-block">
+                <div className="w-11 h-11 rounded-lg bg-[#e9c176] flex items-center justify-center mb-4">
+                  <PlaneTakeoff className="w-5 h-5 text-[#3b2a08]" />
+                </div>
+                <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#e9c176] mb-4 inline-block">
                   Global Reach
                 </span>
                 <h3 className="text-2xl font-bold leading-8 tracking-tight text-white mb-4">
@@ -284,7 +286,7 @@ export default function Services() {
                   {["European Sourcing", "Global Logistics", "Quality Assurance", "Efficient Supply"].map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60"
+                      className="px-3 py-1.5 rounded border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60"
                     >
                       {tag}
                     </span>
@@ -295,11 +297,11 @@ export default function Services() {
                 <div className="h-px w-full bg-white/10 mb-4" />
                 <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.1em] text-white/40 font-bold mb-2">
                   <span>Logistics Efficiency</span>
-                  <span className="text-[#caf300]">85%</span>
+                  <span className="text-[#e9c176]">85%</span>
                 </div>
                 <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-[#caf300] rounded-full"
+                    className="h-full bg-gradient-to-r from-[#b6c4ff] to-[#e9c176] rounded-full"
                     initial={{ width: 0 }}
                     whileInView={{ width: "85%" }}
                     transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
@@ -308,7 +310,7 @@ export default function Services() {
                 </div>
                 <button
                   onClick={() => setActiveService("trade")}
-                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-white mt-6 hover:text-[#caf300] transition-colors group/link"
+                  className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-white mt-6 hover:text-[#e9c176] transition-colors group/link"
                 >
                   Learn More
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -322,32 +324,32 @@ export default function Services() {
       <Modal open={activeDetail !== null} onClose={() => setActiveService(null)}>
         {activeDetail && (
           <div className="relative p-8 md:p-10">
-            <h3 className="text-3xl font-bold tracking-tight text-[#000000] mb-2 pr-10">
+            <h3 className="text-3xl font-bold tracking-tight text-[#f0f0f2] mb-2 pr-10">
               {activeDetail.title}
             </h3>
-            <p className="text-[#536600] font-bold mb-6">{activeDetail.tagline}</p>
-            <p className="text-base leading-7 text-[#444748] mb-8">
+            <p className="text-[#e9c176] font-bold mb-6">{activeDetail.tagline}</p>
+            <p className="text-base leading-7 text-[#9b9db0] mb-8">
               {activeDetail.description}
             </p>
 
-            <div className="bg-[#f9f9f9] border border-[#c4c7c7] p-6">
-              <h4 className="font-bold text-[#000000] mb-4">Key Features</h4>
+            <div className="rounded-lg bg-[#1c1c22] border border-white/10 p-6">
+              <h4 className="font-bold text-[#f0f0f2] mb-4">Key Features</h4>
               <div className="grid sm:grid-cols-2 gap-4">
                 {activeDetail.features.map((feature) => (
                   <div key={feature} className="flex items-start gap-3">
-                    <div className="w-5 h-5 bg-[#caf300] flex items-center justify-center text-[#000000] shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded bg-[#b6c4ff] flex items-center justify-center text-[#001551] shrink-0 mt-0.5">
                       <Check className="w-3 h-3" />
                     </div>
-                    <span className="text-sm font-medium text-[#444748]">{feature}</span>
+                    <span className="text-sm font-medium text-[#9b9db0]">{feature}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-[#c4c7c7] flex justify-end">
+            <div className="mt-8 pt-6 border-t border-white/10 flex justify-end">
               <button
                 onClick={() => setActiveService(null)}
-                className="inline-flex items-center justify-center px-9 py-4 bg-[#000000] text-white text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#1a1c1c] transition-colors duration-150 min-w-[120px]"
+                className="inline-flex items-center justify-center rounded-lg px-9 py-4 bg-[#b6c4ff] text-[#001551] text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#c9d3ff] transition-colors duration-150 min-w-[120px]"
               >
                 Close
               </button>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home, Info, Briefcase, ShieldCheck, Mail, X, Menu } from "lucide-react";
+import { Home, Info, Briefcase, ShieldCheck, Mail, X, Menu, Compass } from "lucide-react";
 import Link from "next/link";
 
 const links = [
@@ -31,23 +31,20 @@ export default function Nav() {
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className={`pointer-events-auto flex items-center gap-1 rounded-full px-2 py-2 shadow-2xl transition-all duration-300 ${
-            scrolled
-              ? "bg-white/90 backdrop-blur-2xl border border-[#c4c7c7]/40 shadow-black/10"
-              : "bg-[#1a1c1c]/85 backdrop-blur-xl border border-white/10"
+          className={`pointer-events-auto flex items-center gap-1 rounded-full px-2 py-2 border border-white/10 shadow-2xl shadow-black/40 transition-all duration-300 ${
+            scrolled ? "bg-[#131316]/90 backdrop-blur-2xl" : "bg-[#131316]/60 backdrop-blur-xl"
           }`}
         >
           {/* Logo pill */}
           <Link
             href="#"
-            className={`px-4 py-1.5 rounded-full font-black tracking-tighter text-sm transition-colors ${
-              scrolled ? "text-[#000000]" : "text-white"
-            }`}
+            className="flex items-center gap-2 px-4 py-1.5 rounded-full font-black tracking-tighter text-sm text-[#f0f0f2]"
           >
+            <Compass className="w-4 h-4 text-[#b6c4ff]" />
             Pio GmbH
           </Link>
 
-          <div className={`w-px h-5 mx-1 ${scrolled ? "bg-[#c4c7c7]" : "bg-white/15"}`} />
+          <div className="w-px h-5 mx-1 bg-white/10" />
 
           {/* Nav links */}
           <div className="hidden md:flex items-center gap-1">
@@ -63,26 +60,18 @@ export default function Nav() {
                     {hoveredIndex === index && (
                       <motion.div
                         layoutId="nav-hover-pill"
-                        className={`absolute inset-0 rounded-full ${scrolled ? "bg-[#f3f3f4]" : "bg-white/15"}`}
+                        className="absolute inset-0 rounded-full bg-white/10"
                         transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
                       />
                     )}
                     <Icon
                       className={`relative z-10 w-4 h-4 transition-colors duration-200 ${
-                        hoveredIndex === index
-                          ? "text-[#caf300]"
-                          : scrolled
-                          ? "text-[#444748]"
-                          : "text-white/60"
+                        hoveredIndex === index ? "text-[#b6c4ff]" : "text-[#9b9db0]"
                       }`}
                     />
                     <span
                       className={`relative z-10 text-[11px] font-bold tracking-[0.08em] uppercase transition-colors duration-200 ${
-                        hoveredIndex === index
-                          ? "text-[#caf300]"
-                          : scrolled
-                          ? "text-[#444748]"
-                          : "text-white/60"
+                        hoveredIndex === index ? "text-[#b6c4ff]" : "text-[#9b9db0]"
                       }`}
                     >
                       {link.name}
@@ -93,19 +82,19 @@ export default function Nav() {
             })}
           </div>
 
-          <div className={`hidden md:block w-px h-5 mx-1 ${scrolled ? "bg-[#c4c7c7]" : "bg-white/15"}`} />
+          <div className="hidden md:block w-px h-5 mx-1 bg-white/10" />
 
           {/* CTA */}
           <Link
             href="#contact"
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-[#caf300] text-[#000000] text-[11px] font-black tracking-[0.08em] uppercase rounded-full hover:bg-[#b0d500] transition-colors duration-150"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-[#e9c176] text-[#3b2a08] text-[11px] font-black tracking-[0.08em] uppercase rounded-full hover:bg-[#f0cd8a] transition-colors duration-150"
           >
             Get Quote
           </Link>
 
           {/* Mobile toggle */}
           <button
-            className={`md:hidden p-2 rounded-full transition-colors ${scrolled ? "text-[#000000] hover:bg-[#f3f3f4]" : "text-white hover:bg-white/10"}`}
+            className="md:hidden p-2 rounded-full text-[#f0f0f2] hover:bg-white/10 transition-colors"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Toggle menu"
           >
@@ -122,7 +111,7 @@ export default function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-20 inset-x-4 z-40 bg-white/95 backdrop-blur-2xl border border-[#c4c7c7]/40 rounded-2xl shadow-2xl p-4 flex flex-col gap-2"
+            className="fixed top-20 inset-x-4 z-40 bg-[#131316]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl p-4 flex flex-col gap-2"
           >
             {links.map((link) => {
               const Icon = link.icon;
@@ -131,18 +120,18 @@ export default function Nav() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#f3f3f4] text-[#444748] hover:text-[#000000] transition-colors group"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-[#9b9db0] hover:text-[#f0f0f2] transition-colors group"
                 >
-                  <Icon className="w-4 h-4 group-hover:text-[#caf300] transition-colors" />
+                  <Icon className="w-4 h-4 group-hover:text-[#b6c4ff] transition-colors" />
                   <span className="text-[11px] font-bold tracking-[0.1em] uppercase">{link.name}</span>
                 </Link>
               );
             })}
-            <div className="h-px bg-[#c4c7c7]/40 my-1" />
+            <div className="h-px bg-white/10 my-1" />
             <Link
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center px-4 py-3 bg-[#caf300] text-[#000000] text-[11px] font-black tracking-[0.08em] uppercase rounded-xl hover:bg-[#b0d500] transition-colors"
+              className="flex items-center justify-center px-4 py-3 bg-[#e9c176] text-[#3b2a08] text-[11px] font-black tracking-[0.08em] uppercase rounded-xl hover:bg-[#f0cd8a] transition-colors"
             >
               Get Quote
             </Link>

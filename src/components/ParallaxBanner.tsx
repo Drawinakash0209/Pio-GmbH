@@ -15,7 +15,7 @@ export default function ParallaxBanner() {
   const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
   return (
-    <section ref={ref} className="relative h-[65vh] overflow-hidden flex items-center justify-center bg-[#1a1c1c]">
+    <section ref={ref} className="relative h-[65vh] overflow-hidden flex items-center justify-center bg-[#0f0f12]">
       {/* Parallax image */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <Image
@@ -29,15 +29,19 @@ export default function ParallaxBanner() {
       </motion.div>
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1c1c] via-transparent to-[#1a1c1c] z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1a1c1c]/60 via-transparent to-[#1a1c1c]/60 z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f12] via-transparent to-[#0f0f12] z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0f0f12]/60 via-transparent to-[#0f0f12]/60 z-[1]" />
+
+      {/* Ambient glow */}
+      <div className="ambient-glow bg-[#b6c4ff] w-[500px] h-[500px] top-1/2 left-1/4 -translate-y-1/2" />
+      <div className="ambient-glow bg-[#e9c176] w-[400px] h-[400px] top-1/2 right-1/4 -translate-y-1/2" />
 
       {/* Grid overlay */}
       <div
         className="absolute inset-0 z-[1] opacity-[0.04]"
         style={{
           backgroundImage:
-            "linear-gradient(to right, #caf300 1px, transparent 1px), linear-gradient(to bottom, #caf300 1px, transparent 1px)",
+            "linear-gradient(to right, #b6c4ff 1px, transparent 1px), linear-gradient(to bottom, #b6c4ff 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -50,11 +54,11 @@ export default function ParallaxBanner() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
         >
-          <span className="inline-block py-1 px-4 border border-[#caf300]/30 bg-[#caf300]/5 text-[#caf300] text-[10px] font-black tracking-[0.2em] uppercase mb-8">
+          <span className="inline-block py-1 px-4 rounded border border-[#e9c176]/30 bg-[#e9c176]/5 text-[#e9c176] text-[10px] font-black tracking-[0.2em] uppercase mb-8">
             Zukunftssicher
           </span>
           <h2
-            className="text-white mb-6"
+            className="text-white mb-6 glow-text"
             style={{
               fontSize: "clamp(36px, 5vw, 72px)",
               lineHeight: "1.1",
@@ -63,7 +67,7 @@ export default function ParallaxBanner() {
             }}
           >
             Shaping the Future of{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#caf300] to-[#b0d500]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b6c4ff] to-[#e9c176]">
               Facility Management
             </span>
           </h2>
@@ -72,7 +76,7 @@ export default function ParallaxBanner() {
           </p>
           <Link
             href="#contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#caf300] text-[#000000] text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#b0d500] transition-colors duration-150"
+            className="inline-flex items-center gap-3 rounded-lg px-8 py-4 bg-[#b6c4ff] text-[#001551] text-[11px] font-black tracking-[0.1em] uppercase hover:bg-[#c9d3ff] transition-colors duration-150"
           >
             Start a Conversation
           </Link>
