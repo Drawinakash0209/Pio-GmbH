@@ -1,39 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 
 @theme {
-  /* Refined dark surface scale */
-  --color-bg: #0e0e0e;
-  --color-surface: #131313;
-  --color-card: #1c1b1b;
-  --color-card-alt: #20201f;
+  /* Surfaces */
+  --color-bg: #0f0d0a;
+  --color-surface: #151210;
+  --color-card: #1e1a15;
+  --color-card-alt: #241f18;
+  --color-border: rgba(201, 151, 58, 0.12);
 
   /* Accents */
-  --color-primary: #0055ff;
-  --color-secondary: #e9c176;
+  --color-primary: #c9973a;
+  --color-primary-light: #e8b84b;
+  --color-primary-dim: rgba(201, 151, 58, 0.12);
+  --color-cream: #f5f0e8;
+  --color-warm-white: #ede9e3;
 
   /* Text */
-  --color-on-background: #e5e2e1;
-  --color-on-surface: #e5e2e1;
-  --color-on-surface-variant: #c3c5d9;
-  --color-outline: #8d90a2;
-  --color-outline-variant: #434656;
+  --color-on-background: #f0ece6;
+  --color-on-surface: #f0ece6;
+  --color-on-surface-variant: #b8b09f;
+  --color-muted: #6e6659;
 
   --radius-DEFAULT: 0.125rem;
-  --radius-lg: 0.25rem;
-  --radius-xl: 0.5rem;
-  --radius-full: 0.75rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
 
-  --spacing-section-padding: 120px;
-  --spacing-container-max: 1440px;
-  --spacing-margin-desktop: 64px;
-  --spacing-base: 8px;
-  --spacing-gutter: 24px;
-  --spacing-margin-mobile: 16px;
+  --font-family-display: "Playfair Display", Georgia, serif;
+  --font-family-sans: "DM Sans", system-ui, sans-serif;
+  --font-family-mono: "DM Mono", monospace;
+  --font-display: var(--font-family-display);
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
+}
 
-  --font-family-sans: "Inter", sans-serif;
-  --font-family-mono: "Courier Prime", monospace;
-  --font-display: var(--font-qalisso), serif;
-  --font-accent: var(--font-questero-italic), cursive;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -41,20 +49,102 @@ body {
   color: var(--color-on-background);
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.refined-border {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* ── Typography ── */
+.font-display {
+  font-family: var(--font-family-display);
 }
 
-.glass-panel {
-  background: rgba(14, 14, 14, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* ── Amber border utility ── */
+.amber-border {
+  border: 1px solid rgba(201, 151, 58, 0.18);
+}
+
+/* ── Glass utility ── */
+.glass-amber {
+  background: rgba(15, 13, 10, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(201, 151, 58, 0.15);
+}
+
+/* ── Number label utility ── */
+.section-num {
+  font-family: var(--font-family-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* ── Diagonal divider ── */
+.diagonal-divider {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+/* ── Hover underline slide ── */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-primary);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 9999px;
 }
 
 ::selection {
   background-color: var(--color-primary);
-  color: #ffffff;
+  color: #0f0d0a;
+}
+
+/* ── Animated gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #c9973a 0%, #e8b84b 50%, #c9973a 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Char animation ── */
+.char {
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* ── Section reveal ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }

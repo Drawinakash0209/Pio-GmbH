@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Compass, X, Menu } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 
 const links = [
@@ -18,32 +17,47 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      <nav
-        className={`fixed top-0 w-full z-50 border-b transition-all duration-300 ${
-          scrolled ? "bg-[#0e0e0e]/90 border-white/10" : "bg-[#0e0e0e]/70 border-white/5"
-        } backdrop-blur-xl`}
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "glass-amber border-b border-[rgba(201,151,58,0.15)] py-3"
+            : "bg-transparent py-6"
+        }`}
       >
-        <div className="max-w-[1440px] mx-auto px-4 md:px-[64px] flex justify-between items-center h-20">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-16 flex items-center justify-between">
           {/* Brand */}
-          <Link href="#" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <Compass className="w-5 h-5 text-[#0055ff]" />
-            <span className="font-display text-[20px] font-semibold text-[#e5e2e1] tracking-tight">Pio GmbH</span>
+          <Link href="#" className="flex flex-col group">
+            <span
+              className="font-display text-[22px] font-600 leading-none text-[#f0ece6] group-hover:text-[#c9973a] transition-colors duration-300"
+              style={{ fontWeight: 600, letterSpacing: "-0.02em" }}
+            >
+              Pio GmbH
+            </span>
+            <span
+              className="font-mono text-[9px] tracking-[0.22em] uppercase text-[#c9973a] mt-0.5"
+              style={{ fontFamily: "DM Mono, monospace" }}
+            >
+              Mülheim · Germany
+            </span>
           </Link>
 
-          {/* Links (Desktop) */}
-          <div className="hidden md:flex gap-10 items-center">
-            {links.map((link) => (
+          {/* Desktop Nav — center */}
+          <div className="hidden md:flex items-center gap-0 absolute left-1/2 -translate-x-1/2">
+            {links.map((link, i) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-[#c3c5d9] font-medium hover:text-[#0055ff] transition-colors text-sm tracking-wide"
+                className="nav-link px-5 py-1 text-[13px] font-medium tracking-wide text-[#b8b09f] hover:text-[#f0ece6] transition-colors duration-200"
               >
                 {link.name}
               </Link>
@@ -51,51 +65,68 @@ export default function Nav() {
           </div>
 
           {/* CTA */}
-          <Link
-            href="#contact"
-            className="hidden md:inline-flex items-center bg-[#0055ff]/10 text-[#0055ff] border border-[#0055ff]/30 text-sm px-6 py-2.5 rounded hover:bg-[#0055ff] hover:text-white transition-all duration-300 font-medium tracking-wide"
-          >
-            Get Quote
-          </Link>
+          <div className="hidden md:flex items-center gap-4">
+            <Link
+              href="#contact"
+              className="group flex items-center gap-2 px-6 py-2.5 text-[12px] font-medium tracking-[0.12em] uppercase border border-[rgba(201,151,58,0.4)] text-[#c9973a] rounded-sm hover:bg-[#c9973a] hover:text-[#0f0d0a] transition-all duration-300"
+            >
+              Get a Quote
+              <span className="text-[10px] group-hover:translate-x-1 transition-transform inline-block">→</span>
+            </Link>
+          </div>
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden text-[#e5e2e1]"
+            className="md:hidden flex flex-col gap-1.5 p-1 group"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <span
+              className={`block h-px w-6 bg-[#f0ece6] transition-all duration-300 ${
+                mobileOpen ? "rotate-45 translate-y-[8px]" : ""
+              }`}
+            />
+            <span
+              className={`block h-px w-4 bg-[#c9973a] transition-all duration-300 ${
+                mobileOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-px w-6 bg-[#f0ece6] transition-all duration-300 ${
+                mobileOpen ? "-rotate-45 -translate-y-[8px]" : ""
+              }`}
+            />
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Mobile dropdown */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="fixed top-20 inset-x-4 z-40 refined-border rounded-xl bg-[#1c1b1b] shadow-2xl p-4 flex flex-col gap-2"
+            initial={{ opacity: 0, y: -20, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.97 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed top-20 inset-x-4 z-40 rounded-xl glass-amber shadow-2xl p-6 flex flex-col gap-1"
           >
             {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 rounded hover:bg-white/5 text-[#c3c5d9] hover:text-[#e5e2e1] transition-colors text-sm font-medium tracking-wide"
+                className="px-4 py-3.5 rounded-lg text-[14px] font-medium text-[#b8b09f] hover:text-[#f0ece6] hover:bg-white/5 transition-all duration-200 tracking-wide"
               >
                 {link.name}
               </Link>
             ))}
-            <div className="h-px bg-white/10 my-1" />
+            <div className="h-px bg-[rgba(201,151,58,0.15)] my-2" />
             <Link
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center px-4 py-3 bg-[#0055ff] text-white text-sm font-medium tracking-wide rounded hover:bg-[#0055ff]/90 transition-colors"
+              className="flex items-center justify-center px-4 py-3.5 bg-[#c9973a] text-[#0f0d0a] text-[13px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-[#e8b84b] transition-colors"
             >
-              Get Quote
+              Get a Quote
             </Link>
           </motion.div>
         )}

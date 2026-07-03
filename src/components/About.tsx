@@ -1,18 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Building2,
-  Globe,
-  Award,
-  Target,
-  Users,
-  Zap,
-  Check,
-  ArrowRight,
-} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Building2, Globe, Award, ArrowRight, Check, Target, Users, Zap } from "lucide-react";
 import Modal from "./Modal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const pillars = [
   { icon: Building2, label: "Founded in Mülheim" },
@@ -29,207 +23,259 @@ const standoutPoints = [
 
 export default function About() {
   const [open, setOpen] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const numRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Text side slides in from left
+      gsap.fromTo(
+        textRef.current,
+        { x: -60, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+
+      // Visual panel slides in from right
+      gsap.fromTo(
+        panelRef.current,
+        { x: 60, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+
+      // Number counter animation
+      gsap.fromTo(
+        numRef.current,
+        { opacity: 0.03 },
+        {
+          opacity: 0.06,
+          duration: 1.5,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top center",
+            end: "bottom center",
+            scrub: true,
+          },
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="about" className="py-[120px] bg-[#131313]">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              viewport={{ once: true }}
-              className="mb-6"
-            >
-              <span className="inline-block border-l-2 border-[#0055ff] pl-4 text-[#0055ff] text-[11px] font-medium tracking-[0.2em] uppercase">
-                Über uns
-              </span>
-            </motion.div>
+    <section ref={sectionRef} id="about" className="relative py-32 bg-[#151210] overflow-hidden">
+      {/* Section number watermark */}
+      <span
+        ref={numRef}
+        className="absolute top-0 right-0 font-display font-900 text-[#c9973a] select-none pointer-events-none leading-none"
+        style={{
+          fontFamily: "Playfair Display, serif",
+          fontWeight: 900,
+          fontSize: "clamp(120px, 18vw, 280px)",
+          opacity: 0.04,
+          lineHeight: 1,
+          right: "-0.05em",
+          top: "-0.1em",
+        }}
+        aria-hidden="true"
+      >
+        01
+      </span>
 
+      <div className="max-w-[1440px] mx-auto px-6 md:px-16">
+        {/* Section label */}
+        <div className="flex items-center gap-4 mb-16">
+          <span className="section-num" style={{ fontFamily: "DM Mono, monospace", fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9973a" }}>
+            01 / About
+          </span>
+          <div className="flex-1 h-px bg-gradient-to-r from-[rgba(201,151,58,0.3)] to-transparent" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          {/* Text */}
+          <div ref={textRef}>
             <h2
-              className="font-display text-[#e5e2e1] mb-6"
+              className="font-display mb-6 text-[#f0ece6]"
               style={{
-                fontSize: "clamp(32px, 3vw, 44px)",
-                lineHeight: "1.2",
-                letterSpacing: "-0.01em",
-                fontWeight: 600,
+                fontFamily: "Playfair Display, serif",
+                fontSize: "clamp(34px, 3.5vw, 50px)",
+                lineHeight: "1.15",
+                letterSpacing: "-0.02em",
+                fontWeight: 700,
               }}
             >
-              Bridging Global Expertise with Local Excellence.
+              Bridging Global Expertise{" "}
+              <em className="italic text-[#c9973a]">with Local Excellence.</em>
             </h2>
-            <p className="text-base leading-7 text-[#c3c5d9] font-light mb-6">
-              At Pio GmbH, we operate on the fundamental principles of German
-              engineering: precision, reliability, and structured execution. Our
-              management methodologies are designed to streamline complex
-              operational challenges into highly efficient, scalable solutions.
+
+            <p className="text-base leading-8 text-[#b8b09f] font-light mb-5" style={{ fontFamily: "DM Sans, sans-serif" }}>
+              At Pio GmbH, we operate on the fundamental principles of German engineering: precision, reliability, and structured execution. Our management methodologies are designed to streamline complex operational challenges into highly efficient, scalable solutions.
             </p>
-            <p className="text-base leading-7 text-[#c3c5d9] font-light mb-10">
-              Located in the industrial heartland of Mülheim an der Ruhr, we
-              leverage regional industrial heritage combined with modern,
-              international management practices to deliver uncompromising
-              quality across all our service divisions.
+            <p className="text-base leading-8 text-[#b8b09f] font-light mb-10" style={{ fontFamily: "DM Sans, sans-serif" }}>
+              Located in the industrial heartland of Mülheim an der Ruhr, we leverage regional industrial heritage combined with modern, international management practices to deliver uncompromising quality across all our service divisions.
             </p>
 
-            {/* Pillar chips */}
-            <div className="flex flex-wrap gap-3">
-              {pillars.map(({ icon: Icon, label }, i) => (
-                <motion.div
+            {/* Pillars */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              {pillars.map(({ icon: Icon, label }) => (
+                <div
                   key={label}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.08 }}
-                  viewport={{ once: true }}
-                  className="refined-border flex items-center gap-2 px-4 py-2 rounded bg-[#1c1b1b] hover:border-[#0055ff]/40 transition-colors duration-200 group"
+                  className="flex items-center gap-2.5 px-4 py-2.5 rounded-sm border border-[rgba(201,151,58,0.2)] bg-[rgba(201,151,58,0.04)] hover:border-[rgba(201,151,58,0.4)] hover:bg-[rgba(201,151,58,0.08)] transition-all duration-300 group"
                 >
-                  <Icon className="w-4 h-4 text-[#8d90a2] group-hover:text-[#0055ff] transition-colors" />
-                  <span className="text-[11px] font-medium tracking-[0.08em] uppercase text-[#c3c5d9] group-hover:text-[#e5e2e1] transition-colors">
+                  <Icon className="w-3.5 h-3.5 text-[#c9973a]" />
+                  <span className="text-[11px] font-medium tracking-[0.1em] uppercase text-[#b8b09f] group-hover:text-[#f0ece6] transition-colors" style={{ fontFamily: "DM Mono, monospace" }}>
                     {label}
                   </span>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            <motion.button
+            <button
               onClick={() => setOpen(true)}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-[#e5e2e1] mt-8 hover:text-[#0055ff] transition-colors group/link"
+              className="group inline-flex items-center gap-3 text-sm font-medium text-[#f0ece6] hover:text-[#c9973a] transition-colors duration-300"
+              style={{ fontFamily: "DM Sans, sans-serif" }}
             >
-              Learn More
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-            </motion.button>
-          </motion.div>
+              <span>Learn More About Us</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
 
           {/* Visual panel */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="refined-border relative h-[480px] rounded-xl bg-[#1c1b1b] overflow-hidden">
-              {/* Decorative stat blocks */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="grid grid-cols-2 gap-4 p-8 w-full max-w-sm">
+          <div ref={panelRef} className="relative">
+            <div
+              className="relative h-[480px] rounded-lg overflow-hidden"
+              style={{ border: "1px solid rgba(201,151,58,0.12)", background: "#1e1a15" }}
+            >
+              {/* Grid of stat panels */}
+              <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                <div className="grid grid-cols-2 gap-4 h-full">
                   {[
-                    { n: "100%", l: "Qualität" },
-                    { n: "24/7", l: "Betrieb" },
-                    { n: "DE", l: "Standort" },
-                    { n: "EU", l: "Reichweite" },
-                  ].map(({ n, l }, i) => (
-                    <motion.div
+                    { n: "100%", l: "Qualität", accent: true },
+                    { n: "24/7", l: "Betrieb", accent: false },
+                    { n: "DE", l: "Standort", accent: false },
+                    { n: "EU", l: "Reichweite", accent: true },
+                  ].map(({ n, l, accent }) => (
+                    <div
                       key={l}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.4 + i * 0.08 }}
-                      viewport={{ once: true }}
-                      className="refined-border rounded bg-white/[0.02] p-5 flex flex-col gap-1 hover:bg-white/5 transition-colors"
+                      className="flex flex-col justify-center p-6 rounded-sm hover:bg-[rgba(201,151,58,0.05)] transition-colors duration-300"
+                      style={{ border: "1px solid rgba(201,151,58,0.1)" }}
                     >
-                      <span className="text-3xl font-semibold text-[#e5e2e1] tracking-tight">{n}</span>
-                      <span className="text-[10px] uppercase tracking-[0.15em] text-[#c3c5d9]/50 font-medium">{l}</span>
-                    </motion.div>
+                      <span
+                        className="font-display font-700 leading-none mb-2"
+                        style={{
+                          fontFamily: "Playfair Display, serif",
+                          fontWeight: 700,
+                          fontSize: "clamp(28px, 3vw, 40px)",
+                          color: accent ? "#c9973a" : "#f0ece6",
+                        }}
+                      >
+                        {n}
+                      </span>
+                      <span
+                        className="text-[10px] tracking-[0.18em] uppercase text-[#6e6659]"
+                        style={{ fontFamily: "DM Mono, monospace" }}
+                      >
+                        {l}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
+
+              {/* Amber accent line */}
+              <div className="absolute top-0 left-0 w-12 h-0.5 bg-gradient-to-r from-[#c9973a] to-transparent" />
+              <div className="absolute bottom-0 right-0 w-12 h-0.5 bg-gradient-to-l from-[#c9973a] to-transparent" />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
+      {/* Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="p-8 md:p-12">
-          <span className="inline-block border-l-2 border-[#0055ff] pl-4 text-[#0055ff] text-[11px] font-medium tracking-[0.2em] uppercase mb-6">
-            Our Story &amp; Values
-          </span>
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-6 h-0.5 bg-[#c9973a]" />
+            <span className="text-[10px] tracking-[0.2em] uppercase text-[#c9973a]" style={{ fontFamily: "DM Mono, monospace" }}>
+              Our Story & Values
+            </span>
+          </div>
           <h3
-            className="font-display text-[#e5e2e1] mb-8"
-            style={{
-              fontSize: "clamp(26px, 3vw, 34px)",
-              lineHeight: "1.25",
-              letterSpacing: "-0.01em",
-              fontWeight: 600,
-            }}
+            className="font-display text-[#f0ece6] mb-8"
+            style={{ fontFamily: "Playfair Display, serif", fontSize: "clamp(26px, 3vw, 36px)", lineHeight: 1.2, fontWeight: 700, letterSpacing: "-0.02em" }}
           >
-            Defining Facility Management Excellence, from Mülheim to the World
+            Defining Facility Management Excellence,{" "}
+            <em className="italic text-[#c9973a]">from Mülheim to the World</em>
           </h3>
 
           <div className="flex items-start gap-4 mb-10">
-            <div className="w-12 h-12 rounded bg-[#1a1a1a] border border-white/10 flex items-center justify-center shrink-0">
-              <Target className="w-5 h-5 text-[#0055ff]" />
+            <div className="w-10 h-10 rounded border border-[rgba(201,151,58,0.3)] bg-[rgba(201,151,58,0.06)] flex items-center justify-center shrink-0">
+              <Target className="w-4 h-4 text-[#c9973a]" />
             </div>
             <div>
-              <h4 className="text-xl font-medium tracking-tight text-[#e5e2e1] mb-2">
-                Excellence in Execution
-              </h4>
-              <p className="text-base leading-7 text-[#c3c5d9] font-light">
-                At Pio GmbH, we believe mediocrity has no place in facility
-                management. Every engagement, from a single maintenance visit
-                to a multi-site staffing rollout, is run against the same
-                German engineering standard: precise, documented, and
-                accountable. Our teams are trained and audited against that
-                standard continuously, not just at onboarding.
+              <h4 className="text-lg font-medium text-[#f0ece6] mb-2" style={{ fontFamily: "DM Sans, sans-serif" }}>Excellence in Execution</h4>
+              <p className="text-base leading-7 text-[#b8b09f] font-light" style={{ fontFamily: "DM Sans, sans-serif" }}>
+                At Pio GmbH, we believe mediocrity has no place in facility management. Every engagement is run against the same German engineering standard: precise, documented, and accountable.
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5 mb-10">
-            <div className="refined-border rounded-xl p-6 bg-[#1c1b1b]">
-              <Target className="w-7 h-7 text-[#0055ff] mb-3" />
-              <h5 className="font-medium text-lg mb-2 text-[#e5e2e1]">
-                Strategic Foundation
-              </h5>
-              <p className="text-sm leading-6 text-[#c3c5d9] font-light">
-                Rooted in the industrial heritage of Mülheim an der Ruhr,
-                aligning every service line with long-term operational goals.
-              </p>
-            </div>
-            <div className="refined-border rounded-xl p-6 bg-[#1c1b1b]">
-              <Users className="w-7 h-7 text-[#e9c176] mb-3" />
-              <h5 className="font-medium text-lg mb-2 text-[#e5e2e1]">
-                People First
-              </h5>
-              <p className="text-sm leading-6 text-[#c3c5d9] font-light">
-                Investing in recruitment, training, and welfare so our
-                workforce arrives motivated, skilled, and accountable.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            {[
+              { icon: Target, title: "Strategic Foundation", body: "Rooted in the industrial heritage of Mülheim an der Ruhr, aligning every service line with long-term operational goals." },
+              { icon: Users, title: "People First", body: "Investing in recruitment, training, and welfare so our workforce arrives motivated, skilled, and accountable." },
+            ].map(({ icon: Icon, title, body }) => (
+              <div key={title} className="p-6 rounded-sm" style={{ border: "1px solid rgba(201,151,58,0.12)", background: "#1e1a15" }}>
+                <Icon className="w-6 h-6 text-[#c9973a] mb-3" />
+                <h5 className="font-medium text-[#f0ece6] mb-2" style={{ fontFamily: "DM Sans, sans-serif" }}>{title}</h5>
+                <p className="text-sm leading-6 text-[#b8b09f] font-light" style={{ fontFamily: "DM Sans, sans-serif" }}>{body}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="refined-border rounded-xl p-8 bg-[#161616]">
-            <h4 className="text-xl font-medium mb-6 text-[#e5e2e1] flex items-center gap-3">
-              <Zap className="w-5 h-5 text-[#e9c176]" />
+          <div className="p-6 rounded-sm mb-8" style={{ border: "1px solid rgba(201,151,58,0.12)", background: "#151210" }}>
+            <h4 className="text-base font-medium text-[#f0ece6] mb-5 flex items-center gap-2" style={{ fontFamily: "DM Sans, sans-serif" }}>
+              <Zap className="w-4 h-4 text-[#c9973a]" />
               Why We Stand Out
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {standoutPoints.map((point) => (
                 <li key={point} className="flex items-start gap-3">
-                  <div className="p-1 rounded bg-[#0055ff] text-white mt-0.5 shrink-0">
-                    <Check className="w-3.5 h-3.5" />
+                  <div className="w-4 h-4 rounded-sm bg-[#c9973a] flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 text-[#0f0d0a]" />
                   </div>
-                  <span className="text-[#c3c5d9] font-light leading-6">{point}</span>
+                  <span className="text-sm text-[#b8b09f] font-light leading-6" style={{ fontFamily: "DM Sans, sans-serif" }}>{point}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="mt-10 flex justify-center">
-            <button
-              onClick={() => setOpen(false)}
-              className="inline-flex items-center justify-center rounded px-9 py-3.5 bg-[#0055ff] text-white text-sm font-medium tracking-wide hover:bg-[#0055ff]/90 transition-colors duration-300 min-w-[140px]"
-            >
-              Close
-            </button>
-          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="w-full py-3.5 rounded-sm bg-[#c9973a] text-[#0f0d0a] text-[13px] font-semibold tracking-[0.1em] uppercase hover:bg-[#e8b84b] transition-colors duration-300"
+            style={{ fontFamily: "DM Sans, sans-serif" }}
+          >
+            Close
+          </button>
         </div>
       </Modal>
     </section>

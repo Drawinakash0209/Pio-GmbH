@@ -1,44 +1,68 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Users, Trophy, Clock } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { value: "100", suffix: "%", label: "Quality Focus", icon: Trophy },
-  { value: "24/7", suffix: "", label: "Operations", icon: Clock },
-  { value: "Expert", suffix: "", label: "Core Team", icon: Users },
+  { value: "100%", label: "Quality Focus" },
+  { value: "24/7", label: "Operations" },
+  { value: "EU", label: "Reach" },
+  { value: "DE", label: "Standards" },
 ];
 
 export default function StatsBar() {
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".stat-item",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.08,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: barRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }, barRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="bg-[#131313] border-b border-white/5">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-[64px] py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
-          {stats.map(({ value, suffix, label, icon: Icon }, i) => (
-            <motion.div
+    <section ref={barRef} className="bg-[#151210] border-y border-[rgba(201,151,58,0.1)]">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-16 py-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-[rgba(201,151,58,0.1)]">
+          {stats.map(({ value, label }) => (
+            <div
               key={label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-start pt-4 md:pt-0 md:pl-8 first:pl-0 group"
+              className="stat-item flex flex-col items-center text-center md:px-8"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-[#0055ff]/10 flex items-center justify-center rounded">
-                  <Icon className="w-4 h-4 text-[#0055ff]" />
-                </div>
-              </div>
               <span
-                className="text-[#e5e2e1] mb-1 font-semibold tracking-tight"
-                style={{ fontSize: "clamp(32px, 5vw, 64px)", lineHeight: 1 }}
+                className="font-display font-700 text-[#c9973a] leading-none"
+                style={{
+                  fontFamily: "Playfair Display, serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(28px, 3.5vw, 44px)",
+                }}
               >
                 {value}
-                {suffix && <span className="text-[#e9c176]">{suffix}</span>}
               </span>
-              <span className="text-[11px] font-medium tracking-[0.1em] uppercase text-[#c3c5d9]/60">
+              <span
+                className="text-[10px] tracking-[0.18em] uppercase text-[#6e6659] mt-2"
+                style={{ fontFamily: "DM Mono, monospace" }}
+              >
                 {label}
               </span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
