@@ -1,6 +1,28 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  /* ---- Theme-reactive design tokens (light values; dark overrides in .dark below) ---- */
+  --color-t-bg: #f9f9f9;
+  --color-t-bg-elevated: #ffffff;
+  --color-t-bg-subtle: #f3f3f4;
+  --color-t-bg-muted: #e8e8e8;
+  --color-t-ink: #000000;
+  --color-t-on-ink: #ffffff;
+  --color-t-body: #444748;
+  --color-t-faint: #747878;
+  --color-t-border: #c4c7c7;
+  --color-t-link: #536600;
+  --color-t-dark-panel: #1a1c1c;
+  --color-t-on-dark-panel: #ffffff;
+  --color-t-on-dark-panel-soft: rgba(255, 255, 255, 0.6);
+  --color-t-accent: #caf300;
+  --color-t-accent-dim: #b0d500;
+  --color-t-on-accent: #000000;
+  --color-t-badge: #c7ef00;
+  --color-t-on-badge: #576a00;
+
   --color-surface-container-low: #f3f3f4;
   --color-on-tertiary-container: #7e848c;
   --color-on-primary: #ffffff;
@@ -65,11 +87,41 @@
   --font-family-mono: "Courier Prime", monospace;
 }
 
+/* ---- Dark theme overrides ---- */
+.dark {
+  --color-t-bg: #0a0b0b;
+  --color-t-bg-elevated: #151717;
+  --color-t-bg-subtle: #1b1d1d;
+  --color-t-bg-muted: #232626;
+  --color-t-ink: #f5f5f5;
+  --color-t-on-ink: #101112;
+  --color-t-body: #b8bcbc;
+  --color-t-faint: #8a8f8f;
+  --color-t-border: #2b2e2e;
+  --color-t-link: #caf300;
+  --color-t-dark-panel: #141616;
+  --color-t-on-dark-panel: #f5f5f5;
+  --color-t-on-dark-panel-soft: rgba(245, 245, 245, 0.55);
+  --color-t-accent: #caf300;
+  --color-t-accent-dim: #b0d500;
+  --color-t-on-accent: #000000;
+  --color-t-badge: #c7ef00;
+  --color-t-on-badge: #576a00;
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
 body {
-  background-color: var(--color-background);
-  color: var(--color-on-background);
+  background-color: var(--color-t-bg);
+  color: var(--color-t-ink);
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .glass-panel {
@@ -78,8 +130,28 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(196, 199, 199, 0.3);
 }
+.dark .glass-panel {
+  background: rgba(20, 22, 22, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
 ::selection {
-  background-color: var(--color-secondary-fixed);
-  color: var(--color-on-secondary-fixed);
+  background-color: var(--color-t-accent);
+  color: var(--color-t-on-accent);
+}
+
+/* ---- Scroll / motion helpers ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }

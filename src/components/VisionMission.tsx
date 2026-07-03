@@ -33,7 +33,7 @@ const values = [
 
 export default function VisionMission() {
   return (
-    <section className="py-[120px] bg-white border-t border-[#c4c7c7]/50">
+    <section className="py-[120px] bg-t-bg-elevated border-t border-t-border/50">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Header */}
         <motion.div
@@ -43,11 +43,11 @@ export default function VisionMission() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#536600] px-3 py-1.5 bg-[#c7ef00] mb-4 inline-block">
+          <span className="text-[10px] font-black tracking-[0.15em] uppercase text-t-on-badge px-3 py-1.5 bg-t-badge mb-4 inline-block">
             Vision &amp; Auftrag
           </span>
           <h2
-            className="text-[#000000]"
+            className="text-t-ink"
             style={{
               fontSize: "clamp(32px, 3vw, 44px)",
               lineHeight: "1.15",
@@ -66,9 +66,10 @@ export default function VisionMission() {
               key={label}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -4 }}
               transition={{ delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="group relative p-10 bg-[#1a1c1c] overflow-hidden"
+              className="group relative p-10 bg-t-dark-panel overflow-hidden"
             >
               {/* Grid pattern */}
               <div
@@ -80,16 +81,16 @@ export default function VisionMission() {
                 }}
               />
               <div className="relative">
-                <div className="w-12 h-12 bg-[#caf300] flex items-center justify-center mb-6">
-                  <Icon className="w-5 h-5 text-[#000000]" />
+                <div className="w-12 h-12 bg-t-accent flex items-center justify-center mb-6">
+                  <Icon className="w-5 h-5 text-t-on-accent" />
                 </div>
-                <span className="block text-[10px] font-black tracking-[0.15em] uppercase text-[#caf300] mb-3">
+                <span className="block text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-3">
                   {label}
                 </span>
                 <h3 className="text-2xl font-bold tracking-tight text-white mb-4">{title}</h3>
                 <p className="text-base leading-7 text-white/60 max-w-md">{body}</p>
               </div>
-              <div className="absolute bottom-0 left-0 w-16 h-1 bg-[#caf300]" />
+              <div className="absolute bottom-0 left-0 w-16 h-1 bg-t-accent" />
             </motion.div>
           ))}
         </div>
@@ -103,15 +104,15 @@ export default function VisionMission() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="group relative p-8 border border-[#c4c7c7] hover:border-[#000000] bg-[#f9f9f9] hover:bg-white transition-all duration-200 overflow-hidden flex items-start gap-5"
+              className="group relative p-8 border border-t-border hover:border-t-ink bg-t-bg hover:bg-t-bg-elevated transition-all duration-200 overflow-hidden flex items-start gap-5"
             >
-              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#caf300] group-hover:w-full transition-all duration-300" />
-              <div className="w-12 h-12 bg-[#1a1c1c] flex items-center justify-center shrink-0 group-hover:bg-[#caf300] transition-colors duration-200">
-                <Icon className="w-5 h-5 text-[#caf300] group-hover:text-[#000000] transition-colors duration-200" />
+              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-t-accent group-hover:w-full transition-all duration-300" />
+              <div className="w-12 h-12 bg-t-dark-panel flex items-center justify-center shrink-0 group-hover:bg-t-accent transition-colors duration-200">
+                <Icon className="w-5 h-5 text-t-accent group-hover:text-t-on-accent transition-colors duration-200" />
               </div>
               <div>
-                <h3 className="text-xl font-bold tracking-tight text-[#000000] mb-3">{title}</h3>
-                <p className="text-base leading-6 text-[#444748]">{body}</p>
+                <h3 className="text-xl font-bold tracking-tight text-t-ink mb-3">{title}</h3>
+                <p className="text-base leading-6 text-t-body">{body}</p>
               </div>
             </motion.div>
           ))}
