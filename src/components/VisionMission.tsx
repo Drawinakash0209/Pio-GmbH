@@ -47,7 +47,7 @@ export default function VisionMission() {
             Vision &amp; Auftrag
           </span>
           <h2
-            className="text-[#e5e2e1]"
+            className="font-display text-[#e5e2e1]"
             style={{
               fontSize: "clamp(32px, 3vw, 44px)",
               lineHeight: "1.2",
@@ -76,7 +76,7 @@ export default function VisionMission() {
               <span className="block text-[11px] font-medium tracking-[0.15em] uppercase text-[#0055ff] mb-3">
                 {label}
               </span>
-              <h3 className="text-2xl font-medium tracking-tight text-[#e5e2e1] mb-4">{title}</h3>
+              <h3 className="font-display text-2xl font-medium tracking-tight text-[#e5e2e1] mb-4">{title}</h3>
               <p className="text-base leading-7 text-[#c3c5d9] font-light max-w-md">{body}</p>
             </motion.div>
           ))}
@@ -97,7 +97,7 @@ export default function VisionMission() {
                 <Icon className="w-5 h-5 text-[#e9c176]" />
               </div>
               <div>
-                <h3 className="text-xl font-medium tracking-tight text-[#e5e2e1] mb-3">{title}</h3>
+                <h3 className="font-display text-xl font-medium tracking-tight text-[#e5e2e1] mb-3">{title}</h3>
                 <p className="text-base leading-6 text-[#c3c5d9] font-light">{body}</p>
               </div>
             </motion.div>

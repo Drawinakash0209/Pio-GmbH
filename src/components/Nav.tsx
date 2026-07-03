@@ -34,7 +34,7 @@ export default function Nav() {
           {/* Brand */}
           <Link href="#" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Compass className="w-5 h-5 text-[#0055ff]" />
-            <span className="text-[20px] font-semibold text-[#e5e2e1] tracking-tight">Pio GmbH</span>
+            <span className="font-display text-[20px] font-semibold text-[#e5e2e1] tracking-tight">Pio GmbH</span>
           </Link>
 
           {/* Links (Desktop) */}

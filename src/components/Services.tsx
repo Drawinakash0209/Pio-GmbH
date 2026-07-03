@@ -93,7 +93,7 @@ export default function Services() {
             Core Capabilities
           </span>
           <h2
-            className="text-[#e5e2e1]"
+            className="font-display text-[#e5e2e1]"
             style={{
               fontSize: "clamp(32px, 3vw, 44px)",
               lineHeight: "1.2",
@@ -120,7 +120,7 @@ export default function Services() {
                 <div className="w-11 h-11 rounded bg-[#1a1a1a] border border-white/10 flex items-center justify-center mb-6">
                   <Sparkles className="w-5 h-5 text-[#0055ff]" />
                 </div>
-                <h3 className="text-2xl font-medium leading-8 tracking-tight text-[#e5e2e1] mb-4">
+                <h3 className="font-display text-2xl font-medium leading-8 tracking-tight text-[#e5e2e1] mb-4">
                   Facility Management
                 </h3>
                 <p className="text-base leading-6 text-[#c3c5d9] font-light">
@@ -179,7 +179,7 @@ export default function Services() {
               <div className="w-11 h-11 rounded bg-[#1a1a1a] border border-white/10 flex items-center justify-center mb-6 group-hover:border-[#e9c176]/40 transition-colors duration-300">
                 <Users className="w-5 h-5 text-[#e9c176]" />
               </div>
-              <h3 className="text-2xl font-medium leading-8 tracking-tight text-[#e5e2e1] mb-4">
+              <h3 className="font-display text-2xl font-medium leading-8 tracking-tight text-[#e5e2e1] mb-4">
                 Staffing Solutions
               </h3>
               <p className="text-base leading-6 text-[#c3c5d9] font-light">
@@ -230,7 +230,7 @@ export default function Services() {
             </div>
             <div className="p-8 flex-grow flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-medium leading-8 tracking-tight text-[#e5e2e1] mb-4">
+                <h3 className="font-display text-2xl font-medium leading-8 tracking-tight text-[#e5e2e1] mb-4">
                   Operational Optimization
                 </h3>
                 <p className="text-base leading-6 text-[#c3c5d9] font-light">
@@ -275,7 +275,7 @@ export default function Services() {
                 <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-[#e9c176] mb-4 inline-block">
                   Global Reach
                 </span>
-                <h3 className="text-2xl font-medium leading-8 tracking-tight text-white mb-4">
+                <h3 className="font-display text-2xl font-medium leading-8 tracking-tight text-white mb-4">
                   Import &amp; Export
                 </h3>
                 <p className="text-base leading-6 text-[#c3c5d9] font-light">
@@ -324,10 +324,10 @@ export default function Services() {
       <Modal open={activeDetail !== null} onClose={() => setActiveService(null)}>
         {activeDetail && (
           <div className="relative p-8 md:p-10">
-            <h3 className="text-3xl font-medium tracking-tight text-[#e5e2e1] mb-2 pr-10">
+            <h3 className="font-display text-3xl font-medium tracking-tight text-[#e5e2e1] mb-2 pr-10">
               {activeDetail.title}
             </h3>
-            <p className="text-[#0055ff] font-medium mb-6">{activeDetail.tagline}</p>
+            <p className="font-accent text-[#0055ff] mb-6">{activeDetail.tagline}</p>
             <p className="text-base leading-7 text-[#c3c5d9] font-light mb-8">
               {activeDetail.description}
             </p>

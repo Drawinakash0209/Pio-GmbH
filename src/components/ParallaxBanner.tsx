@@ -44,7 +44,7 @@ export default function ParallaxBanner() {
             Zukunftssicher
           </span>
           <h2
-            className="text-white mb-6"
+            className="font-display text-white mb-6"
             style={{
               fontSize: "clamp(36px, 5vw, 68px)",
               lineHeight: "1.15",
@@ -53,7 +53,7 @@ export default function ParallaxBanner() {
             }}
           >
             Shaping the Future of{" "}
-            <span className="text-[#0055ff]">
+            <span className="font-accent text-[#0055ff]">
               Facility Management
             </span>
           </h2>

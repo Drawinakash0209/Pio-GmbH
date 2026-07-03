@@ -54,7 +54,7 @@ export default function About() {
             </motion.div>
 
             <h2
-              className="text-[#e5e2e1] mb-6"
+              className="font-display text-[#e5e2e1] mb-6"
               style={{
                 fontSize: "clamp(32px, 3vw, 44px)",
                 lineHeight: "1.2",
@@ -152,7 +152,7 @@ export default function About() {
             Our Story &amp; Values
           </span>
           <h3
-            className="text-[#e5e2e1] mb-8"
+            className="font-display text-[#e5e2e1] mb-8"
             style={{
               fontSize: "clamp(26px, 3vw, 34px)",
               lineHeight: "1.25",

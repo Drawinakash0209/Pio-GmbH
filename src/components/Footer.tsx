@@ -31,7 +31,7 @@ export default function Footer() {
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <Compass className="w-5 h-5 text-[#0055ff]" />
-            <span className="text-[20px] font-semibold text-[#e5e2e1] tracking-tight">Pio GmbH</span>
+            <span className="font-display text-[20px] font-semibold text-[#e5e2e1] tracking-tight">Pio GmbH</span>
           </div>
           <p className="text-sm text-[#c3c5d9] font-light leading-relaxed">
             © {new Date().getFullYear()} Pio GmbH.<br />

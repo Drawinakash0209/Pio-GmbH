@@ -39,7 +39,7 @@ export default function WhyUs() {
               Warum wir
             </span>
             <h2
-              className="text-[#e5e2e1]"
+              className="font-display text-[#e5e2e1]"
               style={{
                 fontSize: "clamp(32px, 3vw, 44px)",
                 lineHeight: "1.2",
@@ -73,7 +73,7 @@ export default function WhyUs() {
               <div className="w-12 h-12 rounded bg-[#1a1a1a] border border-white/10 flex items-center justify-center mb-6 group-hover:border-[#0055ff]/40 transition-colors duration-300">
                 <Icon className="w-5 h-5 text-[#0055ff]" />
               </div>
-              <h3 className="text-xl font-medium tracking-tight text-[#e5e2e1] mb-3">{title}</h3>
+              <h3 className="font-display text-xl font-medium tracking-tight text-[#e5e2e1] mb-3">{title}</h3>
               <p className="text-base leading-6 text-[#c3c5d9] font-light">{body}</p>
 
               {/* Number */}

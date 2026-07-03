@@ -32,6 +32,8 @@
 
   --font-family-sans: "Inter", sans-serif;
   --font-family-mono: "Courier Prime", monospace;
+  --font-display: var(--font-qalisso), serif;
+  --font-accent: var(--font-questero-italic), cursive;
 }
 
 body {

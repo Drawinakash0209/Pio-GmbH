@@ -32,7 +32,7 @@ export default function Contact() {
               Kontakt
             </span>
             <h2
-              className="text-[#e5e2e1] mb-6"
+              className="font-display text-[#e5e2e1] mb-6"
               style={{
                 fontSize: "clamp(32px, 3vw, 44px)",
                 lineHeight: "1.2",

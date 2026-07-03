@@ -40,7 +40,7 @@ export default function Hero() {
 
           {/* Headline — letter by letter */}
           <h1
-            className="text-[#e5e2e1] mb-8"
+            className="font-display text-[#e5e2e1] mb-8"
             style={{ fontSize: "clamp(44px, 6vw, 76px)", lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: 600 }}
           >
             {headline.map((word, wi) => (
@@ -72,8 +72,8 @@ export default function Hero() {
             className="text-lg leading-7 text-[#c3c5d9] font-light mb-10 max-w-xl"
           >
             A premier management and service company combining{" "}
-            <span className="text-[#e5e2e1] font-normal">European standards</span> with{" "}
-            <span className="text-[#e5e2e1] font-normal">local excellence</span>.
+            <span className="font-accent text-[#e5e2e1]">European standards</span> with{" "}
+            <span className="font-accent text-[#e5e2e1]">local excellence</span>.
           </motion.p>
 
           <motion.div
