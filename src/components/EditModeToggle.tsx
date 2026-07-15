@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Pencil, Check, RotateCcw, Info, LogOut } from "lucide-react";
+import { Pencil, Check, RotateCcw, Info, LogOut, LayoutDashboard } from "lucide-react";
 import { useEditable } from "./EditableProvider";
 
 export default function EditModeToggle() {
@@ -53,20 +54,29 @@ export default function EditModeToggle() {
         )}
       </AnimatePresence>
 
-      <motion.button
-        type="button"
-        onClick={toggleEditMode}
-        whileHover={{ scale: 1.04 }}
-        whileTap={{ scale: 0.96 }}
-        className={`inline-flex items-center gap-2 px-5 py-3.5 text-[11px] font-black tracking-[0.08em] uppercase shadow-2xl transition-colors duration-200 ${
-          editMode
-            ? "bg-t-accent text-t-on-accent hover:bg-t-accent-dim"
-            : "bg-t-ink text-t-on-ink hover:bg-t-dark-panel hover:text-t-on-dark-panel"
-        }`}
-      >
-        {editMode ? <Check className="w-4 h-4" /> : <Pencil className="w-4 h-4" />}
-        {editMode ? "Done Editing" : "Edit Site"}
-      </motion.button>
+      <div className="flex items-center gap-2">
+        <Link
+          href="/admin/dashboard"
+          title="Open content dashboard"
+          className="inline-flex items-center justify-center w-12 h-12 bg-t-ink text-t-on-ink shadow-2xl hover:bg-t-dark-panel hover:text-t-on-dark-panel transition-colors duration-200"
+        >
+          <LayoutDashboard className="w-4 h-4" />
+        </Link>
+        <motion.button
+          type="button"
+          onClick={toggleEditMode}
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          className={`inline-flex items-center gap-2 px-5 py-3.5 text-[11px] font-black tracking-[0.08em] uppercase shadow-2xl transition-colors duration-200 ${
+            editMode
+              ? "bg-t-accent text-t-on-accent hover:bg-t-accent-dim"
+              : "bg-t-ink text-t-on-ink hover:bg-t-dark-panel hover:text-t-on-dark-panel"
+          }`}
+        >
+          {editMode ? <Check className="w-4 h-4" /> : <Pencil className="w-4 h-4" />}
+          {editMode ? "Done Editing" : "Edit Site"}
+        </motion.button>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function AdminLoginPage() {
   const store = await cookies();
   if (verifySessionToken(store.get(ADMIN_COOKIE_NAME)?.value)) {
-    redirect("/");
+    redirect("/admin/dashboard");
   }
 
   return (

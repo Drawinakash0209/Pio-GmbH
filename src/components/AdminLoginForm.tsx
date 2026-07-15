@@ -26,7 +26,7 @@ export default function AdminLoginForm() {
         setError(data.error ?? "Invalid password");
         return;
       }
-      router.push("/");
+      router.push("/admin/dashboard");
       router.refresh();
     } finally {
       setLoading(false);
