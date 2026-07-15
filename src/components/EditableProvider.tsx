@@ -1,88 +1,95 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState, useSyncExternalStore } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ContentMap = Record<string, string>;
-
-const STORAGE_KEY = "pio-gmbh-content-v1";
-const EMPTY_CONTENT: ContentMap = {};
-
-let store: ContentMap = EMPTY_CONTENT;
-let storeLoaded = false;
-const listeners = new Set<() => void>();
-
-function loadStore(): ContentMap {
-  if (storeLoaded) return store;
-  storeLoaded = true;
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (raw) store = JSON.parse(raw);
-  } catch {
-    // localStorage may be unavailable (private browsing, etc.) — fall back to defaults.
-  }
-  return store;
-}
-
-function persistStore(next: ContentMap) {
-  store = next;
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // localStorage may be unavailable — edits still work for this session.
-  }
-  listeners.forEach((listener) => listener());
-}
-
-function subscribe(listener: () => void) {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-}
-
-function getSnapshot() {
-  return loadStore();
-}
-
-function getServerSnapshot() {
-  return EMPTY_CONTENT;
-}
 
 interface EditableContextValue {
   editMode: boolean;
   toggleEditMode: () => void;
+  isAdmin: boolean;
   content: ContentMap;
-  setContent: (id: string, value: string) => void;
-  resetField: (id: string) => void;
-  resetAll: () => void;
+  setContent: (id: string, value: string) => Promise<void>;
+  resetField: (id: string) => Promise<void>;
+  resetAll: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const EditableContext = createContext<EditableContextValue | undefined>(undefined);
 
-export function EditableProvider({ children }: { children: React.ReactNode }) {
+export function EditableProvider({
+  children,
+  initialContent,
+  isAdmin,
+}: {
+  children: React.ReactNode;
+  initialContent: ContentMap;
+  isAdmin: boolean;
+}) {
+  const router = useRouter();
   const [editMode, setEditMode] = useState(false);
-  // Synchronizes with the localStorage-backed store; returns EMPTY_CONTENT on
-  // the server and during hydration, then the real content once mounted —
-  // React handles that divergence natively, no effect/setState needed.
-  const content = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const [content, setContentState] = useState<ContentMap>(initialContent);
 
-  const setContent = useCallback((id: string, value: string) => {
-    persistStore({ ...loadStore(), [id]: value });
+  const setContent = useCallback(async (id: string, value: string) => {
+    let previous: string | undefined;
+    setContentState((prev) => {
+      previous = prev[id];
+      return { ...prev, [id]: value };
+    });
+    const res = await fetch("/api/content", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, value }),
+    });
+    if (!res.ok) {
+      // Revert the optimistic update if the server rejected it (e.g. session expired).
+      setContentState((prev) => {
+        const next = { ...prev };
+        if (previous === undefined) delete next[id];
+        else next[id] = previous;
+        return next;
+      });
+    }
   }, []);
 
-  const resetField = useCallback((id: string) => {
-    const next = { ...loadStore() };
-    delete next[id];
-    persistStore(next);
+  const resetField = useCallback(async (id: string) => {
+    setContentState((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    await fetch(`/api/content?id=${encodeURIComponent(id)}`, { method: "DELETE" });
   }, []);
 
-  const resetAll = useCallback(() => {
-    persistStore({});
+  const resetAll = useCallback(async () => {
+    setContentState({});
+    await fetch("/api/content", { method: "DELETE" });
   }, []);
 
-  const toggleEditMode = useCallback(() => setEditMode((v) => !v), []);
+  const toggleEditMode = useCallback(() => {
+    setEditMode((v) => (isAdmin ? !v : false));
+  }, [isAdmin]);
+
+  const logout = useCallback(async () => {
+    await fetch("/api/admin/logout", { method: "POST" });
+    setEditMode(false);
+    router.push("/");
+    router.refresh();
+  }, [router]);
 
   return (
     <EditableContext.Provider
-      value={{ editMode, toggleEditMode, content, setContent, resetField, resetAll }}
+      value={{
+        editMode: editMode && isAdmin,
+        toggleEditMode,
+        isAdmin,
+        content,
+        setContent,
+        resetField,
+        resetAll,
+        logout,
+      }}
     >
       {children}
     </EditableContext.Provider>

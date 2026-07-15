@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { EditableProvider } from "@/components/EditableProvider";
+import { getAllContent } from "@/lib/db";
+import { ADMIN_COOKIE_NAME, verifySessionToken } from "@/lib/session";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -21,9 +24,13 @@ export const metadata: Metadata = {
     "A premier management and service company in Mülheim an der Ruhr combining European standards with local excellence.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const content = getAllContent();
+  const cookieStore = await cookies();
+  const isAdmin = verifySessionToken(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
+
   return (
     <html
       lang="en"
@@ -44,7 +51,9 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         <ThemeProvider>
-          <EditableProvider>{children}</EditableProvider>
+          <EditableProvider initialContent={content} isAdmin={isAdmin}>
+            {children}
+          </EditableProvider>
         </ThemeProvider>
       </body>
     </html>

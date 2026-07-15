@@ -1,11 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Pencil, Check, RotateCcw, Info } from "lucide-react";
+import { Pencil, Check, RotateCcw, Info, LogOut } from "lucide-react";
 import { useEditable } from "./EditableProvider";
 
 export default function EditModeToggle() {
-  const { editMode, toggleEditMode, resetAll } = useEditable();
+  const { editMode, toggleEditMode, resetAll, isAdmin, logout } = useEditable();
+
+  if (!isAdmin) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-[80] flex flex-col items-end gap-3">
@@ -22,7 +24,7 @@ export default function EditModeToggle() {
               <Info className="w-4 h-4 text-t-accent shrink-0 mt-0.5" />
               <span>
                 Click any dashed text to edit it. Hover an image to change or reset it. Changes
-                save automatically in this browser.
+                save for every visitor.
               </span>
             </div>
             <button
@@ -36,6 +38,16 @@ export default function EditModeToggle() {
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Reset All Edits
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm("Log out of admin mode?")) logout();
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-t-bg-elevated border border-t-border text-t-body text-[11px] font-black tracking-[0.08em] uppercase hover:border-t-ink hover:text-t-ink transition-colors shadow-lg"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Log Out
             </button>
           </motion.div>
         )}
