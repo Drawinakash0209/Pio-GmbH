@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
 import Modal from "./Modal";
+import EditableImage from "./EditableImage";
+import EditableText from "./EditableText";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -123,14 +124,18 @@ export default function Services() {
                     cleaning_services
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4">
-                  Facility Management
-                </h3>
-                <p className="text-base leading-6 text-t-body">
-                  Comprehensive cleaning, maintenance, and technical oversight.
-                  We maintain your infrastructure to the highest hygienic and
-                  operational standards.
-                </p>
+                <EditableText
+                  id="services.facility.title"
+                  as="h3"
+                  defaultValue="Facility Management"
+                  className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4"
+                />
+                <EditableText
+                  id="services.facility.body"
+                  as="p"
+                  defaultValue="Comprehensive cleaning, maintenance, and technical oversight. We maintain your infrastructure to the highest hygienic and operational standards."
+                  className="text-base leading-6 text-t-body"
+                />
                 <div className="flex flex-wrap gap-2 mt-6">
                   {["Cleaning", "Maintenance", "Hygiene", "Care"].map((tag) => (
                     <span
@@ -159,12 +164,11 @@ export default function Services() {
               </div>
             </div>
             <div className="md:w-1/2 h-64 md:h-auto order-1 md:order-2 relative overflow-hidden">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN4pSLaLjtzJWkQ7F-ef4LTr1zXga3uEc5BaTgwC5HcY7i3vRVRg8nRCzoXPSU8n-bW-wGBR5aF5RVsS3_fkXy-WwFkisqry_-Ynz1uhrqh-AGIQ18bNgUv_8vSt1KW3Cjnsgpe1KLJQLp4m9BxiFM1ItSg-IBfXCZ7yGqPwnFnVKQ1jEmYgFkj05XUq-s2EkOLcirgEfLzxGitYxIpT7PyFYBy3zkiV1qH_HWiIHUYAp_3pu3dl7g0qk9zP7TBf8ZCc_mbRrAH2Y"
+              <EditableImage
+                id="services.facility.image"
+                defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAN4pSLaLjtzJWkQ7F-ef4LTr1zXga3uEc5BaTgwC5HcY7i3vRVRg8nRCzoXPSU8n-bW-wGBR5aF5RVsS3_fkXy-WwFkisqry_-Ynz1uhrqh-AGIQ18bNgUv_8vSt1KW3Cjnsgpe1KLJQLp4m9BxiFM1ItSg-IBfXCZ7yGqPwnFnVKQ1jEmYgFkj05XUq-s2EkOLcirgEfLzxGitYxIpT7PyFYBy3zkiV1qH_HWiIHUYAp_3pu3dl7g0qk9zP7TBf8ZCc_mbRrAH2Y"
                 alt="Facility Management"
-                fill
                 className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                unoptimized
               />
             </div>
           </motion.div>
@@ -185,13 +189,18 @@ export default function Services() {
                   groups
                 </span>
               </div>
-              <h3 className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4">
-                Staffing Solutions
-              </h3>
-              <p className="text-base leading-6 text-t-body">
-                Skilled workforce integration. We provide vetted, highly trained
-                personnel to meet your operational demands with precision.
-              </p>
+              <EditableText
+                id="services.staffing.title"
+                as="h3"
+                defaultValue="Staffing Solutions"
+                className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4"
+              />
+              <EditableText
+                id="services.staffing.body"
+                as="p"
+                defaultValue="Skilled workforce integration. We provide vetted, highly trained personnel to meet your operational demands with precision."
+                className="text-base leading-6 text-t-body"
+              />
             </div>
             <div className="mt-8 pt-4 border-t border-t-border">
               <ul className="space-y-2 mb-6">
@@ -223,25 +232,28 @@ export default function Services() {
             className="border border-t-border hover:border-t-ink transition-all duration-200 bg-t-bg flex flex-col overflow-hidden min-h-[420px] group"
           >
             <div className="h-52 relative overflow-hidden">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwKU18lsm9jZL_eXH0zmMrXGMfdfe56EMg6X38jmw-nW2khKIbS_qzEIyNQqSpfBiCv_eDn9Ktat5UWr6AdVR2BMeVWegoJdJ_H3KPgfwemiSBtp3SfbQAa_qKmNkDOkrxp8GNzDPjwZsSyGbYqzjK7Pe1I33WIIdAn1aETYTonYBrbZ50TS0uDet3AoQcsRqimne2bjsxEFdjRegg01ZdIKL29A4wTtDhrIuPh3QHUr3XMVlXjUkjQBbFsDx-2-yVC4dBIWitUR0"
+              <EditableImage
+                id="services.optimization.image"
+                defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAwKU18lsm9jZL_eXH0zmMrXGMfdfe56EMg6X38jmw-nW2khKIbS_qzEIyNQqSpfBiCv_eDn9Ktat5UWr6AdVR2BMeVWegoJdJ_H3KPgfwemiSBtp3SfbQAa_qKmNkDOkrxp8GNzDPjwZsSyGbYqzjK7Pe1I33WIIdAn1aETYTonYBrbZ50TS0uDet3AoQcsRqimne2bjsxEFdjRegg01ZdIKL29A4wTtDhrIuPh3QHUr3XMVlXjUkjQBbFsDx-2-yVC4dBIWitUR0"
                 alt="Operational Optimization"
-                fill
                 className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                unoptimized
               />
               <div className="absolute bottom-0 left-0 w-full h-1 bg-t-accent" />
             </div>
             <div className="p-8 flex-grow flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4">
-                  Operational Optimization
-                </h3>
-                <p className="text-base leading-6 text-t-body">
-                  Project management and efficiency consulting. Streamlining
-                  your processes through rigorous analysis and structured
-                  execution.
-                </p>
+                <EditableText
+                  id="services.optimization.title"
+                  as="h3"
+                  defaultValue="Operational Optimization"
+                  className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4"
+                />
+                <EditableText
+                  id="services.optimization.body"
+                  as="p"
+                  defaultValue="Project management and efficiency consulting. Streamlining your processes through rigorous analysis and structured execution."
+                  className="text-base leading-6 text-t-body"
+                />
               </div>
               <button
                 onClick={() => setActiveService("optimization")}
@@ -264,26 +276,32 @@ export default function Services() {
             className="lg:col-span-2 group border border-t-border hover:border-t-ink transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
           >
             <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzNLU5XTPySUs2I-74gd1DKJLOC3khcf1UoYHxC3pZXMeYSC7f2PgciMKwHU3ZD4fpQKtNFmvZTj_mHeapWhAMnvy_bR8Jafexeiis0Yg6N5StZp70AVG362AALo8vVHKMWdMrSUhFTWcw6c0O5vO-88Cf_YSs5rV2-NRuYULEnbmJtFoYOL6qQHwtEqGOtwuPuuIqwOsiM9o22CzkJNPAAFH2s4SdHwIgi7lq9zgGL3ao5CLFGFLuAfR9W-ftZD12lQbWG7I84rs"
+              <EditableImage
+                id="services.trade.image"
+                defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAzNLU5XTPySUs2I-74gd1DKJLOC3khcf1UoYHxC3pZXMeYSC7f2PgciMKwHU3ZD4fpQKtNFmvZTj_mHeapWhAMnvy_bR8Jafexeiis0Yg6N5StZp70AVG362AALo8vVHKMWdMrSUhFTWcw6c0O5vO-88Cf_YSs5rV2-NRuYULEnbmJtFoYOL6qQHwtEqGOtwuPuuIqwOsiM9o22CzkJNPAAFH2s4SdHwIgi7lq9zgGL3ao5CLFGFLuAfR9W-ftZD12lQbWG7I84rs"
                 alt="Import & Export"
-                fill
                 className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                unoptimized
               />
             </div>
             <div className="md:w-1/2 p-8 flex flex-col justify-between bg-t-dark-panel text-white">
               <div>
-                <span className="text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-4 inline-block">
-                  Global Reach
-                </span>
-                <h3 className="text-2xl font-bold leading-8 tracking-tight text-white mb-4">
-                  Import &amp; Export
-                </h3>
-                <p className="text-base leading-6 text-white/60">
-                  European sourcing and logistics. Reliable cross-border trade
-                  management ensuring timely delivery and compliance.
-                </p>
+                <EditableText
+                  id="services.trade.eyebrow"
+                  defaultValue="Global Reach"
+                  className="text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-4 inline-block"
+                />
+                <EditableText
+                  id="services.trade.title"
+                  as="h3"
+                  defaultValue="Import & Export"
+                  className="text-2xl font-bold leading-8 tracking-tight text-white mb-4"
+                />
+                <EditableText
+                  id="services.trade.body"
+                  as="p"
+                  defaultValue="European sourcing and logistics. Reliable cross-border trade management ensuring timely delivery and compliance."
+                  className="text-base leading-6 text-white/60"
+                />
                 <div className="flex flex-wrap gap-2 mt-6">
                   {["European Sourcing", "Global Logistics", "Quality Assurance", "Efficient Supply"].map((tag) => (
                     <span

@@ -3,19 +3,23 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Clock, Globe2, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import EditableText from "./EditableText";
 
 const pillars = [
   {
+    id: "whyus.reliability",
     icon: ShieldCheck,
     title: "German Reliability",
     body: "Built on a foundation of exact standards, rigorous quality control, and steadfast commitment to contractual obligations.",
   },
   {
+    id: "whyus.availability",
     icon: Clock,
     title: "24/7 Availability",
     body: "Continuous operational readiness. Our management structures ensure round-the-clock response capabilities for critical infrastructure.",
   },
   {
+    id: "whyus.expertise",
     icon: Globe2,
     title: "International Expertise",
     body: "Local operational excellence coupled with global sourcing and management strategies, adapting to diverse market requirements.",
@@ -61,9 +65,9 @@ export default function WhyUs() {
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {pillars.map(({ icon: Icon, title, body }, i) => (
+          {pillars.map(({ id, icon: Icon, title, body }, i) => (
             <motion.div
-              key={title}
+              key={id}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{ y: -6 }}
@@ -77,8 +81,18 @@ export default function WhyUs() {
               <div className="w-12 h-12 bg-t-dark-panel flex items-center justify-center mb-6 group-hover:bg-t-accent transition-colors duration-200">
                 <Icon className="w-5 h-5 text-t-accent group-hover:text-t-on-accent transition-colors duration-200" />
               </div>
-              <h3 className="text-xl font-bold tracking-tight text-t-ink mb-3">{title}</h3>
-              <p className="text-base leading-6 text-t-body">{body}</p>
+              <EditableText
+                id={`${id}.title`}
+                as="h3"
+                defaultValue={title}
+                className="text-xl font-bold tracking-tight text-t-ink mb-3"
+              />
+              <EditableText
+                id={`${id}.body`}
+                as="p"
+                defaultValue={body}
+                className="text-base leading-6 text-t-body"
+              />
 
               {/* Number */}
               <span

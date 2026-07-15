@@ -83,8 +83,9 @@
   --spacing-gutter: 24px;
   --spacing-margin-mobile: 16px;
 
-  --font-family-sans: "Inter", sans-serif;
-  --font-family-mono: "Courier Prime", monospace;
+  --font-family-display: var(--font-playfair-display), Georgia, serif;
+  --font-family-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-family-mono: var(--font-dm-mono), monospace;
 }
 
 /* ---- Dark theme overrides ---- */
@@ -122,6 +123,21 @@ body {
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ---- Typography ---- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: var(--font-family-display);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
 }
 
 .glass-panel {

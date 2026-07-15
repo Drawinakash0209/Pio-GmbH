@@ -2,8 +2,9 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import EditableImage from "./EditableImage";
+import EditableText from "./EditableText";
 
 export default function ParallaxBanner() {
   const ref = useRef(null);
@@ -19,13 +20,12 @@ export default function ParallaxBanner() {
     <section ref={ref} className="relative h-[65vh] overflow-hidden flex items-center justify-center bg-t-dark-panel">
       {/* Parallax image */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
-        <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDld9YW58dCIekh7C7oqkVcPUFY8tB4MqEyKU-TXDooGLeQk70vqNepWB1je21a4riq7G5LneZMQrSIfSuzEKSKcpPvvEsmxmW5_geNG4D_xy_7FCDXWwKmjYIcGjBYv_Kbe3DiZALCyFFeKqA8wfFKV7mqD0tEGqFz6_uJvs-MG72bIWXo8aWLQeTIaf4Vy5siBUEc-3pVQ-QKHrp-uiwgCuwGW8QmlYTcYcQI3pGNLvLECGqV3oJ389G3rbG_qKxV-Z7JJ6rtU7U"
+        <EditableImage
+          id="parallax.bg"
+          defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuDld9YW58dCIekh7C7oqkVcPUFY8tB4MqEyKU-TXDooGLeQk70vqNepWB1je21a4riq7G5LneZMQrSIfSuzEKSKcpPvvEsmxmW5_geNG4D_xy_7FCDXWwKmjYIcGjBYv_Kbe3DiZALCyFFeKqA8wfFKV7mqD0tEGqFz6_uJvs-MG72bIWXo8aWLQeTIaf4Vy5siBUEc-3pVQ-QKHrp-uiwgCuwGW8QmlYTcYcQI3pGNLvLECGqV3oJ389G3rbG_qKxV-Z7JJ6rtU7U"
           alt="Parallax"
-          fill
           className="object-cover"
           style={{ filter: "brightness(0.25) grayscale(0.6)" }}
-          unoptimized
         />
       </motion.div>
 
@@ -51,9 +51,11 @@ export default function ParallaxBanner() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
         >
-          <span className="inline-block py-1 px-4 border border-t-accent/30 bg-t-accent/5 text-t-accent text-[10px] font-black tracking-[0.2em] uppercase mb-8">
-            Zukunftssicher
-          </span>
+          <EditableText
+            id="parallax.eyebrow"
+            defaultValue="Zukunftssicher"
+            className="inline-block py-1 px-4 border border-t-accent/30 bg-t-accent/5 text-t-accent text-[10px] font-black tracking-[0.2em] uppercase mb-8"
+          />
           <h2
             className="text-white mb-6"
             style={{
@@ -68,9 +70,12 @@ export default function ParallaxBanner() {
               Facility Management
             </span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-            We combine structured German engineering with modern management to deliver services that go beyond expectations.
-          </p>
+          <EditableText
+            id="parallax.body"
+            as="p"
+            defaultValue="We combine structured German engineering with modern management to deliver services that go beyond expectations."
+            className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed mb-10"
+          />
           <Link
             href="#contact"
             className="inline-flex items-center gap-3 px-8 py-4 bg-t-accent text-t-on-accent text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-accent-dim transition-colors duration-150"

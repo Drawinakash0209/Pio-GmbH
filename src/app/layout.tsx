@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Courier_Prime } from "next/font/google";
+import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { EditableProvider } from "@/components/EditableProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const courierPrime = Courier_Prime({
-  weight: ["400"],
+const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-courier-prime",
+  variable: "--font-playfair-display",
+});
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
+const dmMono = DM_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-dm-mono",
 });
 
 export const metadata: Metadata = {
@@ -22,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${courierPrime.variable}`}
+      className={`${playfairDisplay.variable} ${dmSans.variable} ${dmMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -38,7 +43,9 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <EditableProvider>{children}</EditableProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

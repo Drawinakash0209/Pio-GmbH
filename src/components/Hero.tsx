@@ -2,8 +2,9 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { useRef } from "react";
+import EditableImage from "./EditableImage";
+import EditableText from "./EditableText";
 
 const headline = ["International", "Expertise.", "German", "Reliability."];
 
@@ -23,13 +24,12 @@ export default function Hero() {
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background */}
       <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0 z-0">
-        <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDld9YW58dCIekh7C7oqkVcPUFY8tB4MqEyKU-TXDooGLeQk70vqNepWB1je21a4riq7G5LneZMQrSIfSuzEKSKcpPvvEsmxmW5_geNG4D_xy_7FCDXWwKmjYIcGjBYv_Kbe3DiZALCyFFeKqA8wfFKV7mqD0tEGqFz6_uJvs-MG72bIWXo8aWLQeTIaf4Vy5siBUEc-3pVQ-QKHrp-uiwgCuwGW8QmlYTcYcQI3pGNLvLECGqV3oJ389G3rbG_qKxV-Z7JJ6rtU7U"
+        <EditableImage
+          id="hero.bg"
+          defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuDld9YW58dCIekh7C7oqkVcPUFY8tB4MqEyKU-TXDooGLeQk70vqNepWB1je21a4riq7G5LneZMQrSIfSuzEKSKcpPvvEsmxmW5_geNG4D_xy_7FCDXWwKmjYIcGjBYv_Kbe3DiZALCyFFeKqA8wfFKV7mqD0tEGqFz6_uJvs-MG72bIWXo8aWLQeTIaf4Vy5siBUEc-3pVQ-QKHrp-uiwgCuwGW8QmlYTcYcQI3pGNLvLECGqV3oJ389G3rbG_qKxV-Z7JJ6rtU7U"
           alt="Hero Background"
-          fill
           className="object-cover"
           priority
-          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-b from-t-bg/30 via-t-bg/20 to-t-bg/60" />
         <div className="absolute inset-0 bg-gradient-to-r from-t-bg/70 via-t-bg/20 to-transparent" />
@@ -48,9 +48,11 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-t-accent text-t-on-accent text-[10px] font-black tracking-[0.15em] uppercase">
-              Mülheim an der Ruhr · Germany
-            </span>
+            <EditableText
+              id="hero.badge"
+              defaultValue="Mülheim an der Ruhr · Germany"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-t-accent text-t-on-accent text-[10px] font-black tracking-[0.15em] uppercase"
+            />
           </motion.div>
 
           {/* Headline — letter by letter */}
