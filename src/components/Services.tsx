@@ -7,6 +7,7 @@ import { ArrowRight, Check } from "lucide-react";
 import Modal from "./Modal";
 import EditableImage from "./EditableImage";
 import EditableText from "./EditableText";
+import { useLanguage } from "./LanguageProvider";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -17,93 +18,41 @@ const cardVariants = {
   }),
 };
 
-type ServiceDetail = {
-  title: string;
-  tagline: string;
-  description: string;
-  features: string[];
-};
-
-const serviceDetails: Record<string, ServiceDetail> = {
-  facility: {
-    title: "Facility Management",
-    tagline: "Comprehensive Care, Zero Compromise",
-    description:
-      "Our facility management teams handle the full lifecycle of your building's upkeep — from daily cleaning cycles to scheduled technical maintenance — so hotels, offices, and industrial sites run without interruption. Every visit is logged and measured against German hygiene and safety benchmarks.",
-    features: [
-      "Daily & Deep Cleaning Cycles",
-      "Preventive Maintenance Scheduling",
-      "Hygiene & Sanitation Compliance",
-      "Interior-Exterior Building Care",
-    ],
-  },
-  staffing: {
-    title: "Staffing Solutions",
-    tagline: "Powering Your Operations with People",
-    description:
-      "We recruit, vet, and train personnel who integrate directly into your operations — whether you need short-term coverage or a long-term workforce. Every placement is backed by structured onboarding and ongoing compliance administration.",
-    features: [
-      "Specialized Recruitment",
-      "On-Site Personnel Management",
-      "Continuous Training Programs",
-      "Compliance & Payroll Administration",
-    ],
-  },
-  optimization: {
-    title: "Operational Optimization",
-    tagline: "Precision Process Engineering",
-    description:
-      "Our project management specialists analyze your existing workflows and rebuild them around measurable quality control and efficiency targets, drawing on structured German engineering methods to remove waste without disrupting operations.",
-    features: [
-      "Quality Control Systems",
-      "Workflow Efficiency Audits",
-      "Structured Project Governance",
-      "Data-Driven Reporting",
-    ],
-  },
-  trade: {
-    title: "Import & Export",
-    tagline: "European Sourcing, Global Delivery",
-    description:
-      "We source premium European goods — food, textiles, and household products — and manage the full cross-border logistics chain, ensuring every shipment clears compliance and arrives on schedule.",
-    features: [
-      "European Sourcing Network",
-      "Global Logistics Coordination",
-      "Quality Assurance Checks",
-      "Efficient Cross-Border Supply",
-    ],
-  },
-};
-
 export default function Services() {
+  const { t } = useLanguage();
   const [activeService, setActiveService] = useState<string | null>(null);
-  const activeDetail = activeService ? serviceDetails[activeService] : null;
+  const activeDetail = activeService ? t.services.modal.details[activeService] : null;
 
   return (
     <section id="services" className="py-[120px] bg-t-bg-elevated">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
+        {/* Section label */}
+        <div className="flex items-center gap-4 mb-16">
+          <span className="section-label">{t.services.sectionLabel}</span>
+          <div className="section-divider" />
+        </div>
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
         >
-          <span className="text-[10px] font-black tracking-[0.15em] uppercase text-t-on-badge px-3 py-1.5 bg-t-badge mb-4 inline-block">
-            Core Capabilities
-          </span>
           <h2
-            className="text-t-ink"
+            className="font-display text-t-ink"
             style={{
-              fontSize: "clamp(32px, 3vw, 44px)",
-              lineHeight: "1.15",
-              letterSpacing: "-0.03em",
+              fontSize: "clamp(32px, 3.5vw, 52px)",
+              lineHeight: "1.1",
+              letterSpacing: "-0.025em",
               fontWeight: 700,
             }}
           >
-            Strategic Service Pillars
+            {t.services.heading.main}
+            <em className="accent-italic">{t.services.heading.accent}</em>
           </h2>
+          <p className="text-sm text-t-faint max-w-xs">{t.services.subtext}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -115,32 +64,35 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 group border border-t-border hover:border-t-ink transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
+            className="lg:col-span-2 group rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
           >
             <div className="md:w-1/2 p-8 flex flex-col justify-between order-2 md:order-1">
               <div>
-                <div className="w-11 h-11 bg-t-ink flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-t-accent text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <div className="w-11 h-11 rounded-sm bg-t-ink flex items-center justify-center mb-6">
+                  <span
+                    className="material-symbols-outlined text-t-accent text-xl"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
                     cleaning_services
                   </span>
                 </div>
                 <EditableText
                   id="services.facility.title"
                   as="h3"
-                  defaultValue="Facility Management"
+                  defaultValue={t.cms.servicesFacilityTitle}
                   className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4"
                 />
                 <EditableText
                   id="services.facility.body"
                   as="p"
-                  defaultValue="Comprehensive cleaning, maintenance, and technical oversight. We maintain your infrastructure to the highest hygienic and operational standards."
+                  defaultValue={t.cms.servicesFacilityBody}
                   className="text-base leading-6 text-t-body"
                 />
                 <div className="flex flex-wrap gap-2 mt-6">
-                  {["Cleaning", "Maintenance", "Hygiene", "Care"].map((tag) => (
+                  {t.services.facility.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 bg-t-bg-elevated border border-t-border text-[10px] font-bold tracking-[0.08em] uppercase text-t-body"
+                      className="px-3 py-1.5 rounded-sm bg-t-bg-elevated border border-t-border text-[10px] font-bold tracking-[0.08em] uppercase text-t-body font-mono"
                     >
                       {tag}
                     </span>
@@ -152,14 +104,14 @@ export default function Services() {
                   href="#contact"
                   className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink hover:text-t-link transition-colors group/link"
                 >
-                  Request Audit
+                  {t.services.facility.requestAudit}
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                 </Link>
                 <button
                   onClick={() => setActiveService("facility")}
                   className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-faint hover:text-t-ink transition-colors"
                 >
-                  Learn More
+                  {t.services.facility.learnMore}
                 </button>
               </div>
             </div>
@@ -181,10 +133,10 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="border border-t-border hover:border-t-ink transition-all duration-200 bg-t-bg p-8 flex flex-col justify-between min-h-[420px] group"
+            className="rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg p-8 flex flex-col justify-between min-h-[420px] group"
           >
             <div>
-              <div className="w-11 h-11 bg-t-bg-muted border border-t-border flex items-center justify-center mb-6 group-hover:bg-t-ink transition-colors duration-200">
+              <div className="w-11 h-11 rounded-sm bg-t-bg-muted border border-t-border flex items-center justify-center mb-6 group-hover:bg-t-ink transition-colors duration-200">
                 <span className="material-symbols-outlined text-t-ink group-hover:text-t-accent transition-colors duration-200">
                   groups
                 </span>
@@ -192,21 +144,21 @@ export default function Services() {
               <EditableText
                 id="services.staffing.title"
                 as="h3"
-                defaultValue="Staffing Solutions"
+                defaultValue={t.cms.servicesStaffingTitle}
                 className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4"
               />
               <EditableText
                 id="services.staffing.body"
                 as="p"
-                defaultValue="Skilled workforce integration. We provide vetted, highly trained personnel to meet your operational demands with precision."
+                defaultValue={t.cms.servicesStaffingBody}
                 className="text-base leading-6 text-t-body"
               />
             </div>
             <div className="mt-8 pt-4 border-t border-t-border">
               <ul className="space-y-2 mb-6">
-                {["Rapid Deployment", "Quality Assured", "Vetted Personnel"].map((item) => (
+                {t.services.staffing.items.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm leading-5 text-t-body">
-                    <span className="w-1.5 h-1.5 bg-t-accent inline-block shrink-0" />
+                    <span className="w-1.5 h-1.5 bg-t-accent inline-block shrink-0 rounded-full" />
                     {item}
                   </li>
                 ))}
@@ -215,7 +167,7 @@ export default function Services() {
                 onClick={() => setActiveService("staffing")}
                 className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink hover:text-t-link transition-colors group/link"
               >
-                Learn More
+                {t.services.staffing.learnMore}
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -229,7 +181,7 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="border border-t-border hover:border-t-ink transition-all duration-200 bg-t-bg flex flex-col overflow-hidden min-h-[420px] group"
+            className="rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg flex flex-col overflow-hidden min-h-[420px] group"
           >
             <div className="h-52 relative overflow-hidden">
               <EditableImage
@@ -245,13 +197,13 @@ export default function Services() {
                 <EditableText
                   id="services.optimization.title"
                   as="h3"
-                  defaultValue="Operational Optimization"
+                  defaultValue={t.cms.servicesOptimizationTitle}
                   className="text-2xl font-bold leading-8 tracking-tight text-t-ink mb-4"
                 />
                 <EditableText
                   id="services.optimization.body"
                   as="p"
-                  defaultValue="Project management and efficiency consulting. Streamlining your processes through rigorous analysis and structured execution."
+                  defaultValue={t.cms.servicesOptimizationBody}
                   className="text-base leading-6 text-t-body"
                 />
               </div>
@@ -259,7 +211,7 @@ export default function Services() {
                 onClick={() => setActiveService("optimization")}
                 className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink mt-6 hover:text-t-link transition-colors group/link"
               >
-                Learn More
+                {t.services.optimization.learnMore}
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -273,7 +225,7 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 group border border-t-border hover:border-t-ink transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
+            className="lg:col-span-2 group rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
           >
             <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
               <EditableImage
@@ -287,26 +239,26 @@ export default function Services() {
               <div>
                 <EditableText
                   id="services.trade.eyebrow"
-                  defaultValue="Global Reach"
-                  className="text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-4 inline-block"
+                  defaultValue={t.cms.servicesTradeEyebrow}
+                  className="text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-4 inline-block font-mono"
                 />
                 <EditableText
                   id="services.trade.title"
                   as="h3"
-                  defaultValue="Import & Export"
+                  defaultValue={t.cms.servicesTradeTitle}
                   className="text-2xl font-bold leading-8 tracking-tight text-white mb-4"
                 />
                 <EditableText
                   id="services.trade.body"
                   as="p"
-                  defaultValue="European sourcing and logistics. Reliable cross-border trade management ensuring timely delivery and compliance."
+                  defaultValue={t.cms.servicesTradeBody}
                   className="text-base leading-6 text-white/60"
                 />
                 <div className="flex flex-wrap gap-2 mt-6">
-                  {["European Sourcing", "Global Logistics", "Quality Assurance", "Efficient Supply"].map((tag) => (
+                  {t.services.trade.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60"
+                      className="px-3 py-1.5 rounded-sm border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60 font-mono"
                     >
                       {tag}
                     </span>
@@ -315,8 +267,8 @@ export default function Services() {
               </div>
               <div className="mt-8">
                 <div className="h-px w-full bg-white/10 mb-4" />
-                <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.1em] text-white/40 font-bold mb-2">
-                  <span>Logistics Efficiency</span>
+                <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.1em] text-white/40 font-bold mb-2 font-mono">
+                  <span>{t.services.trade.efficiencyLabel}</span>
                   <span className="text-t-accent">85%</span>
                 </div>
                 <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
@@ -332,7 +284,7 @@ export default function Services() {
                   onClick={() => setActiveService("trade")}
                   className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-white mt-6 hover:text-t-accent transition-colors group/link"
                 >
-                  Learn More
+                  {t.services.trade.learnMore}
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -348,16 +300,14 @@ export default function Services() {
               {activeDetail.title}
             </h3>
             <p className="text-t-link font-bold mb-6">{activeDetail.tagline}</p>
-            <p className="text-base leading-7 text-t-body mb-8">
-              {activeDetail.description}
-            </p>
+            <p className="text-base leading-7 text-t-body mb-8">{activeDetail.description}</p>
 
-            <div className="bg-t-bg border border-t-border p-6">
-              <h4 className="font-bold text-t-ink mb-4">Key Features</h4>
+            <div className="bg-t-bg rounded-lg border border-t-border p-6">
+              <h4 className="font-bold text-t-ink mb-4">{t.services.modal.keyFeatures}</h4>
               <div className="grid sm:grid-cols-2 gap-4">
                 {activeDetail.features.map((feature) => (
                   <div key={feature} className="flex items-start gap-3">
-                    <div className="w-5 h-5 bg-t-accent flex items-center justify-center text-t-on-accent shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-sm bg-t-accent flex items-center justify-center text-t-on-accent shrink-0 mt-0.5">
                       <Check className="w-3 h-3" />
                     </div>
                     <span className="text-sm font-medium text-t-body">{feature}</span>
@@ -369,9 +319,9 @@ export default function Services() {
             <div className="mt-8 pt-6 border-t border-t-border flex justify-end">
               <button
                 onClick={() => setActiveService(null)}
-                className="inline-flex items-center justify-center px-9 py-4 bg-t-ink text-t-on-ink text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-dark-panel hover:text-t-on-dark-panel transition-colors duration-150 min-w-[120px]"
+                className="inline-flex items-center justify-center px-9 py-4 rounded-sm bg-t-ink text-t-on-ink text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-dark-panel hover:text-t-on-dark-panel transition-colors duration-150 min-w-[120px]"
               >
-                Close
+                {t.services.modal.close}
               </button>
             </div>
           </div>

@@ -5,8 +5,10 @@ import { useRef } from "react";
 import Link from "next/link";
 import EditableImage from "./EditableImage";
 import EditableText from "./EditableText";
+import { useLanguage } from "./LanguageProvider";
 
 export default function ParallaxBanner() {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -38,7 +40,7 @@ export default function ParallaxBanner() {
         className="absolute inset-0 z-[1] opacity-[0.04]"
         style={{
           backgroundImage:
-            "linear-gradient(to right, #caf300 1px, transparent 1px), linear-gradient(to bottom, #caf300 1px, transparent 1px)",
+            "linear-gradient(to right, var(--color-t-accent) 1px, transparent 1px), linear-gradient(to bottom, var(--color-t-accent) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -51,13 +53,24 @@ export default function ParallaxBanner() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
         >
+          {/* Animated accent divider */}
+          <div className="flex justify-center mb-8">
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 80 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="h-0.5 bg-gradient-to-r from-t-accent to-t-accent-dim"
+            />
+          </div>
+
           <EditableText
             id="parallax.eyebrow"
-            defaultValue="Zukunftssicher"
-            className="inline-block py-1 px-4 border border-t-accent/30 bg-t-accent/5 text-t-accent text-[10px] font-black tracking-[0.2em] uppercase mb-8"
+            defaultValue={t.cms.parallaxEyebrow}
+            className="inline-block py-1.5 px-5 rounded-full border border-t-accent/30 bg-t-accent/5 text-t-accent text-[10px] font-black tracking-[0.2em] uppercase mb-8 font-mono"
           />
           <h2
-            className="text-white mb-6"
+            className="font-display text-white mb-6"
             style={{
               fontSize: "clamp(36px, 5vw, 72px)",
               lineHeight: "1.1",
@@ -65,22 +78,22 @@ export default function ParallaxBanner() {
               fontWeight: 800,
             }}
           >
-            Shaping the Future of{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-t-accent to-t-accent-dim">
-              Facility Management
+            {t.parallax.heading.main}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-t-accent to-t-accent-dim italic">
+              {t.parallax.heading.accent}
             </span>
           </h2>
           <EditableText
             id="parallax.body"
             as="p"
-            defaultValue="We combine structured German engineering with modern management to deliver services that go beyond expectations."
+            defaultValue={t.cms.parallaxBody}
             className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed mb-10"
           />
           <Link
             href="#contact"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-t-accent text-t-on-accent text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-accent-dim transition-colors duration-150"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-sm bg-t-accent text-t-on-accent text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-accent-dim transition-colors duration-150"
           >
-            Start a Conversation
+            {t.parallax.cta}
           </Link>
         </motion.div>
       </motion.div>

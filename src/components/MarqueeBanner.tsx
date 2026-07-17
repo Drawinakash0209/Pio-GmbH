@@ -2,20 +2,11 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-
-const items = [
-  "Deutsche Zuverlässigkeit",
-  "Internationale Expertise",
-  "Facility Management",
-  "24/7 Betrieb",
-  "Qualität Zuerst",
-  "Mülheim an der Ruhr",
-  "Personaldienstleistungen",
-  "Import & Export",
-];
+import { useLanguage } from "./LanguageProvider";
 
 export default function MarqueeBanner() {
-  const doubled = [...items, ...items, ...items];
+  const { t } = useLanguage();
+  const doubled = [...t.marquee, ...t.marquee, ...t.marquee];
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -40,7 +31,13 @@ export default function MarqueeBanner() {
       >
         {doubled.map((text, i) => (
           <div key={i} className="flex items-center gap-4 shrink-0">
-            <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-t-ink to-t-faint">
+            <span
+              className="font-display text-2xl md:text-3xl italic uppercase tracking-tighter"
+              style={{
+                WebkitTextStroke: "1px var(--color-t-accent-dim)",
+                color: "transparent",
+              }}
+            >
               {text}
             </span>
             <div className="w-2 h-2 bg-t-accent rounded-full shrink-0" />

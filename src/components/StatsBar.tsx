@@ -3,12 +3,12 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Users, Trophy, Clock } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useLanguage } from "./LanguageProvider";
 
-const stats = [
-  { value: "100", suffix: "%", label: "Quality Focus", icon: Trophy, numeric: 100 },
-  { value: "24/7", suffix: "", label: "Operations", icon: Clock, numeric: null },
-  { value: "Expert", suffix: "", label: "Core Team", icon: Users, numeric: null },
-];
+const iconFor = [Trophy, Clock, Users];
+const valueFor = ["100", "24/7", "Expert"];
+const suffixFor = ["%", "", ""];
+const numericFor: (number | null)[] = [100, null, null];
 
 function CountUp({ to }: { to: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -30,42 +30,48 @@ function CountUp({ to }: { to: number }) {
 }
 
 export default function StatsBar() {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-t-dark-panel border-b border-white/5">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-[64px] py-12">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-16 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
-          {stats.map(({ value, suffix, label, icon: Icon, numeric }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-start pt-4 md:pt-0 md:pl-8 first:pl-0 group"
-            >
+          {t.statsBar.map(({ label }, i) => {
+            const Icon = iconFor[i];
+            const numeric = numericFor[i];
+            return (
               <motion.div
-                initial={{ scale: 0.6, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ delay: i * 0.1 + 0.1, type: "spring", stiffness: 200, damping: 14 }}
+                key={label}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-3 mb-3"
+                className="flex flex-col items-start pt-4 md:pt-0 md:pl-8 first:pl-0 group"
               >
-                <div className="w-8 h-8 bg-t-accent/10 flex items-center justify-center rounded">
-                  <Icon className="w-4 h-4 text-t-accent" />
-                </div>
+                <motion.div
+                  initial={{ scale: 0.6, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: i * 0.1 + 0.1, type: "spring", stiffness: 200, damping: 14 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-3 mb-3"
+                >
+                  <div className="w-8 h-8 bg-t-accent/10 flex items-center justify-center rounded">
+                    <Icon className="w-4 h-4 text-t-accent" />
+                  </div>
+                </motion.div>
+                <span
+                  className="font-display text-white mb-1 font-black tracking-tight"
+                  style={{ fontSize: "clamp(32px, 5vw, 64px)", lineHeight: 1 }}
+                >
+                  {numeric !== null ? <CountUp to={numeric} /> : valueFor[i]}
+                  {suffixFor[i] && <span className="text-t-accent">{suffixFor[i]}</span>}
+                </span>
+                <span className="text-[11px] font-bold tracking-[0.1em] uppercase text-white/40 font-mono">
+                  {label}
+                </span>
               </motion.div>
-              <span
-                className="text-white mb-1 font-black tracking-tight"
-                style={{ fontSize: "clamp(32px, 5vw, 64px)", lineHeight: 1 }}
-              >
-                {numeric !== null ? <CountUp to={numeric} /> : value}
-                {suffix && <span className="text-t-accent">{suffix}</span>}
-              </span>
-              <span className="text-[11px] font-bold tracking-[0.1em] uppercase text-white/40">
-                {label}
-              </span>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

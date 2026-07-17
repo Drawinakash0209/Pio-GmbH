@@ -156,6 +156,63 @@ h6,
   color: var(--color-t-on-accent);
 }
 
+/* ---- Section-label pattern (borrowed from theme_4's numbered layout) ---- */
+.section-label {
+  font-family: var(--font-family-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-t-accent-dim);
+  white-space: nowrap;
+}
+.dark .section-label {
+  color: var(--color-t-accent);
+}
+
+.section-divider {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(to right, var(--color-t-border), transparent);
+}
+
+.section-watermark {
+  font-family: var(--font-family-display);
+  font-weight: 900;
+  color: var(--color-t-ink);
+  opacity: 0.045;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.accent-italic {
+  font-style: italic;
+  color: var(--color-t-link);
+}
+.dark .accent-italic {
+  color: var(--color-t-accent);
+}
+
+/* ---- Nav underline-slide hover (theme_4 pattern) ---- */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-t-accent);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
 /* ---- Scroll / motion helpers ---- */
 @media (prefers-reduced-motion: reduce) {
   *,

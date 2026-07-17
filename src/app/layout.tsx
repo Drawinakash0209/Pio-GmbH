@@ -3,6 +3,7 @@ import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import { EditableProvider } from "@/components/EditableProvider";
 import { getAllContent } from "@/lib/db";
 import { ADMIN_COOKIE_NAME, verifySessionToken } from "@/lib/session";
@@ -42,18 +43,20 @@ export default async function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
-        {/* Set theme class before paint to avoid a light/dark flash on load */}
+        {/* Set theme class + language before paint to avoid a flash of the wrong state on load */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('pio-gmbh-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('pio-gmbh-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}var l=localStorage.getItem('pio-gmbh-lang');if(l==='de'||l==='en'){document.documentElement.lang=l;}}catch(e){}})();`,
           }}
         />
       </head>
       <body suppressHydrationWarning>
         <ThemeProvider>
-          <EditableProvider initialContent={content} isAdmin={isAdmin}>
-            {children}
-          </EditableProvider>
+          <LanguageProvider>
+            <EditableProvider initialContent={content} isAdmin={isAdmin}>
+              {children}
+            </EditableProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
