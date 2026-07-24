@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const content = getAllContent();
+  const content = await getAllContent();
   const cookieStore = await cookies();
   const isAdmin = verifySessionToken(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
 

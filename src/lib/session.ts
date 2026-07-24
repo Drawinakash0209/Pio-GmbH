@@ -1,4 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import bcrypt from "bcryptjs";
+import { getAdminPasswordHash, setAdminPasswordHash } from "./db";
+
+const BCRYPT_ROUNDS = 12;
 
 export const ADMIN_COOKIE_NAME = "pio_admin_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
@@ -40,10 +44,32 @@ export function verifySessionToken(token: string | undefined | null): boolean {
   return safeEqual(signature, sign(`${role}.${expiresStr}`));
 }
 
-export function verifyAdminPassword(password: string): boolean {
-  const expected = process.env.ADMIN_PASSWORD;
-  if (!expected) {
-    throw new Error("ADMIN_PASSWORD environment variable is not set.");
+let seedInFlight: Promise<string> | undefined;
+
+// Seeds admin_credentials from ADMIN_PASSWORD on first run; the DB row is
+// authoritative for every login after that.
+function getOrSeedPasswordHash(): Promise<string> {
+  if (!seedInFlight) {
+    seedInFlight = (async () => {
+      const existing = await getAdminPasswordHash();
+      if (existing) return existing;
+
+      const seed = process.env.ADMIN_PASSWORD;
+      if (!seed) {
+        throw new Error("ADMIN_PASSWORD environment variable is not set.");
+      }
+      const hash = await bcrypt.hash(seed, BCRYPT_ROUNDS);
+      await setAdminPasswordHash(hash);
+      return hash;
+    })().catch((err) => {
+      seedInFlight = undefined;
+      throw err;
+    });
   }
-  return safeEqual(password, expected);
+  return seedInFlight;
+}
+
+export async function verifyAdminPassword(password: string): Promise<boolean> {
+  const hash = await getOrSeedPasswordHash();
+  return bcrypt.compare(password, hash);
 }

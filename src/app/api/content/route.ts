@@ -9,7 +9,7 @@ async function isAdminRequest(): Promise<boolean> {
 }
 
 export async function GET() {
-  return NextResponse.json(getAllContent());
+  return NextResponse.json(await getAllContent());
 }
 
 export async function PATCH(request: Request) {
@@ -25,7 +25,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   }
 
-  setContentValue(id, value);
+  await setContentValue(id, value);
   return NextResponse.json({ ok: true });
 }
 
@@ -38,9 +38,9 @@ export async function DELETE(request: Request) {
   const id = searchParams.get("id");
 
   if (id) {
-    deleteContentValue(id);
+    await deleteContentValue(id);
   } else {
-    resetAllContent();
+    await resetAllContent();
   }
 
   return NextResponse.json({ ok: true });

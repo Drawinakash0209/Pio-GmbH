@@ -4,6 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { ADMIN_COOKIE_NAME, verifySessionToken } from "@/lib/session";
+import { recordUpload } from "@/lib/db";
 
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 const ALLOWED_TYPES: Record<string, string> = {
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
   const filename = `${randomUUID()}.${ext}`;
   const bytes = Buffer.from(await file.arrayBuffer());
   await writeFile(path.join(UPLOAD_DIR, filename), bytes);
+  await recordUpload(filename, file.type, file.size);
 
   return NextResponse.json({ url: `/uploads/${filename}` });
 }

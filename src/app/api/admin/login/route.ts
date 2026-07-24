@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const password = typeof body?.password === "string" ? body.password : "";
 
-  if (!password || !verifyAdminPassword(password)) {
+  if (!password || !(await verifyAdminPassword(password))) {
     // Small fixed delay blunts naive brute-force attempts.
     await new Promise((resolve) => setTimeout(resolve, 400));
     return NextResponse.json({ error: "Invalid password" }, { status: 401 });
