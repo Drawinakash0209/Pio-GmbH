@@ -3,7 +3,7 @@
 // EditableText/EditableImage ids used out in src/components/*.tsx — it has
 // no server-only imports so it's safe to import from both server and client.
 
-export type FieldType = "text" | "textarea" | "image";
+export type FieldType = "text" | "textarea" | "media";
 
 export interface ContentField {
   id: string;
@@ -28,7 +28,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     label: "Hero",
     description: "The full-screen intro banner at the top of the site.",
     fields: [
-      { id: "hero.bg", label: "Background image", type: "image", defaultValue: HERO_BG },
+      { id: "hero.bg", label: "Background (image or video)", type: "media", defaultValue: HERO_BG },
       {
         id: "hero.badge",
         label: "Location badge",
@@ -44,8 +44,8 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     fields: [
       {
         id: "services.facility.image",
-        label: "Facility Management — image",
-        type: "image",
+        label: "Facility Management — image or video",
+        type: "media",
         defaultValue:
           "https://lh3.googleusercontent.com/aida-public/AB6AXuAN4pSLaLjtzJWkQ7F-ef4LTr1zXga3uEc5BaTgwC5HcY7i3vRVRg8nRCzoXPSU8n-bW-wGBR5aF5RVsS3_fkXy-WwFkisqry_-Ynz1uhrqh-AGIQ18bNgUv_8vSt1KW3Cjnsgpe1KLJQLp4m9BxiFM1ItSg-IBfXCZ7yGqPwnFnVKQ1jEmYgFkj05XUq-s2EkOLcirgEfLzxGitYxIpT7PyFYBy3zkiV1qH_HWiIHUYAp_3pu3dl7g0qk9zP7TBf8ZCc_mbRrAH2Y",
       },
@@ -77,8 +77,8 @@ export const CONTENT_SECTIONS: ContentSection[] = [
       },
       {
         id: "services.optimization.image",
-        label: "Operational Optimization — image",
-        type: "image",
+        label: "Operational Optimization — image or video",
+        type: "media",
         defaultValue:
           "https://lh3.googleusercontent.com/aida-public/AB6AXuAwKU18lsm9jZL_eXH0zmMrXGMfdfe56EMg6X38jmw-nW2khKIbS_qzEIyNQqSpfBiCv_eDn9Ktat5UWr6AdVR2BMeVWegoJdJ_H3KPgfwemiSBtp3SfbQAa_qKmNkDOkrxp8GNzDPjwZsSyGbYqzjK7Pe1I33WIIdAn1aETYTonYBrbZ50TS0uDet3AoQcsRqimne2bjsxEFdjRegg01ZdIKL29A4wTtDhrIuPh3QHUr3XMVlXjUkjQBbFsDx-2-yVC4dBIWitUR0",
       },
@@ -97,8 +97,8 @@ export const CONTENT_SECTIONS: ContentSection[] = [
       },
       {
         id: "services.trade.image",
-        label: "Import & Export — image",
-        type: "image",
+        label: "Import & Export — image or video",
+        type: "media",
         defaultValue:
           "https://lh3.googleusercontent.com/aida-public/AB6AXuAzNLU5XTPySUs2I-74gd1DKJLOC3khcf1UoYHxC3pZXMeYSC7f2PgciMKwHU3ZD4fpQKtNFmvZTj_mHeapWhAMnvy_bR8Jafexeiis0Yg6N5StZp70AVG362AALo8vVHKMWdMrSUhFTWcw6c0O5vO-88Cf_YSs5rV2-NRuYULEnbmJtFoYOL6qQHwtEqGOtwuPuuIqwOsiM9o22CzkJNPAAFH2s4SdHwIgi7lq9zgGL3ao5CLFGFLuAfR9W-ftZD12lQbWG7I84rs",
       },
@@ -174,7 +174,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     label: "Future Banner",
     description: "The full-width parallax call-to-action banner.",
     fields: [
-      { id: "parallax.bg", label: "Background image", type: "image", defaultValue: HERO_BG },
+      { id: "parallax.bg", label: "Background (image or video)", type: "media", defaultValue: HERO_BG },
       {
         id: "parallax.eyebrow",
         label: "Eyebrow label",

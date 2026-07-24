@@ -13,8 +13,12 @@ const ALLOWED_TYPES: Record<string, string> = {
   "image/webp": "webp",
   "image/gif": "gif",
   "image/svg+xml": "svg",
+  "video/mp4": "mp4",
+  "video/webm": "webm",
+  "video/quicktime": "mov",
 };
-const MAX_SIZE = 8 * 1024 * 1024; // 8MB
+const MAX_IMAGE_SIZE = 8 * 1024 * 1024; // 8MB
+const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
 
 export async function POST(request: Request) {
   const store = await cookies();
@@ -33,8 +37,13 @@ export async function POST(request: Request) {
   if (!ext) {
     return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
   }
-  if (file.size > MAX_SIZE) {
-    return NextResponse.json({ error: "File too large (max 8MB)" }, { status: 400 });
+  const isVideo = file.type.startsWith("video/");
+  const maxSize = isVideo ? MAX_VIDEO_SIZE : MAX_IMAGE_SIZE;
+  if (file.size > maxSize) {
+    return NextResponse.json(
+      { error: `File too large (max ${maxSize / (1024 * 1024)}MB)` },
+      { status: 400 }
+    );
   }
 
   await mkdir(UPLOAD_DIR, { recursive: true });

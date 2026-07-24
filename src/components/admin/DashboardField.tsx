@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Check, ImageUp, Loader2, RotateCcw } from "lucide-react";
 import type { ContentField } from "@/lib/content-schema";
+import { isVideoSrc } from "@/lib/media";
 
 type SaveStatus = "idle" | "saving" | "saved";
 
@@ -130,7 +131,7 @@ function TextField({ field, value, isCustom, onSave, onReset }: DashboardFieldPr
   );
 }
 
-function ImageField({ field, value, isCustom, onSave, onReset }: DashboardFieldProps) {
+function MediaField({ field, value, isCustom, onSave, onReset }: DashboardFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [status, setStatus] = useState<SaveStatus>("idle");
@@ -162,7 +163,11 @@ function ImageField({ field, value, isCustom, onSave, onReset }: DashboardFieldP
   return (
     <FieldChrome field={field} isCustom={isCustom} onReset={onReset} status={status}>
       <div className="relative w-full h-48 bg-t-bg-subtle overflow-hidden mb-3">
-        <Image src={value} alt={field.label} fill className="object-cover" unoptimized />
+        {isVideoSrc(value) ? (
+          <video src={value} className="absolute inset-0 w-full h-full object-cover" muted loop autoPlay playsInline />
+        ) : (
+          <Image src={value} alt={field.label} fill className="object-cover" unoptimized />
+        )}
       </div>
       <button
         type="button"
@@ -171,14 +176,20 @@ function ImageField({ field, value, isCustom, onSave, onReset }: DashboardFieldP
         className="inline-flex items-center gap-2 px-4 py-2.5 bg-t-ink text-t-on-ink text-[11px] font-black tracking-[0.08em] uppercase hover:bg-t-dark-panel hover:text-t-on-dark-panel transition-colors disabled:opacity-60"
       >
         {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ImageUp className="w-4 h-4" />}
-        {uploading ? "Uploading…" : "Change Image"}
+        {uploading ? "Uploading…" : "Change Image or Video"}
       </button>
-      <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*,video/*"
+        className="hidden"
+        onChange={handleFile}
+      />
     </FieldChrome>
   );
 }
 
 export default function DashboardField(props: DashboardFieldProps) {
-  if (props.field.type === "image") return <ImageField {...props} />;
+  if (props.field.type === "media") return <MediaField {...props} />;
   return <TextField {...props} />;
 }
