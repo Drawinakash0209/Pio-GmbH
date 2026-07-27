@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Eye, Target, Handshake, Gauge } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
+import EditableText from "./EditableText";
 
 const statementIcons = [Eye, Target];
 const valueIcons = [Handshake, Gauge];
@@ -15,7 +16,11 @@ export default function VisionMission() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
-          <span className="section-label">{t.visionMission.sectionLabel}</span>
+          <EditableText
+            id="visionMission.sectionLabel"
+            defaultValue={t.visionMission.sectionLabel}
+            className="section-label"
+          />
           <div className="section-divider" />
         </div>
 
@@ -32,8 +37,10 @@ export default function VisionMission() {
             fontWeight: 700,
           }}
         >
-          {t.visionMission.heading.main}
-          <em className="accent-italic">{t.visionMission.heading.accent}</em>
+          <EditableText id="visionMission.heading.main" defaultValue={t.visionMission.heading.main} />
+          <em className="accent-italic">
+            <EditableText id="visionMission.heading.accent" defaultValue={t.visionMission.heading.accent} />
+          </em>
         </motion.h2>
 
         {/* Vision & Mission — two dark statement panels */}
@@ -63,11 +70,23 @@ export default function VisionMission() {
                   <div className="w-12 h-12 rounded-sm bg-t-accent flex items-center justify-center mb-6">
                     <Icon className="w-5 h-5 text-t-on-accent" />
                   </div>
-                  <span className="block text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-3 font-mono">
-                    {label}
-                  </span>
-                  <h3 className="text-2xl font-bold tracking-tight text-white mb-4">{title}</h3>
-                  <p className="text-base leading-7 text-white/60 max-w-md">{body}</p>
+                  <EditableText
+                    id={`visionMission.statements.${i}.label`}
+                    defaultValue={label}
+                    className="block text-[10px] font-black tracking-[0.15em] uppercase text-t-accent mb-3 font-mono"
+                  />
+                  <EditableText
+                    id={`visionMission.statements.${i}.title`}
+                    as="h3"
+                    defaultValue={title}
+                    className="text-2xl font-bold tracking-tight text-white mb-4"
+                  />
+                  <EditableText
+                    id={`visionMission.statements.${i}.body`}
+                    as="p"
+                    defaultValue={body}
+                    className="text-base leading-7 text-white/60 max-w-md"
+                  />
                 </div>
                 <div className="absolute bottom-0 left-0 w-16 h-1 bg-t-accent" />
               </motion.div>
@@ -93,8 +112,18 @@ export default function VisionMission() {
                   <Icon className="w-5 h-5 text-t-accent group-hover:text-t-on-accent transition-colors duration-200" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold tracking-tight text-t-ink mb-3">{title}</h3>
-                  <p className="text-base leading-6 text-t-body">{body}</p>
+                  <EditableText
+                    id={`visionMission.values.${i}.title`}
+                    as="h3"
+                    defaultValue={title}
+                    className="text-xl font-bold tracking-tight text-t-ink mb-3"
+                  />
+                  <EditableText
+                    id={`visionMission.values.${i}.body`}
+                    as="p"
+                    defaultValue={body}
+                    className="text-base leading-6 text-t-body"
+                  />
                 </div>
               </motion.div>
             );

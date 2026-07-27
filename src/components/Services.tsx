@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import EditableImage from "./EditableImage";
 import EditableText from "./EditableText";
 import { useLanguage } from "./LanguageProvider";
+import { useEditableValue } from "./useEditableValue";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -22,13 +23,22 @@ export default function Services() {
   const { t } = useLanguage();
   const [activeService, setActiveService] = useState<string | null>(null);
   const activeDetail = activeService ? t.services.modal.details[activeService] : null;
+  const requestAudit = useEditableValue("services.facility.requestAudit", t.services.facility.requestAudit);
+  const facilityLearnMore = useEditableValue("services.facility.learnMore", t.services.facility.learnMore);
+  const staffingLearnMore = useEditableValue("services.staffing.learnMore", t.services.staffing.learnMore);
+  const optimizationLearnMore = useEditableValue(
+    "services.optimization.learnMore",
+    t.services.optimization.learnMore
+  );
+  const tradeLearnMore = useEditableValue("services.trade.learnMore", t.services.trade.learnMore);
+  const modalClose = useEditableValue("services.modal.close", t.services.modal.close);
 
   return (
     <section id="services" className="py-[120px] bg-t-bg-elevated">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
-          <span className="section-label">{t.services.sectionLabel}</span>
+          <EditableText id="services.sectionLabel" defaultValue={t.services.sectionLabel} className="section-label" />
           <div className="section-divider" />
         </div>
 
@@ -49,10 +59,17 @@ export default function Services() {
               fontWeight: 700,
             }}
           >
-            {t.services.heading.main}
-            <em className="accent-italic">{t.services.heading.accent}</em>
+            <EditableText id="services.heading.main" defaultValue={t.services.heading.main} />
+            <em className="accent-italic">
+              <EditableText id="services.heading.accent" defaultValue={t.services.heading.accent} />
+            </em>
           </h2>
-          <p className="text-sm text-t-faint max-w-xs">{t.services.subtext}</p>
+          <EditableText
+            id="services.subtext"
+            as="p"
+            defaultValue={t.services.subtext}
+            className="text-sm text-t-faint max-w-xs"
+          />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -89,13 +106,13 @@ export default function Services() {
                   className="text-base leading-6 text-t-body"
                 />
                 <div className="flex flex-wrap gap-2 mt-6">
-                  {t.services.facility.tags.map((tag) => (
-                    <span
+                  {t.services.facility.tags.map((tag, i) => (
+                    <EditableText
                       key={tag}
-                      className="px-3 py-1.5 rounded-sm bg-t-bg-elevated border border-t-border text-[10px] font-bold tracking-[0.08em] uppercase text-t-body font-mono"
-                    >
-                      {tag}
-                    </span>
+                      id={`services.facility.tags.${i}`}
+                      defaultValue={tag}
+                      className="px-3 py-1.5 rounded-sm bg-t-bg-elevated border border-t-border text-[10px] font-bold tracking-[0.08em] uppercase text-t-body font-mono inline-block"
+                    />
                   ))}
                 </div>
               </div>
@@ -104,14 +121,14 @@ export default function Services() {
                   href="#contact"
                   className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink hover:text-t-link transition-colors group/link"
                 >
-                  {t.services.facility.requestAudit}
+                  {requestAudit}
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                 </Link>
                 <button
                   onClick={() => setActiveService("facility")}
                   className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-faint hover:text-t-ink transition-colors"
                 >
-                  {t.services.facility.learnMore}
+                  {facilityLearnMore}
                 </button>
               </div>
             </div>
@@ -156,10 +173,10 @@ export default function Services() {
             </div>
             <div className="mt-8 pt-4 border-t border-t-border">
               <ul className="space-y-2 mb-6">
-                {t.services.staffing.items.map((item) => (
+                {t.services.staffing.items.map((item, i) => (
                   <li key={item} className="flex items-center gap-2 text-sm leading-5 text-t-body">
                     <span className="w-1.5 h-1.5 bg-t-accent inline-block shrink-0 rounded-full" />
-                    {item}
+                    <EditableText id={`services.staffing.items.${i}`} defaultValue={item} />
                   </li>
                 ))}
               </ul>
@@ -167,7 +184,7 @@ export default function Services() {
                 onClick={() => setActiveService("staffing")}
                 className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink hover:text-t-link transition-colors group/link"
               >
-                {t.services.staffing.learnMore}
+                {staffingLearnMore}
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -211,7 +228,7 @@ export default function Services() {
                 onClick={() => setActiveService("optimization")}
                 className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink mt-6 hover:text-t-link transition-colors group/link"
               >
-                {t.services.optimization.learnMore}
+                {optimizationLearnMore}
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -255,20 +272,20 @@ export default function Services() {
                   className="text-base leading-6 text-white/60"
                 />
                 <div className="flex flex-wrap gap-2 mt-6">
-                  {t.services.trade.tags.map((tag) => (
-                    <span
+                  {t.services.trade.tags.map((tag, i) => (
+                    <EditableText
                       key={tag}
-                      className="px-3 py-1.5 rounded-sm border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60 font-mono"
-                    >
-                      {tag}
-                    </span>
+                      id={`services.trade.tags.${i}`}
+                      defaultValue={tag}
+                      className="px-3 py-1.5 rounded-sm border border-white/15 text-[10px] font-bold tracking-[0.08em] uppercase text-white/60 font-mono inline-block"
+                    />
                   ))}
                 </div>
               </div>
               <div className="mt-8">
                 <div className="h-px w-full bg-white/10 mb-4" />
                 <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.1em] text-white/40 font-bold mb-2 font-mono">
-                  <span>{t.services.trade.efficiencyLabel}</span>
+                  <EditableText id="services.trade.efficiencyLabel" defaultValue={t.services.trade.efficiencyLabel} />
                   <span className="text-t-accent">85%</span>
                 </div>
                 <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
@@ -284,7 +301,7 @@ export default function Services() {
                   onClick={() => setActiveService("trade")}
                   className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-white mt-6 hover:text-t-accent transition-colors group/link"
                 >
-                  {t.services.trade.learnMore}
+                  {tradeLearnMore}
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -294,23 +311,45 @@ export default function Services() {
       </div>
 
       <Modal open={activeDetail !== null} onClose={() => setActiveService(null)}>
-        {activeDetail && (
+        {activeDetail && activeService && (
           <div className="relative p-8 md:p-10">
-            <h3 className="text-3xl font-bold tracking-tight text-t-ink mb-2 pr-10">
-              {activeDetail.title}
-            </h3>
-            <p className="text-t-link font-bold mb-6">{activeDetail.tagline}</p>
-            <p className="text-base leading-7 text-t-body mb-8">{activeDetail.description}</p>
+            <EditableText
+              id={`services.modal.details.${activeService}.title`}
+              as="h3"
+              defaultValue={activeDetail.title}
+              className="text-3xl font-bold tracking-tight text-t-ink mb-2 pr-10"
+            />
+            <EditableText
+              id={`services.modal.details.${activeService}.tagline`}
+              as="p"
+              defaultValue={activeDetail.tagline}
+              className="text-t-link font-bold mb-6"
+            />
+            <EditableText
+              id={`services.modal.details.${activeService}.description`}
+              as="p"
+              defaultValue={activeDetail.description}
+              className="text-base leading-7 text-t-body mb-8"
+            />
 
             <div className="bg-t-bg rounded-lg border border-t-border p-6">
-              <h4 className="font-bold text-t-ink mb-4">{t.services.modal.keyFeatures}</h4>
+              <EditableText
+                id="services.modal.keyFeatures"
+                as="h4"
+                defaultValue={t.services.modal.keyFeatures}
+                className="font-bold text-t-ink mb-4"
+              />
               <div className="grid sm:grid-cols-2 gap-4">
-                {activeDetail.features.map((feature) => (
+                {activeDetail.features.map((feature, i) => (
                   <div key={feature} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-sm bg-t-accent flex items-center justify-center text-t-on-accent shrink-0 mt-0.5">
                       <Check className="w-3 h-3" />
                     </div>
-                    <span className="text-sm font-medium text-t-body">{feature}</span>
+                    <EditableText
+                      id={`services.modal.details.${activeService}.features.${i}`}
+                      defaultValue={feature}
+                      className="text-sm font-medium text-t-body"
+                    />
                   </div>
                 ))}
               </div>
@@ -321,7 +360,7 @@ export default function Services() {
                 onClick={() => setActiveService(null)}
                 className="inline-flex items-center justify-center px-9 py-4 rounded-sm bg-t-ink text-t-on-ink text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-dark-panel hover:text-t-on-dark-panel transition-colors duration-150 min-w-[120px]"
               >
-                {t.services.modal.close}
+                {modalClose}
               </button>
             </div>
           </div>

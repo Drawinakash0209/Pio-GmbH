@@ -3,10 +3,16 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useLanguage } from "./LanguageProvider";
+import { useEditable } from "./EditableProvider";
+import { pickEditable } from "./useEditableValue";
 
 export default function MarqueeBanner() {
   const { t } = useLanguage();
-  const doubled = [...t.marquee, ...t.marquee, ...t.marquee];
+  const { content } = useEditable();
+  // Inline contentEditable would be a poor target on scrolling text, so the
+  // marquee items are dashboard-editable only (see useEditableValue.ts).
+  const items = t.marquee.map((item, i) => pickEditable(content, `marquee.${i}`, item));
+  const doubled = [...items, ...items, ...items];
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -32,7 +38,7 @@ export default function MarqueeBanner() {
         {doubled.map((text, i) => (
           <div key={i} className="flex items-center gap-4 shrink-0">
             <span
-              className="font-display text-2xl md:text-3xl italic uppercase tracking-tighter"
+              className="font-script text-2xl md:text-3xl uppercase tracking-tighter"
               style={{
                 WebkitTextStroke: "1px var(--color-t-accent-dim)",
                 color: "transparent",

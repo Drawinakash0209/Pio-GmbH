@@ -5,10 +5,13 @@ import Link from "next/link";
 import EditableImage from "./EditableImage";
 import EditableText from "./EditableText";
 import { useLanguage } from "./LanguageProvider";
+import { useEditableValue } from "./useEditableValue";
 
 export default function Hero() {
   const { t } = useLanguage();
   const words = t.hero.headline;
+  const ctaPrimary = useEditableValue("hero.ctaPrimary", t.hero.ctaPrimary);
+  const ctaSecondary = useEditableValue("hero.ctaSecondary", t.hero.ctaSecondary);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-t-bg">
@@ -79,11 +82,11 @@ export default function Hero() {
                   className="inline-block"
                   style={{
                     color: wi >= 2 ? "var(--color-t-faint)" : "var(--color-t-ink)",
-                    fontStyle: wi % 2 !== 0 ? "italic" : "normal",
+                    fontFamily: wi % 2 !== 0 ? "var(--font-family-script)" : "inherit",
                     fontWeight: wi % 2 === 0 ? 700 : 500,
                   }}
                 >
-                  {word}
+                  <EditableText id={`hero.headline.${wi}`} defaultValue={word} />
                 </motion.span>
               </span>
             ))}
@@ -101,11 +104,19 @@ export default function Hero() {
             transition={{ delay: 0.7, duration: 0.7 }}
             className="text-lg leading-8 text-t-body font-light mb-12 max-w-md"
           >
-            {t.hero.subtitleBefore}
-            <span className="not-italic text-t-ink font-medium">{t.hero.subtitleStandard}</span>
-            {t.hero.subtitleMid}
-            <span className="not-italic text-t-ink font-medium">{t.hero.subtitleExcellence}</span>
-            {t.hero.subtitleAfter}
+            <EditableText id="hero.subtitleBefore" defaultValue={t.hero.subtitleBefore} />
+            <EditableText
+              id="hero.subtitleStandard"
+              defaultValue={t.hero.subtitleStandard}
+              className="not-italic text-t-ink font-medium"
+            />
+            <EditableText id="hero.subtitleMid" defaultValue={t.hero.subtitleMid} />
+            <EditableText
+              id="hero.subtitleExcellence"
+              defaultValue={t.hero.subtitleExcellence}
+              className="not-italic text-t-ink font-medium"
+            />
+            <EditableText id="hero.subtitleAfter" defaultValue={t.hero.subtitleAfter} />
           </motion.p>
 
           {/* CTAs */}
@@ -119,27 +130,31 @@ export default function Hero() {
               href="#services"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-t-accent text-t-on-accent text-[13px] font-semibold tracking-[0.1em] uppercase rounded-sm hover:bg-t-accent-dim transition-colors duration-300"
             >
-              {t.hero.ctaPrimary}
+              {ctaPrimary}
               <span className="text-sm">→</span>
             </Link>
             <Link
               href="#contact"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-transparent border border-t-faint text-t-ink text-[13px] font-medium tracking-[0.1em] uppercase rounded-sm hover:border-t-accent hover:text-t-link transition-all duration-300"
             >
-              {t.hero.ctaSecondary}
+              {ctaSecondary}
             </Link>
           </motion.div>
 
           {/* Stats row */}
           <div className="flex items-center gap-8 mt-16 pt-8 border-t border-t-border">
-            {t.hero.stats.map(({ value, label }) => (
+            {t.hero.stats.map(({ value, label }, i) => (
               <div key={label} className="flex flex-col">
-                <span className="font-display text-[28px] font-700 text-t-link dark:text-t-accent leading-none">
-                  {value}
-                </span>
-                <span className="text-[10px] tracking-[0.15em] uppercase text-t-faint mt-1 font-mono">
-                  {label}
-                </span>
+                <EditableText
+                  id={`hero.stats.${i}.value`}
+                  defaultValue={value}
+                  className="font-display text-[28px] font-700 text-t-link dark:text-t-accent leading-none"
+                />
+                <EditableText
+                  id={`hero.stats.${i}.label`}
+                  defaultValue={label}
+                  className="text-[10px] tracking-[0.15em] uppercase text-t-faint mt-1 font-mono"
+                />
               </div>
             ))}
           </div>
@@ -166,9 +181,11 @@ export default function Hero() {
             {/* Corner tag */}
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
               <div className="glass-panel px-4 py-2 rounded">
-                <span className="text-[10px] tracking-[0.18em] uppercase text-t-accent font-mono">
-                  {t.hero.cornerTag}
-                </span>
+                <EditableText
+                  id="hero.cornerTag"
+                  defaultValue={t.hero.cornerTag}
+                  className="text-[10px] tracking-[0.18em] uppercase text-t-accent font-mono"
+                />
               </div>
             </div>
           </div>
@@ -186,7 +203,11 @@ export default function Hero() {
         transition={{ delay: 1.4, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-t-faint"
       >
-        <span className="text-[9px] tracking-[0.2em] uppercase font-mono">{t.hero.scroll}</span>
+        <EditableText
+          id="hero.scroll"
+          defaultValue={t.hero.scroll}
+          className="text-[9px] tracking-[0.2em] uppercase font-mono"
+        />
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

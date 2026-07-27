@@ -7,11 +7,20 @@ import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "./LanguageProvider";
+import { useEditable } from "./EditableProvider";
+import { useEditableValue, pickEditable } from "./useEditableValue";
 
 export default function Nav() {
   const { t } = useLanguage();
+  const { content } = useEditable();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const tagline = useEditableValue("nav.tagline", t.nav.tagline);
+  const cta = useEditableValue("nav.cta", t.nav.cta);
+  const links = t.nav.links.map((link, i) => ({
+    ...link,
+    name: pickEditable(content, `nav.links.${i}.name`, link.name),
+  }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -40,14 +49,14 @@ export default function Nav() {
             >
               Pio GmbH
             </span>
-            <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-t-accent mt-0.5">
-              {t.nav.tagline}
+            <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-t-accent bg-t-dark-panel rounded-full px-2 py-0.5 mt-1.5 w-fit">
+              {tagline}
             </span>
           </Link>
 
           {/* Desktop Nav — center */}
           <div className="hidden md:flex items-center gap-0 absolute left-1/2 -translate-x-1/2">
-            {t.nav.links.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
@@ -66,7 +75,7 @@ export default function Nav() {
               href="#contact"
               className="group flex items-center gap-2 ml-2 px-6 py-2.5 text-[12px] font-medium tracking-[0.12em] uppercase border border-t-border text-t-link rounded-sm hover:bg-t-accent hover:text-t-on-accent hover:border-t-accent transition-all duration-300"
             >
-              {t.nav.cta}
+              {cta}
               <span className="text-[10px] group-hover:translate-x-1 transition-transform inline-block">
                 →
               </span>
@@ -102,7 +111,7 @@ export default function Nav() {
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="fixed top-20 inset-x-4 z-40 rounded-xl glass-panel shadow-2xl p-6 flex flex-col gap-1"
           >
-            {t.nav.links.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
@@ -118,7 +127,7 @@ export default function Nav() {
               onClick={() => setMobileOpen(false)}
               className="flex items-center justify-center px-4 py-3.5 bg-t-accent text-t-on-accent text-[13px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-t-accent-dim transition-colors"
             >
-              {t.nav.cta}
+              {cta}
             </Link>
           </motion.div>
         )}

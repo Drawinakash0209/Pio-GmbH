@@ -83,9 +83,10 @@
   --spacing-gutter: 24px;
   --spacing-margin-mobile: 16px;
 
-  --font-family-display: var(--font-playfair-display), Georgia, serif;
+  --font-family-display: var(--font-qalisso), Georgia, serif;
   --font-family-sans: var(--font-dm-sans), system-ui, sans-serif;
   --font-family-mono: var(--font-dm-mono), monospace;
+  --font-family-script: var(--font-bloved), Georgia, serif;
 }
 
 /* ---- Dark theme overrides ---- */
@@ -158,15 +159,17 @@ h6,
 
 /* ---- Section-label pattern (borrowed from theme_4's numbered layout) ---- */
 .section-label {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-family-mono);
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-t-accent-dim);
-  white-space: nowrap;
-}
-.dark .section-label {
   color: var(--color-t-accent);
+  white-space: nowrap;
+  background-color: var(--color-t-dark-panel);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
 }
 
 .section-divider {
@@ -185,8 +188,14 @@ h6,
   pointer-events: none;
 }
 
+.font-script {
+  font-family: var(--font-family-script);
+  font-style: normal;
+}
+
 .accent-italic {
-  font-style: italic;
+  font-family: var(--font-family-script);
+  font-style: normal;
   color: var(--color-t-link);
 }
 .dark .accent-italic {

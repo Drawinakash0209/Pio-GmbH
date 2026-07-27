@@ -2,7 +2,7 @@
 
 import { useEditable } from "./EditableProvider";
 
-type EditableTag = "span" | "p" | "h1" | "h2" | "h3" | "h4" | "div";
+type EditableTag = "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div" | "li" | "label";
 
 interface EditableTextProps {
   id: string;

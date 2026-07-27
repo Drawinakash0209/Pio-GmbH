@@ -6,9 +6,11 @@ import Link from "next/link";
 import EditableImage from "./EditableImage";
 import EditableText from "./EditableText";
 import { useLanguage } from "./LanguageProvider";
+import { useEditableValue } from "./useEditableValue";
 
 export default function ParallaxBanner() {
   const { t } = useLanguage();
+  const cta = useEditableValue("parallax.cta", t.parallax.cta);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -78,9 +80,9 @@ export default function ParallaxBanner() {
               fontWeight: 800,
             }}
           >
-            {t.parallax.heading.main}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-t-accent to-t-accent-dim italic">
-              {t.parallax.heading.accent}
+            <EditableText id="parallax.heading.main" defaultValue={t.parallax.heading.main} />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-t-accent to-t-accent-dim font-script">
+              <EditableText id="parallax.heading.accent" defaultValue={t.parallax.heading.accent} />
             </span>
           </h2>
           <EditableText
@@ -93,7 +95,7 @@ export default function ParallaxBanner() {
             href="#contact"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-sm bg-t-accent text-t-on-accent text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-accent-dim transition-colors duration-150"
           >
-            {t.parallax.cta}
+            {cta}
           </Link>
         </motion.div>
       </motion.div>

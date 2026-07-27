@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Lang, Translation, translations } from "@/lib/translations";
 
 interface LanguageContextValue {
@@ -15,12 +15,17 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(undefine
 const STORAGE_KEY = "pio-gmbh-lang";
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // The inline script in layout.tsx sets <html lang> before hydration, so we
-  // read it back lazily instead of needing an effect + setState on mount.
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof document === "undefined") return "en";
-    return document.documentElement.lang === "de" ? "de" : "en";
-  });
+  // Every consumer renders different text per language, so — unlike the theme
+  // class, which is pure CSS — a lazy initializer reading the DOM here would
+  // make the first client render (used for hydration) diverge from the "en"
+  // default the server actually sent whenever a visitor has "de" stored. Start
+  // at the server's default and sync from the (already inline-script-set)
+  // <html lang> in an effect, after hydration has settled.
+  const [lang, setLangState] = useState<Lang>("en");
+
+  useEffect(() => {
+    setLangState(document.documentElement.lang === "de" ? "de" : "en");
+  }, []);
 
   const applyLanguage = useCallback((next: Lang) => {
     setLangState(next);

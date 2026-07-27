@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
@@ -12,7 +13,13 @@ export default function ThemeToggle({
   className?: string;
 }) {
   const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
+  // The server always renders the light-mode icon (it has no access to the
+  // visitor's localStorage theme). Gate the real icon behind a post-mount
+  // flag so the first client render matches that server output exactly —
+  // otherwise React sees a Sun/Moon subtree mismatch during hydration.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && theme === "dark";
 
   return (
     <button

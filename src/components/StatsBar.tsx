@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Users, Trophy, Clock } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useLanguage } from "./LanguageProvider";
+import EditableText from "./EditableText";
 
 const iconFor = [Trophy, Clock, Users];
 const valueFor = ["100", "24/7", "Expert"];
@@ -66,9 +67,11 @@ export default function StatsBar() {
                   {numeric !== null ? <CountUp to={numeric} /> : valueFor[i]}
                   {suffixFor[i] && <span className="text-t-accent">{suffixFor[i]}</span>}
                 </span>
-                <span className="text-[11px] font-bold tracking-[0.1em] uppercase text-white/40 font-mono">
-                  {label}
-                </span>
+                <EditableText
+                  id={`statsBar.${i}.label`}
+                  defaultValue={label}
+                  className="text-[11px] font-bold tracking-[0.1em] uppercase text-white/40 font-mono"
+                />
               </motion.div>
             );
           })}

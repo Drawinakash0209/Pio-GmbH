@@ -4,13 +4,17 @@ import { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Building2, Globe, Award, Target, Users, Zap, Check, ArrowRight } from "lucide-react";
 import Modal from "./Modal";
+import EditableText from "./EditableText";
 import { useLanguage } from "./LanguageProvider";
+import { useEditableValue } from "./useEditableValue";
 
 const pillarIcons = [Building2, Globe, Award];
 
 export default function About() {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
+  const learnMore = useEditableValue("about.learnMore", t.about.learnMore);
+  const modalClose = useEditableValue("about.modal.close", t.about.modal.close);
 
   // Subtle cursor-reactive tilt on the dark visual panel
   const mx = useMotionValue(0.5);
@@ -42,7 +46,7 @@ export default function About() {
       <div className="relative max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
-          <span className="section-label">{t.about.sectionLabel}</span>
+          <EditableText id="about.sectionLabel" defaultValue={t.about.sectionLabel} className="section-label" />
           <div className="section-divider" />
         </div>
 
@@ -63,11 +67,23 @@ export default function About() {
                 fontWeight: 700,
               }}
             >
-              {t.about.heading.main}
-              <em className="accent-italic">{t.about.heading.accent}</em>
+              <EditableText id="about.heading.main" defaultValue={t.about.heading.main} />
+              <em className="accent-italic">
+                <EditableText id="about.heading.accent" defaultValue={t.about.heading.accent} />
+              </em>
             </h2>
-            <p className="text-base leading-7 text-t-body font-light mb-5">{t.about.paragraph1}</p>
-            <p className="text-base leading-7 text-t-body font-light mb-10">{t.about.paragraph2}</p>
+            <EditableText
+              id="about.paragraph1"
+              as="p"
+              defaultValue={t.about.paragraph1}
+              className="text-base leading-7 text-t-body font-light mb-5"
+            />
+            <EditableText
+              id="about.paragraph2"
+              as="p"
+              defaultValue={t.about.paragraph2}
+              className="text-base leading-7 text-t-body font-light mb-10"
+            />
 
             {/* Pillar chips */}
             <div className="flex flex-wrap gap-3 mb-10">
@@ -83,9 +99,11 @@ export default function About() {
                     className="flex items-center gap-2.5 px-4 py-2.5 rounded-sm border border-t-border bg-t-accent/5 hover:border-t-accent-dim hover:bg-t-accent/10 transition-all duration-300 group"
                   >
                     <Icon className="w-3.5 h-3.5 text-t-link dark:text-t-accent" />
-                    <span className="text-[11px] font-medium tracking-[0.1em] uppercase text-t-body group-hover:text-t-ink transition-colors font-mono">
-                      {label}
-                    </span>
+                    <EditableText
+                      id={`about.pillars.${i}`}
+                      defaultValue={label}
+                      className="text-[11px] font-medium tracking-[0.1em] uppercase text-t-body group-hover:text-t-ink transition-colors font-mono"
+                    />
                   </motion.div>
                 );
               })}
@@ -99,7 +117,7 @@ export default function About() {
               viewport={{ once: true }}
               className="group inline-flex items-center gap-3 text-sm font-medium text-t-ink hover:text-t-link transition-colors duration-300"
             >
-              <span>{t.about.learnMore}</span>
+              <span>{learnMore}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.div>
@@ -141,12 +159,16 @@ export default function About() {
                       viewport={{ once: true }}
                       className="rounded-sm border border-white/10 bg-white/5 p-5 flex flex-col gap-1 hover:bg-white/10 transition-colors"
                     >
-                      <span className="font-display text-3xl font-black text-white tracking-tight">
-                        {n}
-                      </span>
-                      <span className="text-[10px] uppercase tracking-[0.15em] text-white/40 font-bold font-mono">
-                        {l}
-                      </span>
+                      <EditableText
+                        id={`about.statPanel.${i}.n`}
+                        defaultValue={n}
+                        className="font-display text-3xl font-black text-white tracking-tight"
+                      />
+                      <EditableText
+                        id={`about.statPanel.${i}.l`}
+                        defaultValue={l}
+                        className="text-[10px] uppercase tracking-[0.15em] text-white/40 font-bold font-mono"
+                      />
                     </motion.div>
                   ))}
                 </div>
@@ -164,7 +186,7 @@ export default function About() {
         <div className="p-8 md:p-12">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-6 h-0.5 bg-t-accent" />
-            <span className="section-label">{t.about.modal.eyebrow}</span>
+            <EditableText id="about.modal.eyebrow" defaultValue={t.about.modal.eyebrow} className="section-label" />
           </div>
           <h3
             className="font-display text-t-ink mb-8"
@@ -175,8 +197,10 @@ export default function About() {
               fontWeight: 700,
             }}
           >
-            {t.about.modal.heading.main}
-            <em className="accent-italic">{t.about.modal.heading.accent}</em>
+            <EditableText id="about.modal.heading.main" defaultValue={t.about.modal.heading.main} />
+            <em className="accent-italic">
+              <EditableText id="about.modal.heading.accent" defaultValue={t.about.modal.heading.accent} />
+            </em>
           </h3>
 
           <div className="flex items-start gap-4 mb-10">
@@ -184,23 +208,51 @@ export default function About() {
               <Target className="w-5 h-5 text-t-link dark:text-t-accent" />
             </div>
             <div>
-              <h4 className="text-xl font-bold tracking-tight text-t-ink mb-2">
-                {t.about.modal.executionTitle}
-              </h4>
-              <p className="text-base leading-7 text-t-body">{t.about.modal.executionBody}</p>
+              <EditableText
+                id="about.modal.executionTitle"
+                as="h4"
+                defaultValue={t.about.modal.executionTitle}
+                className="text-xl font-bold tracking-tight text-t-ink mb-2"
+              />
+              <EditableText
+                id="about.modal.executionBody"
+                as="p"
+                defaultValue={t.about.modal.executionBody}
+                className="text-base leading-7 text-t-body"
+              />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-5 mb-10">
             <div className="p-6 rounded-sm bg-t-bg border border-t-border">
               <Target className="w-7 h-7 text-t-link mb-3" />
-              <h5 className="font-bold text-lg mb-2 text-t-ink">{t.about.modal.strategicTitle}</h5>
-              <p className="text-sm leading-6 text-t-body">{t.about.modal.strategicBody}</p>
+              <EditableText
+                id="about.modal.strategicTitle"
+                as="h5"
+                defaultValue={t.about.modal.strategicTitle}
+                className="font-bold text-lg mb-2 text-t-ink"
+              />
+              <EditableText
+                id="about.modal.strategicBody"
+                as="p"
+                defaultValue={t.about.modal.strategicBody}
+                className="text-sm leading-6 text-t-body"
+              />
             </div>
             <div className="p-6 rounded-sm bg-t-bg border border-t-border">
               <Users className="w-7 h-7 text-t-link mb-3" />
-              <h5 className="font-bold text-lg mb-2 text-t-ink">{t.about.modal.peopleTitle}</h5>
-              <p className="text-sm leading-6 text-t-body">{t.about.modal.peopleBody}</p>
+              <EditableText
+                id="about.modal.peopleTitle"
+                as="h5"
+                defaultValue={t.about.modal.peopleTitle}
+                className="font-bold text-lg mb-2 text-t-ink"
+              />
+              <EditableText
+                id="about.modal.peopleBody"
+                as="p"
+                defaultValue={t.about.modal.peopleBody}
+                className="text-sm leading-6 text-t-body"
+              />
             </div>
           </div>
 
@@ -215,15 +267,19 @@ export default function About() {
             />
             <h4 className="relative text-xl font-bold mb-6 text-white flex items-center gap-3">
               <Zap className="w-5 h-5 text-t-accent" />
-              {t.about.modal.standoutTitle}
+              <EditableText id="about.modal.standoutTitle" defaultValue={t.about.modal.standoutTitle} />
             </h4>
             <ul className="relative space-y-4">
-              {t.about.modal.standoutPoints.map((point) => (
+              {t.about.modal.standoutPoints.map((point, i) => (
                 <li key={point} className="flex items-start gap-3">
                   <div className="p-1 rounded-sm bg-t-accent text-t-on-accent mt-0.5 shrink-0">
                     <Check className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-white/80 leading-6">{point}</span>
+                  <EditableText
+                    id={`about.modal.standoutPoints.${i}`}
+                    defaultValue={point}
+                    className="text-white/80 leading-6"
+                  />
                 </li>
               ))}
             </ul>
@@ -234,7 +290,7 @@ export default function About() {
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center px-9 py-4 rounded-sm bg-t-accent text-t-on-accent text-[11px] font-black tracking-[0.1em] uppercase hover:bg-t-accent-dim transition-colors duration-150 min-w-[140px]"
             >
-              {t.about.modal.close}
+              {modalClose}
             </button>
           </div>
         </div>

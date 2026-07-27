@@ -4,11 +4,23 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, ArrowRight } from "lucide-react";
 import { useLanguage } from "./LanguageProvider";
+import EditableText from "./EditableText";
+import { useEditableValue } from "./useEditableValue";
 
 export default function Contact() {
   const { t, lang } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
+
+  const phone = useEditableValue("contact.phone", "+49 151 27919995");
+  const namePlaceholder = useEditableValue("contact.form.namePlaceholder", t.contact.form.namePlaceholder);
+  const emailPlaceholder = useEditableValue("contact.form.emailPlaceholder", t.contact.form.emailPlaceholder);
+  const messagePlaceholder = useEditableValue(
+    "contact.form.messagePlaceholder",
+    t.contact.form.messagePlaceholder
+  );
+  const submitLabel = useEditableValue("contact.form.submit", t.contact.form.submit);
+  const successAlert = useEditableValue("contact.form.successAlert", t.contact.form.successAlert);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -16,7 +28,7 @@ export default function Contact() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    alert(t.contact.form.successAlert);
+    alert(successAlert);
     setForm({ name: "", email: "", message: "" });
   }
 
@@ -24,22 +36,30 @@ export default function Contact() {
     {
       icon: MapPin,
       label: t.contact.headquarters,
+      labelId: "contact.headquarters",
       content: (
         <span className="text-base text-t-ink">
-          Oberhausener Straße 187
+          <EditableText id="contact.address.street" defaultValue="Oberhausener Straße 187" />
           <br />
-          45476 Mülheim an der Ruhr
+          <EditableText id="contact.address.cityLine" defaultValue="45476 Mülheim an der Ruhr" />
           <br />
-          {lang === "de" ? "Deutschland" : "Germany"}
+          <EditableText
+            id="contact.address.country"
+            defaultValue={lang === "de" ? "Deutschland" : "Germany"}
+          />
         </span>
       ),
     },
     {
       icon: Phone,
       label: t.contact.directLine,
+      labelId: "contact.directLine",
       content: (
-        <a href="tel:+4915127919995" className="text-base text-t-ink hover:text-t-link transition-colors">
-          +49 151 27919995
+        <a
+          href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+          className="text-base text-t-ink hover:text-t-link transition-colors"
+        >
+          {phone}
         </a>
       ),
     },
@@ -50,7 +70,7 @@ export default function Contact() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
-          <span className="section-label">{t.contact.sectionLabel}</span>
+          <EditableText id="contact.sectionLabel" defaultValue={t.contact.sectionLabel} className="section-label" />
           <div className="section-divider" />
         </div>
 
@@ -71,13 +91,20 @@ export default function Contact() {
                 fontWeight: 700,
               }}
             >
-              {t.contact.heading.main}
-              <em className="accent-italic">{t.contact.heading.accent}</em>
+              <EditableText id="contact.heading.main" defaultValue={t.contact.heading.main} />
+              <em className="accent-italic">
+                <EditableText id="contact.heading.accent" defaultValue={t.contact.heading.accent} />
+              </em>
             </h2>
-            <p className="text-base leading-7 text-t-body mb-12 max-w-md">{t.contact.subtext}</p>
+            <EditableText
+              id="contact.subtext"
+              as="p"
+              defaultValue={t.contact.subtext}
+              className="text-base leading-7 text-t-body mb-12 max-w-md"
+            />
 
             <div className="space-y-8">
-              {infoItems.map(({ icon: Icon, label, content }, i) => (
+              {infoItems.map(({ icon: Icon, label, labelId, content }, i) => (
                 <motion.div
                   key={label}
                   initial={{ opacity: 0, y: 16 }}
@@ -90,9 +117,11 @@ export default function Contact() {
                     <Icon className="w-4 h-4 text-t-accent group-hover:text-t-on-accent transition-colors duration-200" />
                   </div>
                   <div>
-                    <span className="block text-[10px] font-black tracking-[0.15em] uppercase text-t-faint mb-1 font-mono">
-                      {label}
-                    </span>
+                    <EditableText
+                      id={labelId}
+                      defaultValue={label}
+                      className="block text-[10px] font-black tracking-[0.15em] uppercase text-t-faint mb-1 font-mono"
+                    />
                     {content}
                   </div>
                 </motion.div>
@@ -102,9 +131,11 @@ export default function Contact() {
             {/* Decorative accent line */}
             <div className="mt-16 flex items-center gap-4">
               <div className="h-px w-12 bg-t-accent" />
-              <span className="text-[10px] tracking-[0.18em] uppercase text-t-faint font-mono">
-                {t.contact.footerTag}
-              </span>
+              <EditableText
+                id="contact.footerTag"
+                defaultValue={t.contact.footerTag}
+                className="text-[10px] tracking-[0.18em] uppercase text-t-faint font-mono"
+              />
             </div>
           </motion.div>
 
@@ -122,18 +153,31 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-8">
               {(
                 [
-                  { name: "name", label: t.contact.form.nameLabel, type: "text", placeholder: t.contact.form.namePlaceholder },
-                  { name: "email", label: t.contact.form.emailLabel, type: "email", placeholder: t.contact.form.emailPlaceholder },
+                  {
+                    name: "name",
+                    labelId: "contact.form.nameLabel",
+                    label: t.contact.form.nameLabel,
+                    type: "text",
+                    placeholder: namePlaceholder,
+                  },
+                  {
+                    name: "email",
+                    labelId: "contact.form.emailLabel",
+                    label: t.contact.form.emailLabel,
+                    type: "email",
+                    placeholder: emailPlaceholder,
+                  },
                 ] as const
-              ).map(({ name, label, type, placeholder }) => (
+              ).map(({ name, labelId, label, type, placeholder }) => (
                 <div key={name} className="relative">
-                  <label
+                  <EditableText
+                    id={labelId}
+                    as="label"
+                    defaultValue={label}
                     className={`block mb-2 text-[10px] font-mono tracking-[0.18em] uppercase transition-colors duration-200 ${
                       focused === name ? "text-t-link dark:text-t-accent" : "text-t-faint"
                     }`}
-                  >
-                    {label}
-                  </label>
+                  />
                   <input
                     type={type}
                     name={name}
@@ -151,20 +195,21 @@ export default function Contact() {
               ))}
 
               <div className="relative">
-                <label
+                <EditableText
+                  id="contact.form.messageLabel"
+                  as="label"
+                  defaultValue={t.contact.form.messageLabel}
                   className={`block mb-2 text-[10px] font-mono tracking-[0.18em] uppercase transition-colors duration-200 ${
                     focused === "message" ? "text-t-link dark:text-t-accent" : "text-t-faint"
                   }`}
-                >
-                  {t.contact.form.messageLabel}
-                </label>
+                />
                 <textarea
                   name="message"
                   value={form.message}
                   onChange={handleChange}
                   onFocus={() => setFocused("message")}
                   onBlur={() => setFocused(null)}
-                  placeholder={t.contact.form.messagePlaceholder}
+                  placeholder={messagePlaceholder}
                   rows={4}
                   required
                   className={`w-full bg-transparent border-0 border-b outline-none px-0 py-3 text-base text-t-ink transition-colors resize-none placeholder-t-border ${
@@ -179,7 +224,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.99 }}
                 className="w-full py-4 rounded-sm bg-t-ink text-t-on-ink text-[11px] font-black tracking-[0.1em] uppercase border border-transparent hover:border-t-accent transition-all duration-150 flex justify-center items-center gap-3 group"
               >
-                {t.contact.form.submit}
+                {submitLabel}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </form>

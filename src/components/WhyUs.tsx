@@ -5,9 +5,11 @@ import { ShieldCheck, Clock, Globe2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import EditableText from "./EditableText";
 import { useLanguage } from "./LanguageProvider";
+import { useEditableValue } from "./useEditableValue";
 
 export default function WhyUs() {
   const { t } = useLanguage();
+  const workWithUs = useEditableValue("whyus.workWithUs", t.whyUs.workWithUs);
 
   const pillars = [
     {
@@ -35,7 +37,7 @@ export default function WhyUs() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
-          <span className="section-label">{t.whyUs.sectionLabel}</span>
+          <EditableText id="whyus.sectionLabel" defaultValue={t.whyUs.sectionLabel} className="section-label" />
           <div className="section-divider" />
         </div>
 
@@ -55,14 +57,16 @@ export default function WhyUs() {
               fontWeight: 700,
             }}
           >
-            {t.whyUs.heading.main}
-            <em className="accent-italic">{t.whyUs.heading.accent}</em>
+            <EditableText id="whyus.heading.main" defaultValue={t.whyUs.heading.main} />
+            <em className="accent-italic">
+              <EditableText id="whyus.heading.accent" defaultValue={t.whyUs.heading.accent} />
+            </em>
           </h2>
           <Link
             href="#contact"
             className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink hover:text-t-link transition-colors group shrink-0"
           >
-            {t.whyUs.workWithUs}
+            {workWithUs}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
