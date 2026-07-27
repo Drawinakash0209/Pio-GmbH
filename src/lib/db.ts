@@ -42,9 +42,12 @@ function ensureSchema(): Promise<void> {
         CREATE TABLE IF NOT EXISTS admin_credentials (
           id INTEGER PRIMARY KEY DEFAULT 1,
           password_hash TEXT NOT NULL,
+          session_version INTEGER NOT NULL DEFAULT 1,
           updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
           CONSTRAINT admin_credentials_singleton CHECK (id = 1)
         );
+
+        ALTER TABLE admin_credentials ADD COLUMN IF NOT EXISTS session_version INTEGER NOT NULL DEFAULT 1;
         `
       )
       .then(() => undefined);
@@ -93,19 +96,37 @@ export async function recordUpload(
   );
 }
 
-export async function getAdminPasswordHash(): Promise<string | null> {
+export async function getAdminCredentials(): Promise<{
+  passwordHash: string;
+  sessionVersion: number;
+} | null> {
   await ensureSchema();
-  const { rows } = await getPool().query<{ password_hash: string }>(
-    "SELECT password_hash FROM admin_credentials WHERE id = 1"
-  );
-  return rows[0]?.password_hash ?? null;
+  const { rows } = await getPool().query<{
+    password_hash: string;
+    session_version: number;
+  }>("SELECT password_hash, session_version FROM admin_credentials WHERE id = 1");
+  if (!rows[0]) return null;
+  return { passwordHash: rows[0].password_hash, sessionVersion: rows[0].session_version };
 }
 
-export async function setAdminPasswordHash(hash: string): Promise<void> {
+export async function getAdminSessionVersion(): Promise<number | null> {
   await ensureSchema();
-  await getPool().query(
-    `INSERT INTO admin_credentials (id, password_hash, updated_at) VALUES (1, $1, now())
-     ON CONFLICT (id) DO UPDATE SET password_hash = excluded.password_hash, updated_at = excluded.updated_at`,
+  const { rows } = await getPool().query<{ session_version: number }>(
+    "SELECT session_version FROM admin_credentials WHERE id = 1"
+  );
+  return rows[0]?.session_version ?? null;
+}
+
+// Rotates the admin password and bumps session_version, which invalidates every
+// session token minted under the old version (see verifySessionToken).
+export async function updateAdminPassword(hash: string): Promise<number> {
+  await ensureSchema();
+  const { rows } = await getPool().query<{ session_version: number }>(
+    `UPDATE admin_credentials
+     SET password_hash = $1, session_version = session_version + 1, updated_at = now()
+     WHERE id = 1
+     RETURNING session_version`,
     [hash]
   );
+  return rows[0].session_version;
 }

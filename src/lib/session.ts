@@ -1,8 +1,9 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import bcrypt from "bcryptjs";
-import { getAdminPasswordHash, setAdminPasswordHash } from "./db";
+import { getAdminCredentials, getAdminSessionVersion, updateAdminPassword } from "./db";
 
 const BCRYPT_ROUNDS = 12;
+const MIN_PASSWORD_LENGTH = 8;
 
 export const ADMIN_COOKIE_NAME = "pio_admin_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
@@ -27,49 +28,55 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(bufA, bufB);
 }
 
-export function createSessionToken(): string {
+// sessionVersion is admin_credentials.session_version at mint time; bumping it
+// (on password change) invalidates every token minted under the old value.
+export function createSessionToken(sessionVersion: number): string {
   const expires = Date.now() + SESSION_TTL_MS;
-  const payload = `admin.${expires}`;
+  const payload = `admin.${sessionVersion}.${expires}`;
   return `${payload}.${sign(payload)}`;
 }
 
-export function verifySessionToken(token: string | undefined | null): boolean {
+export async function verifySessionToken(token: string | undefined | null): Promise<boolean> {
   if (!token) return false;
   const parts = token.split(".");
-  if (parts.length !== 3) return false;
-  const [role, expiresStr, signature] = parts;
+  if (parts.length !== 4) return false;
+  const [role, versionStr, expiresStr, signature] = parts;
   if (role !== "admin") return false;
   const expires = Number(expiresStr);
   if (!Number.isFinite(expires) || Date.now() > expires) return false;
-  return safeEqual(signature, sign(`${role}.${expiresStr}`));
+  if (!safeEqual(signature, sign(`${role}.${versionStr}.${expiresStr}`))) return false;
+
+  const currentVersion = await getAdminSessionVersion();
+  return currentVersion !== null && String(currentVersion) === versionStr;
 }
 
-let seedInFlight: Promise<string> | undefined;
+// Returns the session version to mint a token with, or null if the password was
+// wrong or no admin account has been seeded yet (run `npm run seed`).
+export async function verifyAdminPassword(password: string): Promise<number | null> {
+  const creds = await getAdminCredentials();
+  if (!creds) return null;
+  const valid = await bcrypt.compare(password, creds.passwordHash);
+  return valid ? creds.sessionVersion : null;
+}
 
-// Seeds admin_credentials from ADMIN_PASSWORD on first run; the DB row is
-// authoritative for every login after that.
-function getOrSeedPasswordHash(): Promise<string> {
-  if (!seedInFlight) {
-    seedInFlight = (async () => {
-      const existing = await getAdminPasswordHash();
-      if (existing) return existing;
-
-      const seed = process.env.ADMIN_PASSWORD;
-      if (!seed) {
-        throw new Error("ADMIN_PASSWORD environment variable is not set.");
-      }
-      const hash = await bcrypt.hash(seed, BCRYPT_ROUNDS);
-      await setAdminPasswordHash(hash);
-      return hash;
-    })().catch((err) => {
-      seedInFlight = undefined;
-      throw err;
-    });
+export async function changeAdminPassword(
+  currentPassword: string,
+  newPassword: string
+): Promise<{ ok: true; sessionVersion: number } | { ok: false; error: string }> {
+  if (newPassword.length < MIN_PASSWORD_LENGTH) {
+    return { ok: false, error: `New password must be at least ${MIN_PASSWORD_LENGTH} characters.` };
   }
-  return seedInFlight;
-}
 
-export async function verifyAdminPassword(password: string): Promise<boolean> {
-  const hash = await getOrSeedPasswordHash();
-  return bcrypt.compare(password, hash);
+  const creds = await getAdminCredentials();
+  if (!creds) {
+    return { ok: false, error: "No admin account has been seeded yet." };
+  }
+  const valid = await bcrypt.compare(currentPassword, creds.passwordHash);
+  if (!valid) {
+    return { ok: false, error: "Current password is incorrect." };
+  }
+
+  const hash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
+  const sessionVersion = await updateAdminPassword(hash);
+  return { ok: true, sessionVersion };
 }

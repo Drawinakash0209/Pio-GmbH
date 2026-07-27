@@ -22,7 +22,7 @@ const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
 
 export async function POST(request: Request) {
   const store = await cookies();
-  if (!verifySessionToken(store.get(ADMIN_COOKIE_NAME)?.value)) {
+  if (!(await verifySessionToken(store.get(ADMIN_COOKIE_NAME)?.value))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

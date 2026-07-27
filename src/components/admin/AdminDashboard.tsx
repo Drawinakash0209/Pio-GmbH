@@ -3,14 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ExternalLink, LogOut, RotateCcw } from "lucide-react";
+import { ExternalLink, KeyRound, LogOut, RotateCcw } from "lucide-react";
 import { useEditable } from "../EditableProvider";
 import type { ContentSection } from "@/lib/content-schema";
 import DashboardField from "./DashboardField";
+import AdminChangePasswordForm from "./AdminChangePasswordForm";
 
 export default function AdminDashboard({ sections }: { sections: ContentSection[] }) {
   const { content, setContent, resetField, logout } = useEditable();
   const [activeId, setActiveId] = useState(sections[0]?.id);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const active = sections.find((s) => s.id === activeId) ?? sections[0];
 
   return (
@@ -50,6 +52,14 @@ export default function AdminDashboard({ sections }: { sections: ContentSection[
           </Link>
           <button
             type="button"
+            onClick={() => setShowChangePassword(true)}
+            className="w-full flex items-center gap-2 px-4 py-3 text-sm font-bold text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+          >
+            <KeyRound className="w-4 h-4" />
+            Change Password
+          </button>
+          <button
+            type="button"
             onClick={() => {
               if (window.confirm("Log out of admin mode?")) logout();
             }}
@@ -60,6 +70,10 @@ export default function AdminDashboard({ sections }: { sections: ContentSection[
           </button>
         </div>
       </aside>
+
+      {showChangePassword && (
+        <AdminChangePasswordForm onClose={() => setShowChangePassword(false)} />
+      )}
 
       {/* Main panel */}
       <main className="flex-1 overflow-y-auto">
