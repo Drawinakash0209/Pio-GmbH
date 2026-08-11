@@ -3,33 +3,44 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Clock, Globe2, ArrowRight } from "lucide-react";
 import Link from "next/link";
-
-const pillars = [
-  {
-    icon: ShieldCheck,
-    title: "German Reliability",
-    body: "Built on a foundation of exact standards, rigorous quality control, and steadfast commitment to contractual obligations.",
-    accent: "text-[#caf300]",
-  },
-  {
-    icon: Clock,
-    title: "24/7 Availability",
-    body: "Continuous operational readiness. Our management structures ensure round-the-clock response capabilities for critical infrastructure.",
-    accent: "text-[#caf300]",
-  },
-  {
-    icon: Globe2,
-    title: "International Expertise",
-    body: "Local operational excellence coupled with global sourcing and management strategies, adapting to diverse market requirements.",
-    accent: "text-[#caf300]",
-  },
-];
+import EditableText from "./EditableText";
+import { useLanguage } from "./LanguageProvider";
+import { useEditableValue } from "./useEditableValue";
 
 export default function WhyUs() {
+  const { t } = useLanguage();
+  const workWithUs = useEditableValue("whyus.workWithUs", t.whyUs.workWithUs);
+
+  const pillars = [
+    {
+      id: "whyus.reliability",
+      icon: ShieldCheck,
+      title: t.cms.whyUsReliabilityTitle,
+      body: t.cms.whyUsReliabilityBody,
+    },
+    {
+      id: "whyus.availability",
+      icon: Clock,
+      title: t.cms.whyUsAvailabilityTitle,
+      body: t.cms.whyUsAvailabilityBody,
+    },
+    {
+      id: "whyus.expertise",
+      icon: Globe2,
+      title: t.cms.whyUsExpertiseTitle,
+      body: t.cms.whyUsExpertiseBody,
+    },
+  ];
+
   return (
-    <section id="reliability" className="py-[120px] bg-white">
+    <section id="reliability" className="py-[120px] bg-t-bg-elevated">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
-        {/* Header */}
+        {/* Section label */}
+        <div className="flex items-center gap-4 mb-16">
+          <EditableText id="whyus.sectionLabel" defaultValue={t.whyUs.sectionLabel} className="section-label" />
+          <div className="section-divider" />
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -37,55 +48,64 @@ export default function WhyUs() {
           viewport={{ once: true }}
           className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
         >
-          <div>
-            <span className="text-[10px] font-black tracking-[0.15em] uppercase text-[#536600] px-3 py-1.5 bg-[#c7ef00] mb-4 inline-block">
-              Warum wir
-            </span>
-            <h2
-              className="text-[#000000]"
-              style={{
-                fontSize: "clamp(32px, 3vw, 44px)",
-                lineHeight: "1.15",
-                letterSpacing: "-0.03em",
-                fontWeight: 700,
-              }}
-            >
-              The Pio GmbH Standard
-            </h2>
-          </div>
+          <h2
+            className="font-display text-t-ink"
+            style={{
+              fontSize: "clamp(32px, 3.5vw, 52px)",
+              lineHeight: "1.1",
+              letterSpacing: "-0.025em",
+              fontWeight: 700,
+            }}
+          >
+            <EditableText id="whyus.heading.main" defaultValue={t.whyUs.heading.main} />
+            <em className="accent-italic">
+              <EditableText id="whyus.heading.accent" defaultValue={t.whyUs.heading.accent} />
+            </em>
+          </h2>
           <Link
             href="#contact"
-            className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-[#000000] hover:text-[#536600] transition-colors group shrink-0"
+            className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-t-ink hover:text-t-link transition-colors group shrink-0"
           >
-            Work With Us
+            {workWithUs}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {pillars.map(({ icon: Icon, title, body }, i) => (
+          {pillars.map(({ id, icon: Icon, title, body }, i) => (
             <motion.div
-              key={title}
+              key={id}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -6 }}
               transition={{ delay: i * 0.12, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="group relative p-8 border border-[#c4c7c7] hover:border-[#000000] bg-[#f9f9f9] hover:bg-white transition-all duration-200 overflow-hidden"
+              className="group relative rounded-lg p-8 border border-t-border hover:border-t-accent-dim bg-t-bg hover:bg-t-bg-elevated transition-all duration-200 overflow-hidden"
             >
-              {/* Hover lime accent bar */}
-              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#caf300] group-hover:w-full transition-all duration-300" />
+              {/* Hover accent bar */}
+              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-t-accent group-hover:w-full transition-all duration-300" />
 
-              <div className="w-12 h-12 bg-[#1a1c1c] flex items-center justify-center mb-6 group-hover:bg-[#caf300] transition-colors duration-200">
-                <Icon className="w-5 h-5 text-[#caf300] group-hover:text-[#000000] transition-colors duration-200" />
+              <div className="w-12 h-12 rounded-sm bg-t-dark-panel flex items-center justify-center mb-6 group-hover:bg-t-accent transition-colors duration-200">
+                <Icon className="w-5 h-5 text-t-accent group-hover:text-t-on-accent transition-colors duration-200" />
               </div>
-              <h3 className="text-xl font-bold tracking-tight text-[#000000] mb-3">{title}</h3>
-              <p className="text-base leading-6 text-[#444748]">{body}</p>
+              <EditableText
+                id={`${id}.title`}
+                as="h3"
+                defaultValue={title}
+                className="text-xl font-bold tracking-tight text-t-ink mb-3"
+              />
+              <EditableText
+                id={`${id}.body`}
+                as="p"
+                defaultValue={body}
+                className="text-base leading-6 text-t-body"
+              />
 
-              {/* Number */}
+              {/* Number watermark */}
               <span
-                className="absolute top-6 right-6 text-6xl font-black text-[#000000]/5 select-none pointer-events-none"
-                style={{ lineHeight: 1 }}
+                className="section-watermark absolute top-6 right-6"
+                style={{ fontSize: "56px", opacity: 0.08 }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
