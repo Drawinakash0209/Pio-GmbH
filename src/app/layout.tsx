@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, DM_Mono } from "next/font/google";
+import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import "./globals.css";
@@ -16,9 +16,9 @@ const DEFAULT_TITLE = "Pio GmbH — International Expertise. German Reliability.
 const DEFAULT_DESCRIPTION =
   "Pio GmbH is a premier management and service company in Mülheim an der Ruhr, Germany, combining European standards with local excellence in facility management, staffing, and operations.";
 
-const qalisso = localFont({
-  src: "./fonts/Qalisso.otf",
-  variable: "--font-qalisso",
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair-display",
 });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 const dmMono = DM_Mono({
@@ -95,7 +95,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${qalisso.variable} ${dmSans.variable} ${dmMono.variable} ${bloved.variable}`}
+      className={`${playfairDisplay.variable} ${dmSans.variable} ${dmMono.variable} ${bloved.variable}`}
       suppressHydrationWarning
     >
       <head>
