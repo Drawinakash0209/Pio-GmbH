@@ -86,7 +86,7 @@
   --font-family-display: var(--font-playfair-display), Georgia, serif;
   --font-family-sans: var(--font-dm-sans), system-ui, sans-serif;
   --font-family-mono: var(--font-dm-mono), monospace;
-  --font-family-script: var(--font-bloved), Georgia, serif;
+  --font-family-script: var(--font-playfair-display), Georgia, serif;
 }
 
 /* ---- Dark theme overrides ---- */

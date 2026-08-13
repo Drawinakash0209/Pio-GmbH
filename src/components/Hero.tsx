@@ -82,7 +82,6 @@ export default function Hero() {
                   className="inline-block"
                   style={{
                     color: wi >= 2 ? "var(--color-t-faint)" : "var(--color-t-ink)",
-                    fontFamily: wi % 2 !== 0 ? "var(--font-family-script)" : "inherit",
                     fontWeight: wi % 2 === 0 ? 700 : 500,
                   }}
                 >

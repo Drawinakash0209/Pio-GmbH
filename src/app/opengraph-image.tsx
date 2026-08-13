@@ -8,9 +8,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  const [qalisso, bloved, content] = await Promise.all([
-    readFile(join(process.cwd(), "src/app/fonts/Qalisso.otf")),
-    readFile(join(process.cwd(), "src/app/fonts/Bloved.ttf")),
+  const [playfairDisplay, content] = await Promise.all([
+    readFile(join(process.cwd(), "src/app/fonts/PlayfairDisplay-Bold.woff")),
     getAllContent(),
   ]);
 
@@ -45,12 +44,12 @@ export default async function Image() {
             marginBottom: 40,
           }}
         >
-          <span style={{ fontFamily: "Qalisso", fontSize: 22, color: "#caf300" }}>{badge}</span>
+          <span style={{ fontFamily: "Playfair Display", fontSize: 22, color: "#caf300" }}>{badge}</span>
         </div>
-        <div style={{ display: "flex", fontFamily: "Qalisso", fontSize: 104, color: "#f5f5f5", lineHeight: 1.05 }}>
+        <div style={{ display: "flex", fontFamily: "Playfair Display", fontSize: 104, color: "#f5f5f5", lineHeight: 1.05 }}>
           Pio GmbH
         </div>
-        <div style={{ display: "flex", fontFamily: "Bloved", fontSize: 56, color: "#caf300", marginTop: 20 }}>
+        <div style={{ display: "flex", fontFamily: "Playfair Display", fontSize: 56, color: "#caf300", marginTop: 20 }}>
           {accent}
         </div>
       </div>
@@ -58,8 +57,7 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: "Qalisso", data: qalisso, style: "normal" },
-        { name: "Bloved", data: bloved, style: "normal" },
+        { name: "Playfair Display", data: playfairDisplay, style: "normal" },
       ],
     }
   );

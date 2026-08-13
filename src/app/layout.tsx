@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
-import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -25,10 +24,6 @@ const dmMono = DM_Mono({
   weight: ["400", "500"],
   subsets: ["latin"],
   variable: "--font-dm-mono",
-});
-const bloved = localFont({
-  src: "./fonts/Bloved.ttf",
-  variable: "--font-bloved",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -95,7 +90,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfairDisplay.variable} ${dmSans.variable} ${dmMono.variable} ${bloved.variable}`}
+      className={`${playfairDisplay.variable} ${dmSans.variable} ${dmMono.variable}`}
       suppressHydrationWarning
     >
       <head>
