@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { put } from "@vercel/blob";
 import { randomUUID } from "node:crypto";
 import { ADMIN_COOKIE_NAME, verifySessionToken } from "@/lib/session";
 import { recordUpload } from "@/lib/db";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 const ALLOWED_TYPES: Record<string, string> = {
   "image/png": "png",
   "image/jpeg": "jpg",
@@ -46,11 +44,12 @@ export async function POST(request: Request) {
     );
   }
 
-  await mkdir(UPLOAD_DIR, { recursive: true });
   const filename = `${randomUUID()}.${ext}`;
-  const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(UPLOAD_DIR, filename), bytes);
+  const blob = await put(filename, file, {
+    access: "public",
+    contentType: file.type,
+  });
   await recordUpload(filename, file.type, file.size);
 
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  return NextResponse.json({ url: blob.url });
 }
