@@ -81,9 +81,9 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 group rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
+            className="lg:col-span-2 group rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg-elevated shadow-sm hover:shadow-md dark:shadow-none flex flex-col lg:flex-row overflow-hidden lg:min-h-[420px]"
           >
-            <div className="md:w-1/2 p-8 flex flex-col justify-between order-2 md:order-1">
+            <div className="lg:w-1/2 p-8 flex flex-col justify-between order-2 lg:order-1">
               <div>
                 <div className="w-11 h-11 rounded-sm bg-t-ink flex items-center justify-center mb-6">
                   <span
@@ -132,7 +132,7 @@ export default function Services() {
                 </button>
               </div>
             </div>
-            <div className="md:w-1/2 h-64 md:h-auto order-1 md:order-2 relative overflow-hidden">
+            <div className="lg:w-1/2 h-64 lg:h-auto order-1 lg:order-2 relative overflow-hidden">
               <EditableImage
                 id="services.facility.image"
                 defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAN4pSLaLjtzJWkQ7F-ef4LTr1zXga3uEc5BaTgwC5HcY7i3vRVRg8nRCzoXPSU8n-bW-wGBR5aF5RVsS3_fkXy-WwFkisqry_-Ynz1uhrqh-AGIQ18bNgUv_8vSt1KW3Cjnsgpe1KLJQLp4m9BxiFM1ItSg-IBfXCZ7yGqPwnFnVKQ1jEmYgFkj05XUq-s2EkOLcirgEfLzxGitYxIpT7PyFYBy3zkiV1qH_HWiIHUYAp_3pu3dl7g0qk9zP7TBf8ZCc_mbRrAH2Y"
@@ -150,7 +150,7 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg p-8 flex flex-col justify-between min-h-[420px] group"
+            className="rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg-elevated shadow-sm hover:shadow-md dark:shadow-none p-8 flex flex-col justify-between md:min-h-[420px] group"
           >
             <div>
               <div className="w-11 h-11 rounded-sm bg-t-bg-muted border border-t-border flex items-center justify-center mb-6 group-hover:bg-t-ink transition-colors duration-200">
@@ -198,7 +198,7 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg flex flex-col overflow-hidden min-h-[420px] group"
+            className="rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg-elevated shadow-sm hover:shadow-md dark:shadow-none flex flex-col overflow-hidden md:min-h-[420px] group"
           >
             <div className="h-52 relative overflow-hidden">
               <EditableImage
@@ -242,9 +242,9 @@ export default function Services() {
             whileInView="visible"
             whileHover={{ y: -4 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 group rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 bg-t-bg flex flex-col md:flex-row overflow-hidden min-h-[420px]"
+            className="lg:col-span-2 group rounded-lg border border-t-border hover:border-t-accent-dim transition-all duration-200 shadow-sm hover:shadow-md dark:shadow-none flex flex-col lg:flex-row overflow-hidden lg:min-h-[420px]"
           >
-            <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
+            <div className="lg:w-1/2 h-64 lg:h-auto relative overflow-hidden">
               <EditableImage
                 id="services.trade.image"
                 defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAzNLU5XTPySUs2I-74gd1DKJLOC3khcf1UoYHxC3pZXMeYSC7f2PgciMKwHU3ZD4fpQKtNFmvZTj_mHeapWhAMnvy_bR8Jafexeiis0Yg6N5StZp70AVG362AALo8vVHKMWdMrSUhFTWcw6c0O5vO-88Cf_YSs5rV2-NRuYULEnbmJtFoYOL6qQHwtEqGOtwuPuuIqwOsiM9o22CzkJNPAAFH2s4SdHwIgi7lq9zgGL3ao5CLFGFLuAfR9W-ftZD12lQbWG7I84rs"

@@ -105,7 +105,7 @@ export default function VisionMission() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 viewport={{ once: true }}
-                className="group relative p-8 rounded-lg border border-t-border hover:border-t-ink bg-t-bg hover:bg-t-bg-elevated transition-all duration-200 overflow-hidden flex items-start gap-5"
+                className="group relative p-8 rounded-lg border border-t-border hover:border-t-ink bg-t-bg-elevated shadow-sm hover:shadow-md dark:shadow-none transition-all duration-200 overflow-hidden flex items-start gap-5"
               >
                 <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-t-accent group-hover:w-full transition-all duration-300" />
                 <div className="w-12 h-12 rounded-sm bg-t-dark-panel flex items-center justify-center shrink-0 group-hover:bg-t-accent transition-colors duration-200">

@@ -81,7 +81,7 @@ export default function WhyUs() {
               whileHover={{ y: -6 }}
               transition={{ delay: i * 0.12, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="group relative rounded-lg p-8 border border-t-border hover:border-t-accent-dim bg-t-bg hover:bg-t-bg-elevated transition-all duration-200 overflow-hidden"
+              className="group relative rounded-lg p-8 border border-t-border hover:border-t-accent-dim bg-t-bg-elevated shadow-sm hover:shadow-md dark:shadow-none transition-all duration-200 overflow-hidden"
             >
               {/* Hover accent bar */}
               <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-t-accent group-hover:w-full transition-all duration-300" />
