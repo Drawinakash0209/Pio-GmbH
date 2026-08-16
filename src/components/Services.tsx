@@ -34,7 +34,7 @@ export default function Services() {
   const modalClose = useEditableValue("services.modal.close", t.services.modal.close);
 
   return (
-    <section id="services" className="py-[120px] bg-t-bg-elevated">
+    <section id="services" className="py-16 sm:py-20 md:py-24 lg:py-[120px] bg-t-bg-elevated">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
@@ -252,7 +252,7 @@ export default function Services() {
                 className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
               />
             </div>
-            <div className="md:w-1/2 p-8 flex flex-col justify-between bg-t-dark-panel text-white">
+            <div className="lg:w-1/2 p-8 flex flex-col justify-between bg-t-dark-panel text-white">
               <div>
                 <EditableText
                   id="services.trade.eyebrow"

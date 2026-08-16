@@ -12,7 +12,7 @@ export default function VisionMission() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-[120px] bg-t-bg-elevated border-t border-t-border/50 relative overflow-hidden">
+    <section className="py-16 sm:py-20 md:py-24 lg:py-[120px] bg-t-bg-elevated border-t border-t-border/50 relative overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">

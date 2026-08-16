@@ -66,7 +66,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-[120px] bg-t-bg border-t border-t-border/50">
+    <section id="contact" className="py-16 sm:py-20 md:py-24 lg:py-[120px] bg-t-bg border-t border-t-border/50">
       <div className="max-w-[1440px] mx-auto px-4 md:px-[64px]">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
@@ -74,7 +74,7 @@ export default function Contact() {
           <div className="section-divider" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Info */}
           <motion.div
             initial={{ opacity: 0, x: -32 }}

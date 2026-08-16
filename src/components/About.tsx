@@ -33,7 +33,7 @@ export default function About() {
   }
 
   return (
-    <section id="about" className="relative py-[120px] bg-t-bg overflow-hidden">
+    <section id="about" className="relative py-16 sm:py-20 md:py-24 lg:py-[120px] bg-t-bg overflow-hidden">
       {/* Section number watermark */}
       <span
         className="section-watermark absolute top-0 right-0"
@@ -135,7 +135,7 @@ export default function About() {
           >
             <motion.div
               style={{ rotateX, rotateY }}
-              className="relative h-[480px] rounded-lg bg-t-dark-panel overflow-hidden"
+              className="relative h-[340px] sm:h-[400px] lg:h-[480px] rounded-lg bg-t-dark-panel overflow-hidden"
             >
               {/* Grid pattern */}
               <div

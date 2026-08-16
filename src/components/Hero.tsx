@@ -14,7 +14,7 @@ export default function Hero() {
   const ctaSecondary = useEditableValue("hero.ctaSecondary", t.hero.ctaSecondary);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-t-bg">
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden bg-t-bg">
       {/* Giant background watermark text */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0"
@@ -41,7 +41,7 @@ export default function Hero() {
       />
 
       {/* Main content */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 w-full pt-24 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 min-h-screen items-center">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 w-full pt-24 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 min-h-[100svh] items-center">
         {/* Left — text */}
         <div className="flex flex-col justify-center py-16 lg:py-0">
           {/* Label */}
@@ -141,7 +141,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Stats row */}
-          <div className="flex items-center gap-8 mt-16 pt-8 border-t border-t-border">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-12 sm:mt-16 pt-8 border-t border-t-border">
             {t.hero.stats.map(({ value, label }, i) => (
               <div key={label} className="flex flex-col">
                 <EditableText
